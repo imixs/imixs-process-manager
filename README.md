@@ -17,6 +17,8 @@ You can define your own business process models using the [Imixs-BPMN modeller t
 
 The Imixs Process Manager allows you to define custom forms for your business process without programming. By defining an XML template, you can store forms directly in a BPMN 2.0 model.
 
+<img src="https://raw.githubusercontent.com/imixs/imixs-process-manager/master/src/main/webapp/pages/model-example.png" />
+
 Example:
 
 	<?xml version="1.0"?>
