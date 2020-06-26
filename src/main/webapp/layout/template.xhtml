@@ -8,17 +8,13 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs">
 <h:head>
-
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta content="text/javascript" http-equiv="Content-Script-Type" />
 	<meta content="text/css" http-equiv="Content-Style-Type" />
 	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
 	<meta content="Imixs Workflow" name="keywords" />
 
-
 	<title>#{message.application_title}</title>
-
-
 
 	<i:imixsHeader disablecss="false"
 		dateformat="#{global.datePatternShort}" disabletinymce="false"
@@ -102,25 +98,13 @@
 
 	<script type="text/javascript">
 		/*<![CDATA[*/
-
-		/* Init Script */
-		/* var imixs = IMIXS.org.imixs.core, 
-			imixsOfficeWorkflow = IMIXS.com.imixs.workflow.office;
-
-		imixsOfficeWorkflow.contextPath="#{facesContext.externalContext.requestContextPath}";
-		 */
+		
 		$(document).ready(function() {
-			//imixsOfficeWorkflow.layout();
-
 			layoutEditor();
-
 		});
 
 		/* laest sich im moment nicht auslagern (script_url!) see issue #87 */
 		layoutEditor = function() {
-
-			//tinymce.init({ selector:'textarea.imixs-editor' });
-
 			// Layout office default editor
 			tinymce
 					.init({

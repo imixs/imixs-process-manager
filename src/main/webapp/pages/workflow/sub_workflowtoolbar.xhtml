@@ -7,7 +7,7 @@
 
 
 	<div class="imixs-panel">
-		<h3>#{global.workflow}</h3>
+		<h3>#{message.workflow}</h3>
 
 
 		<!-- **** Workflow Actions only visible if user is autor ***** -->
@@ -21,27 +21,27 @@
 			<p style="color:red">You are not allowed to edit this Workitem!</p>
 		</ui:fragment>
 
-		<h:commandButton value="#{global.close}"
+		<h:commandButton value="#{message.close}"
 			action="/pages/welcome?faced-redirect=true"
 			actionListener="#{workflowController.close()}" />
 
 		<ui:fragment
 			rendered="#{!empty workflowController.workitem.item['txtworkflowhistory']}">
 			<h:panelGrid columns="3">
-				<h:outputLabel value="#{global.created}: " />
+				<h:outputLabel value="#{message.created}: " />
 				<h:outputText
 					value="#{workflowController.workitem.item['$created']} ">
 					<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />
 				</h:outputText>
 				<h:outputText
-					value=" #{global.by} #{workflowController.workitem.item['namcreator']} " />
-				<h:outputLabel value="#{global.modified}: " />
+					value=" #{message.by} #{workflowController.workitem.item['namcreator']} " />
+				<h:outputLabel value="#{message.modified}: " />
 				<h:outputText
 					value="#{workflowController.workitem.item['$modified']} ">
 					<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />
 				</h:outputText>
 				<h:outputText
-					value=" #{global.by} #{workflowController.workitem.item['namcurrenteditor']}" />
+					value=" #{message.by} #{workflowController.workitem.item['namcurrenteditor']}" />
 			</h:panelGrid>
 
 			<h3>History:</h3>
@@ -51,8 +51,8 @@
 					value="#{workflowController.workitem.itemListArray['txtworkflowhistory']}">
 					<h:column>
 						<h:outputText value="#{log[0]}">
-							<f:convertDateTime timeZone="#{global.timeZone}" type="both"
-								pattern="#{global.dateTimePattern}" />
+							<f:convertDateTime timeZone="#{message.timeZone}" type="both"
+								pattern="#{message.dateTimePattern}" />
 						</h:outputText>
 					</h:column>
 					<h:column>

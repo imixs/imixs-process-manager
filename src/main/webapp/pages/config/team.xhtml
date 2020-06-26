@@ -15,15 +15,15 @@
 		<f:view>
 			<h:form id="team_form_id">
 
-				<h1>#{global.team_form_title}</h1>
+				<h1>#{message.team_form_title}</h1>
 
 				<!-- **** General info ***** -->
-				<h2>#{global.edit}</h2>
+				<h2>#{message.edit}</h2>
 
 				<dl>
 
 					<dt>
-						<h:outputLabel value="#{global.name}:">
+						<h:outputLabel value="#{message.name}:">
 							<h:message style="color: red" for="subject_id" showSummary="true"
 								showDetail="true" />
 						</h:outputLabel>
@@ -37,7 +37,7 @@
 					</dd>
 
 					<dt style="clear: left;">
-						<h:outputLabel value="#{global.members}:" />
+						<h:outputLabel value="#{message.members}:" />
 					</dt>
 
 
@@ -56,29 +56,29 @@
 
 				<!-- **** Workflow Actions & History ***** -->
 
-				<h3>#{global.workflow}</h3>
+				<h3>#{message.workflow}</h3>
 
 				<h:commandButton
 					action="/pages/config/teamlist?faces-redirect=true"
 					 actionListener="#{documentController.save()}"
-					value="#{global.save}">
+					value="#{message.save}">
 				</h:commandButton>
 
 
-				<h:commandButton value="#{global.close}"
+				<h:commandButton value="#{message.close}"
 					action="/pages/config/teamlist?faces-redirect=true"
 					actionListener="#{documentController.close()}" />
 
 
 				<h:panelGrid columns="2">
 
-					<h:outputLabel value="#{global.created}: " />
+					<h:outputLabel value="#{message.created}: " />
 					<h:outputText
 						value="#{documentController.document.item['$created']} ">
 						<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />
 					</h:outputText>
 
-					<h:outputLabel value="#{global.modified}: " />
+					<h:outputLabel value="#{message.modified}: " />
 					<h:outputText
 						value="#{documentController.document.item['$modified']} ">
 						<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />

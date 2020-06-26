@@ -25,7 +25,7 @@
  *  	Ralph Soika - Software Developer
  *******************************************************************************/
 
-package org.imixs.application.admin;
+package org.imixs.application.model;
 
 import java.io.Serializable;
 

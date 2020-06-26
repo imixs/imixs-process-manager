@@ -15,7 +15,7 @@
 			<h:form id="teamlistForm">
 
 				<h2>
-					<h:outputText value="#{global.team_form_title}" />
+					<h:outputText value="#{message.team_form_title}" />
 				</h2>
 
 				<h:dataTable id="datatable_id" columns="7" class="imixsdatatable"
@@ -31,7 +31,7 @@
 
 					<h:column>
 						<f:facet name="header">
-							<h:outputText value="#{global.modified}" />
+							<h:outputText value="#{message.modified}" />
 						</f:facet>
 						<h:outputText value="#{record.item['$modified']}">
 
@@ -41,14 +41,14 @@
 					<!-- edit -->
 					<h:column>
 						<h:link outcome="/pages/config/team?faces-redirect=true">
-							<h:outputText value="#{global.edit}" />
+							<h:outputText value="#{message.edit}" />
 							<f:param name="id" value="#{record.item['$uniqueid']}" />
 						</h:link>
 					</h:column>
 
 					<!-- delete -->
 					<h:column>
-						<h:commandLink value="#{global.delete}" action="/pages/config/teamlist?faces-redirect=true"
+						<h:commandLink value="#{message.delete}" action="/pages/config/teamlist?faces-redirect=true"
 							actionListener="#{documentController.delete(record.item['$uniqueid'])}" />
 					</h:column>
 				</h:dataTable>
@@ -56,18 +56,18 @@
 				<h:commandButton
 					actionListener="#{viewHandler.back(teamlistController)}"
 					disabled="#{teamlistController.pageIndex==0}"
-					value="#{global.prev}">
+					value="#{message.prev}">
 				</h:commandButton>
 
 
 				<h:commandButton
 					actionListener="#{viewHandler.forward(teamlistController)}"
-					disabled="#{teamlistController.endOfList}" value="#{global.next}">
+					disabled="#{teamlistController.endOfList}" value="#{message.next}">
 				</h:commandButton>
 
 
 				<h:commandButton actionListener="#{documentController.create()}"
-					action="team" value="#{global.add}">
+					action="team" value="#{message.add}">
 					<f:setPropertyActionListener
 						target="#{documentController.document.item['type']}" value="team" />
 				</h:commandButton>

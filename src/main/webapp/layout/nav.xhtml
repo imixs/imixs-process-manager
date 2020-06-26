@@ -14,7 +14,7 @@
 				<div class="nav-title">
 					<h4>
 						<a href="#{facesContext.externalContext.requestContextPath}/">
-							<label>Imixs-Sample</label>
+							<label>Imixs BPM</label>
 						</a> <span class="pull-right typcn typcn-th-menu-outline"
 							style="margin-right: 10px; cursor: pointer; margin-bottom: 20px;"
 							onclick="togglemenu();"></span>
@@ -29,16 +29,10 @@
 					<li class="nav-item"><a
 						href="#{facesContext.externalContext.requestContextPath}/"><span
 							class="typcn typcn-home"></span><label>Home</label></a></li>
-
-
-
+					
 					<li class="nav-item"><h:commandLink
-							actionListener="#{workflowController.create('1.1',1000,'')}"
-							action="/pages/workflow/workitem" ><span class="typcn typcn-document"></span><label>New Ticket</label>
-							
+							action="/pages/workflow/start" ><span class="typcn typcn-document"></span><label>New Process</label>
 						</h:commandLink></li>
-
-
 
 
 					<li class="nav-item"><a
