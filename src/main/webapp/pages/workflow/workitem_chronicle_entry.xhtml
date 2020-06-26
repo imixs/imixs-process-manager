@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:marty="http://xmlns.jcp.org/jsf/composite/marty"
+	xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs">
+
+
+	
+	<!-- 1) User Icon and Time -->
+	<tr class="header">
+		<td style="width: 160px; vertical-align: top;">
+		
+			<h:graphicImage
+				styleClass="imixs-workitem-chronicle-usericon"
+				title="#{chronicle.user}"
+				value="https://www.gravatar.com/avatar/#{chronicle.user}?d=identicon">
+			</h:graphicImage> 
+			<!-- optional - user initials --> 
+			<h:outputText value="#{chronicle.date}"
+				class="date">
+				<f:convertDateTime timeZone="#{message.timeZone}" type="both"
+					pattern="#{message.dateTimePattern}" />
+			</h:outputText> - #{chronicle.user}</td>
+	</tr>
+
+
+
+	<!-- print all entries by time descending -->
+
+
+
+	<!-- Print History.... -->
+	<ui:repeat var="entry" value="#{chronicle.entries}">
+
+		<!-- history -->
+		<ui:fragment rendered="#{'history' eq entry.item['type']}">
+			<tr class="entry history">
+				<td>
+					<div class="image-block">
+						<h:panelGroup pt:title="#{message.history} #{entry.item['date']}"
+							styleClass="typcn typcn-equals-outline"></h:panelGroup>
+					</div>
+
+					<div class="content-block">
+						<h:outputText escape="false" styleClass="imixs-comments-entry"
+							value="#{entry.item['message']}" />
+					</div>
+				</td>
+			</tr>
+		</ui:fragment>
+
+
+		<!-- comment -->
+		<ui:fragment rendered="#{'comment' eq entry.item['type']}">
+			<tr class="entry comment">
+				<td>
+					<div class="image-block">
+						<h:panelGroup pt:title="#{message.comment} #{entry.item['date']}"
+							styleClass="typcn typcn-message"></h:panelGroup>
+					</div>
+					<div class="content-block">
+						<h:panelGroup styleClass="imixs-comments-entry">
+							<h:outputText value="#{entry.item['message']}" />
+						</h:panelGroup>
+					</div>
+				</td>
+			</tr>
+		</ui:fragment>
+
+	</ui:repeat>
+
+
+
+
+
+</ui:composition>
+

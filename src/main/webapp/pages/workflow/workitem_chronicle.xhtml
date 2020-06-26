@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:marty="http://xmlns.jcp.org/jsf/composite/marty"
+	xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs">
+
+
+
+	<!-- Main panel - shows entries filtered by optional category -->
+	<h:panelGroup id="chronicle-main" layout="block" class="imixs-workitem-chronicle">
+
+
+		<table style="width: 100%;">
+
+
+
+
+			<!-- print a headline for each year -->
+			<ui:repeat var="year" value="#{chronicleController.getYears()}">
+
+				<!-- print YEAR -->
+				<tr class="year">
+					<td colspan="3"><h2
+							style="width: 100%; text-align: center; border-bottom: 1px solid #ddd;">#{year}</h2></td>
+				</tr>
+
+				<!-- print all MONTHs -->
+				<ui:repeat var="month"
+					value="#{chronicleController.getMonths(year)}">
+					<ui:param name="message_month" value="month_#{month}"></ui:param>
+					<tr class="month">
+						<td colspan="3"><h3 style="width: 100%; text-align: center;">#{message[message_month]}</h3></td>
+
+					</tr>
+
+					<!-- show chronic by month -->
+					<ui:repeat var="chronicle"
+						value="#{chronicleController.getChroniclePerMonth(year,month)}">
+						<ui:include src="workitem_chronicle_entry.xhtml">
+							<ui:param name="chronicle" value="#{chronicle}" />
+						</ui:include>
+					</ui:repeat>
+				</ui:repeat>
+			</ui:repeat>
+		</table>
+	</h:panelGroup>
+
+</ui:composition>
+
