@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--Imixs IX XML QueyObject  -  www.imixs.com-->
+<query>
+  <itemcollection>
+    <itemcollection>
+      <item name="txtworkflowmanageruri">
+        <value>http://localhost:8080/workflow-rest/report?open</value>
+      </item>
+      <item name="txtattributelist">
+        <value>$created</value>
+        <value>txtworkflowsummary</value>
+        <value>namcreator</value>
+        <value>txtworkflowgroup</value>
+        <value>txtworkflowstatus</value>
+      </item>
+      <item name="txtcontenttype">
+        <value>application/xml</value>
+      </item>
+      <item name="txtquery">
+        <value>SELECT workitem FROM Entity AS workitem
+  WHERE workitem.type='workitem'</value>
+      </item>
+      <item name="txtname">
+        <value>xsl-demo.ixr</value>
+      </item>
+      <item name="txtxsl">
+        <value>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
+
+	&lt;xsl:template match="/"&gt;
+    &lt;output&gt;
+      &lt;xsl:apply-templates
+        select="/collection/entity[item[name = 'type']/value = 'workitem']" /&gt;
+    &lt;/output&gt;
+	&lt;/xsl:template&gt;
+  
+&lt;!-- Template  --&gt;
+  &lt;xsl:template match="/collection/entity[item[name = 'type']/value = 'workitem']"&gt;
+    &lt;xsl:variable name="currentUniqueID" select="./item[name = '$uniqueid']/value" /&gt;
+    &lt;node&gt;
+      &lt;xsl:value-of select="item[name='txtsubject']/value" /&gt;
+      currentUniqueID: &lt;xsl:value-of select="$currentUniqueID" /&gt;
+      Subject:&lt;xsl:value-of select="txtsubject" /&gt;
+    &lt;/node&gt;
+  &lt;/xsl:template&gt;
+  
+  
+&lt;/xsl:stylesheet&gt;</value>
+      </item>
+    </itemcollection>
+  </itemcollection>
+</query>

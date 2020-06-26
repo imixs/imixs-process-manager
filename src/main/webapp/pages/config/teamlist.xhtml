@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs"
+	template="/layout/template.xhtml">
+
+
+
+
+	<ui:define name="content">
+		<f:view>
+
+			<h:form id="teamlistForm">
+
+				<h2>
+					<h:outputText value="#{global.team_form_title}" />
+				</h2>
+
+				<h:dataTable id="datatable_id" columns="7" class="imixsdatatable"
+					value="#{viewHandler.getData(teamlistController)}" var="record">
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Name" />
+						</f:facet>
+						<h:outputText value="#{record.item['txtName']} " />
+					</h:column>
+
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{global.modified}" />
+						</f:facet>
+						<h:outputText value="#{record.item['$modified']}">
+
+						</h:outputText>
+					</h:column>
+
+					<!-- edit -->
+					<h:column>
+						<h:link outcome="/pages/config/team?faces-redirect=true">
+							<h:outputText value="#{global.edit}" />
+							<f:param name="id" value="#{record.item['$uniqueid']}" />
+						</h:link>
+					</h:column>
+
+					<!-- delete -->
+					<h:column>
+						<h:commandLink value="#{global.delete}" action="/pages/config/teamlist?faces-redirect=true"
+							actionListener="#{documentController.delete(record.item['$uniqueid'])}" />
+					</h:column>
+				</h:dataTable>
+
+				<h:commandButton
+					actionListener="#{viewHandler.back(teamlistController)}"
+					disabled="#{teamlistController.pageIndex==0}"
+					value="#{global.prev}">
+				</h:commandButton>
+
+
+				<h:commandButton
+					actionListener="#{viewHandler.forward(teamlistController)}"
+					disabled="#{teamlistController.endOfList}" value="#{global.next}">
+				</h:commandButton>
+
+
+				<h:commandButton actionListener="#{documentController.create()}"
+					action="team" value="#{global.add}">
+					<f:setPropertyActionListener
+						target="#{documentController.document.item['type']}" value="team" />
+				</h:commandButton>
+
+
+			</h:form>
+		</f:view>
+	</ui:define>
+
+</ui:composition>

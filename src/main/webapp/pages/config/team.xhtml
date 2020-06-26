@@ -1,0 +1,95 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs"
+	template="/layout/template.xhtml">
+
+
+	<f:metadata>
+		<f:viewAction action="#{documentController.onLoad()}" />
+	</f:metadata>
+
+	<ui:define name="content">
+		<f:view>
+			<h:form id="team_form_id">
+
+				<h1>#{global.team_form_title}</h1>
+
+				<!-- **** General info ***** -->
+				<h2>#{global.edit}</h2>
+
+				<dl>
+
+					<dt>
+						<h:outputLabel value="#{global.name}:">
+							<h:message style="color: red" for="subject_id" showSummary="true"
+								showDetail="true" />
+						</h:outputLabel>
+					</dt>
+					<dd>
+						<h:inputText style="width: 20em;" required="true"
+							value="#{documentController.document.item['txtname']}"
+							id="subject_id">
+
+						</h:inputText>
+					</dd>
+
+					<dt style="clear: left;">
+						<h:outputLabel value="#{global.members}:" />
+					</dt>
+
+
+					<dd>
+
+						<h:inputTextarea required="false"
+							style="height: 5em; width: 10em;"
+							value="#{documentController.document.itemList['members']}">
+							<f:converter converterId="org.imixs.VectorConverter" />
+
+						</h:inputTextarea>
+					</dd>
+				</dl>
+
+				<div style="clear: left;" />
+
+				<!-- **** Workflow Actions & History ***** -->
+
+				<h3>#{global.workflow}</h3>
+
+				<h:commandButton
+					action="/pages/config/teamlist?faces-redirect=true"
+					 actionListener="#{documentController.save()}"
+					value="#{global.save}">
+				</h:commandButton>
+
+
+				<h:commandButton value="#{global.close}"
+					action="/pages/config/teamlist?faces-redirect=true"
+					actionListener="#{documentController.close()}" />
+
+
+				<h:panelGrid columns="2">
+
+					<h:outputLabel value="#{global.created}: " />
+					<h:outputText
+						value="#{documentController.document.item['$created']} ">
+						<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />
+					</h:outputText>
+
+					<h:outputLabel value="#{global.modified}: " />
+					<h:outputText
+						value="#{documentController.document.item['$modified']} ">
+						<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />
+					</h:outputText>
+
+				</h:panelGrid>
+
+			</h:form>
+		</f:view>
+	</ui:define>
+
+
+
+</ui:composition>

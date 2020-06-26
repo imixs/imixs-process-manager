@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<h:form onkeypress="if (event.keyCode == 13) { $('.header-search-button').click(); return false; }">
+		<div class="header">
+
+
+
+			<div class="row">
+				<div class="linkbox col-3">
+				
+					<!--  Singed in user -->
+					<h:panelGroup rendered="#{loginController.authenticated}">
+						<span
+							class="typcn typcn-key"></span><h:outputText
+								value="Login: #{loginController.userPrincipal}" />
+					</h:panelGroup>
+					
+				</div>
+				<div class="searchbox col-6">
+
+
+					<h:inputText style="width: 80%;" value="#{searchController.input}"  a:placeholder="search..."/>
+					<h:commandLink actionListener="#{searchController.search()}" styleClass="header-search-button"
+						action="/pages/search" title="#{global.search}" ><span class="typcn typcn-zoom-outline"></span></h:commandLink>
+					
+				</div>
+				<div class="linkbox col-3">
+					<div class="pull-right">
+
+						<ul>
+							<li><a href="https://www.imixs.org" target="_blank"><span
+									class="typcn typcn-mortar-board"></span></a></li>
+
+							<li><a href="https://github.com/imixs/imixs-jsf-example" target="_blank"><span
+									class="typcn typcn-social-github"></span></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+	</h:form>
+</ui:composition>
+
+

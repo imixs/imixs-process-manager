@@ -1,0 +1,8 @@
+{
+  "realm": "master",
+  "auth-server-url": "http://localhost:8081/auth",
+  "ssl-required": "external",
+  "resource": "imixs-workflow",
+  "public-client": true,
+  "use-resource-role-mappings": true
+}

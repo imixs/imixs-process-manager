@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs">
+
+	<nav>
+		<h:form>
+			<!-- Sidebar -->
+			<div class="nav-sidebar">
+
+
+				<div class="nav-title">
+					<h4>
+						<a href="#{facesContext.externalContext.requestContextPath}/">
+							<label>Imixs-Sample</label>
+						</a> <span class="pull-right typcn typcn-th-menu-outline"
+							style="margin-right: 10px; cursor: pointer; margin-bottom: 20px;"
+							onclick="togglemenu();"></span>
+					</h4>
+
+					<small><label>v5.2.0</label></small>
+
+
+				</div>
+				<hr />
+				<ul>
+					<li class="nav-item"><a
+						href="#{facesContext.externalContext.requestContextPath}/"><span
+							class="typcn typcn-home"></span><label>Home</label></a></li>
+
+
+
+					<li class="nav-item"><h:commandLink
+							actionListener="#{workflowController.create('1.1',1000,'')}"
+							action="/pages/workflow/workitem" ><span class="typcn typcn-document"></span><label>New Ticket</label>
+							
+						</h:commandLink></li>
+
+
+
+
+					<li class="nav-item"><a
+						href="#{facesContext.externalContext.requestContextPath}/pages/tasklist.jsf"><span
+							class="typcn typcn-th-list"></span><label>Tasklist</label></a></li>
+
+				</ul>
+				<hr />
+				<ul>
+
+					<li class="nav-item"><h:commandLink
+							action="/pages/config/teamlist?faces-redirect=true">
+							<span class="typcn typcn-group"></span>
+							<label>Teams</label>
+						</h:commandLink></li>
+
+					<li class="nav-item"><a target="_blank"
+						href="#{facesContext.externalContext.requestContextPath}/pages/admin/modellist.jsf">
+							<span class="typcn typcn-flow-merge"></span><label>Models</label>
+					</a></li>
+
+					<hr />
+					<li class="nav-item"><a target="admin"
+						href="http://localhost:8888/"> <span
+							class="typcn typcn-spanner"></span><label>Admin-Client</label>
+					</a></li>
+				</ul>
+
+
+
+			</div>
+		</h:form>
+	</nav>
+
+</ui:composition>
+
+

@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs"
+	template="/layout/template.xhtml">
+
+	<ui:define name="content">
+
+
+		<form method="post"
+			action="#{facesContext.externalContext.requestContextPath}/j_security_check">
+
+			<div>
+				<h1>
+					<h:outputLabel value="#{global.login_title}" />
+				</h1>
+				<h:panelGrid columns="2">
+
+					<h:outputLabel value="#{global.username}:" />
+					<h:inputText id="j_username" />
+
+					<h:outputLabel value="#{global.password}:" />
+					<h:inputSecret id="j_password" />
+
+				</h:panelGrid>
+				<input type="submit" value="#{global.login}" />
+			</div>
+		</form>
+		
+		
+		
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,94 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs"
+	template="/layout/template.xhtml">
+
+	<ui:define name="content">
+		<h1>Search</h1>
+		
+
+	
+		<!-- Show search result -->
+		
+
+	<f:view>
+
+
+		<h:form>
+			<h2>Result</h2>
+
+			<h:dataTable class="imixsdatatable" style="width:100%"
+				value="#{viewHandler.getData(searchController)}" var="workitem">
+
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{global.summary}" />
+					</f:facet>
+						<h:link outcome="/pages/workflow/workitem">
+							<h:outputText value="#{workitem.item['$workflowSummary']}" />
+							<f:param name="id" value="#{workitem.item['$uniqueid']}" />
+					</h:link>
+
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{global.owner}" />
+					</f:facet>
+					<ui:repeat var="owner" value="#{workitem.itemList['namOwner']}">
+						<h:outputText value="#{owner}" />
+						<br />
+					</ui:repeat>
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{global.created}" />
+					</f:facet>
+					<h:outputText value="#{workitem.item['$created']}">
+						<f:convertDateTime timeZone="CET" type="date" dateStyle="medium" />
+					</h:outputText>
+					<h:outputText value=" #{global.by} #{workitem.item['$creator']}" />
+				</h:column>
+
+
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{global.modified}" />
+					</f:facet>
+					<h:outputText value="#{workitem.item['$modified']}">
+						<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />
+					</h:outputText>
+
+					<h:outputText
+						value=" #{global.by} #{workitem.item['$editor']}" />
+				</h:column>
+
+
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{global.status}" />
+					</f:facet>
+					<h:outputText value="#{workitem.item['$workflowstatus']}" />
+				</h:column>
+
+				<h:column>
+					<h:commandLink value="#{global.delete}"
+						action="#{workflowController.delete(workitem.item['$uniqueid'],'worklist')}"
+						rendered="#{workitem.item['$isAuthor']}">
+					</h:commandLink>
+				</h:column>
+
+			</h:dataTable>
+
+
+		
+
+		</h:form>
+	</f:view>
+
+	</ui:define>
+</ui:composition>

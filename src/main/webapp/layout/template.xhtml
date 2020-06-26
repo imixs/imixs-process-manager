@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs">
+<h:head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta content="text/javascript" http-equiv="Content-Script-Type" />
+	<meta content="text/css" http-equiv="Content-Style-Type" />
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+	<meta content="Imixs Workflow" name="keywords" />
+
+
+	<title>#{message.application_title}</title>
+
+
+
+	<i:imixsHeader disablecss="false"
+		dateformat="#{global.datePatternShort}" disabletinymce="false"
+		disablefileupload="false"
+		xxtheme="#{facesContext.externalContext.requestContextPath}/layout/themes/office/jquery-ui-1.10.4.custom.css"
+		theme="#{facesContext.externalContext.requestContextPath}/layout/themes/smoothness/jquery-ui.css" />
+
+	<!-- tinyMCE -->
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/layout/js/tinymce/tinymce.min.js"></script>
+
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/layout/js/imixs-core.js"></script>
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/layout/js/imixs-xml.js"></script>
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/layout/js/basic.js"></script>
+
+	<!-- Fonts
+	    ================================================== -->
+	<link rel="stylesheet" type="text/css"
+		href="#{facesContext.externalContext.requestContextPath}/layout/css/fonts/open_sans.css" />
+	<link rel="stylesheet" type="text/css"
+		href="#{facesContext.externalContext.requestContextPath}/layout/css/fonts/typicons.css" />
+
+	<!-- layout -->
+	<link
+		href="#{facesContext.externalContext.requestContextPath}/layout/css/imixs-basic.css"
+		charset="UTF-8" type="text/css" rel="stylesheet" />
+	<link
+		href="#{facesContext.externalContext.requestContextPath}/layout/css/imixs-layout.css"
+		charset="UTF-8" type="text/css" rel="stylesheet" />
+
+	<link
+		href="#{facesContext.externalContext.requestContextPath}/layout/css/basic.css"
+		charset="UTF-8" type="text/css" rel="stylesheet" />
+
+</h:head>
+<h:body>
+
+
+
+	<f:view>
+		<f:loadBundle basename="bundle.message" var="message" />
+
+
+		<ui:insert name="nav">
+			<ui:include src="nav.xhtml" />
+		</ui:insert>
+
+
+
+
+		<!-- Page Content -->
+		<div class="content">
+
+			<ui:insert name="header">
+			<ui:include src="header.xhtml" />
+		</ui:insert>
+
+
+			<div id="imixs-content" class="main-container">
+
+				<div id="imixs-content">
+					<ui:insert name="content">
+						<h2>Default Content</h2>
+					</ui:insert>
+				</div>
+
+				<div id="imixs-footer">
+					<ui:insert name="footer">
+						<ui:include src="footer.xhtml" />
+					</ui:insert>
+				</div>
+			</div>
+		</div>
+	</f:view>
+
+
+
+
+	<script type="text/javascript">
+		/*<![CDATA[*/
+
+		/* Init Script */
+		/* var imixs = IMIXS.org.imixs.core, 
+			imixsOfficeWorkflow = IMIXS.com.imixs.workflow.office;
+
+		imixsOfficeWorkflow.contextPath="#{facesContext.externalContext.requestContextPath}";
+		 */
+		$(document).ready(function() {
+			//imixsOfficeWorkflow.layout();
+
+			layoutEditor();
+
+		});
+
+		/* laest sich im moment nicht auslagern (script_url!) see issue #87 */
+		layoutEditor = function() {
+
+			//tinymce.init({ selector:'textarea.imixs-editor' });
+
+			// Layout office default editor
+			tinymce
+					.init({
+						selector : 'textarea.imixs-editor',
+						height : 300,
+						plugins : [
+								'advlist autolink lists link image preview',
+								'searchreplace code fullscreen',
+								'contextmenu paste code' ],
+						toolbar : 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+						content_css : "#{facesContext.externalContext.requestContextPath}/layout/css/tinymce.css"
+
+					});
+
+		};
+
+		/*]]>*/
+	</script>
+
+
+
+</h:body>
+
+</html>

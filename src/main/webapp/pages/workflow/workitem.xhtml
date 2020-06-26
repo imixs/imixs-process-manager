@@ -1,0 +1,55 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs"
+	template="/layout/template.xhtml">
+
+
+
+
+	<f:metadata>
+		<f:viewAction action="#{workflowController.onLoad()}" />
+	</f:metadata>
+
+
+
+	<ui:define name="content">
+		<f:view>
+
+
+
+			<h:form id="workitem_form_id">
+
+				<h1>#{workflowController.workitem.item['txtWorkflowGroup']}</h1>
+				<h2>#{workflowController.workitem.item['txtWorkflowStatus']}</h2>
+
+				<!-- Error  -->
+				<ui:include src="error.xhtml" />
+
+
+				<div class="imixs-tabs">
+					<ul>
+						<li><a href="#tab-1">General</a></li>
+						<li><a href="#tab-2">Files</a></li>
+
+					</ul>
+					<div id="tab-1">
+						<ui:include src="/pages/workflow/sub_main.xhtml" />
+					</div>
+					<div id="tab-2">
+						<ui:include src="/pages/workflow/sub_attachments.xhtml" />
+						<div style="clear: left;" />
+					</div>
+
+				</div>
+
+				<!-- **** Workflow Actions & History  ***** -->
+				<ui:include src="/pages/workflow/sub_workflowtoolbar.xhtml" />
+
+			</h:form>
+		</f:view>
+	</ui:define>
+
+</ui:composition>

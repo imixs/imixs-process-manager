@@ -1,0 +1,19 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/layout/template.xhtml">
+
+
+
+	<ui:define name="content">
+		<h:form>
+			<h1>You are logged out!</h1>
+
+			<p>
+				<h:commandLink action="login" value="#{global.log_in}" />
+			</p>
+		</h:form>
+	</ui:define>
+</ui:composition>

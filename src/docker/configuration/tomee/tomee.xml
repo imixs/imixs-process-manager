@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tomee>
+	<!-- see http://tomee.apache.org/containers-and-resources.html -->
+
+	<Resource id="jdbc/workflow" type="DataSource">
+		JdbcDriver org.postgresql.Driver
+		JdbcUrl jdbc:postgresql://imixssample-db/workflow-db
+		UserName postgres
+		Password adminadmin
+		JtaManaged true
+	</Resource>
+
+	<!-- activate next line to be able to deploy applications in apps 
+	<Deployments dir="apps" />
+	-->
+	
+</tomee>
+

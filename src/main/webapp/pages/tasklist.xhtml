@@ -1,0 +1,18 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs"
+	template="/layout/template.xhtml">
+
+	<ui:define name="content">
+		<h1>The Imixs Workflow - JSF Sample Application</h1>
+		
+		<!-- Show task list -->
+		<c:if test="#{loginController.authenticated}">
+			<ui:include src="/pages/sub_tasklist.xhtml" />
+		</c:if>
+		
+	</ui:define>
+</ui:composition>
