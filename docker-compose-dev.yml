@@ -6,6 +6,8 @@ services:
     environment:
       POSTGRES_PASSWORD: adminadmin
       POSTGRES_DB: workflow-db
+    volumes: 
+      - dbdata:/var/lib/postgresql/data
   
   imixs-app:
     image: imixs/imixs-jsf-example
@@ -27,4 +29,5 @@ services:
 #    ports:
 #      - "8888:8080"      
       
-  
+volumes:
+  dbdata:   

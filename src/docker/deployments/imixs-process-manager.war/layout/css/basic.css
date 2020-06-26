@@ -13,7 +13,7 @@ body, html {
 }
 
 .ui-widget {
-	font-size:1em;
+	font-size: 1em;
 }
 
 .ui-button {
@@ -21,7 +21,6 @@ body, html {
 	color: #fff !important;
 	font-weight: normal !important;
 }
-
 
 #imixs-content.loading {
 	overflow: hidden;
@@ -32,8 +31,7 @@ body, html {
 }
 
 .loading {
-	background: rgba(255, 255, 255, .8) url(../icons/ajax-loader.gif) 50%
-		50% no-repeat;
+	background: rgba(255, 255, 255, .8) url(../icons/ajax-loader.gif) 50% 50% no-repeat;
 	color: #ccc;
 }
 
@@ -67,6 +65,7 @@ body, html {
 .header .nav-sidebar ul li {
 	cursor: pointer;
 }
+
 .header .typcn {
 	font-size: 1.3rem;
 	cursor: pointer;
@@ -96,21 +95,21 @@ body, html {
 }
 
 .nav-sidebar {
-    height: 100%;
-    width: 200px;
-    background-color: #263544;
+	height: 100%;
+	width: 200px;
+	background-color: #263544;
 	color: #f1f7ff;
-    position: fixed !important;
-    z-index: 1;
-    overflow: hidden;
-    border-right: 1px solid rgb(224, 228, 231);
+	position: fixed !important;
+	z-index: 1;
+	overflow: hidden;
+	border-right: 1px solid rgb(224, 228, 231);
 }
 
 .nav-sidebar hr {
-    color: #FCB802;
-    border-color: #FCB802;
-    border-style: none none solid;
-    border-width: 0 0 2px;
+	color: #FCB802;
+	border-color: #FCB802;
+	border-style: none none solid;
+	border-width: 0 0 2px;
 }
 
 .nav-sidebar .nav-title {
@@ -142,7 +141,12 @@ body, html {
 }
 
 .imixs-date {
-	width:7em !important;
+	width: 140px !important;
+	background: url(./calendar_14.png) no-repeat scroll left center white !important;
+	background-position-x: left;
+	background-position-y: center;
+	background-position: 6px 8px, center !important;
+	padding-left: 28px !important;
 }
 
 .nav-sidebar a {
@@ -163,7 +167,6 @@ body, html {
 
 .content {
 	margin-left: 200px;
-
 }
 
 .form-section {
@@ -189,7 +192,7 @@ body, html {
 }
 
 .nav-item:hover {
-	background-color :#1d2531 !important;
+	background-color: #1d2531 !important;
 	color: #fff;
 }
 
@@ -248,24 +251,26 @@ input[type="button"]:active, input[type="submit"]:active, a.button:active,
 
 /* tootip */
 span.tooltip:hover {
-    cursor: help;
-    position: relative
+	cursor: help;
+	position: relative
 }
+
 span.tooltip span.tip {
-    display: none
+	display: none
 }
+
 span.tooltip:hover span.tip {
-    display: block;
-    z-index: 100;
-    left: -285px;
-    width: 300px;
-    position: absolute;
-    top: 16px;
-    padding: 10px;
-    margin: 10px;
-    text-decoration: none;
-	font-size:0.85rem;    
-    background-color: #ffffff;
+	display: block;
+	z-index: 100;
+	left: -285px;
+	width: 300px;
+	position: absolute;
+	top: 16px;
+	padding: 10px;
+	margin: 10px;
+	text-decoration: none;
+	font-size: 0.85rem;
+	background-color: #ffffff;
 	border-radius: 5px;
 	-webkit-box-shadow: 0 0 5px 0 rgba(43, 43, 43, .1), 0 11px 6px -7px
 		rgba(43, 43, 43, .1);
@@ -277,25 +282,26 @@ span.tooltip:hover span.tip {
 	transition: all .3s ease-in-out;
 }
 
-
+.imixs-form-section, .imixs-form-section-2, .imixs-form-section-3 {
+	margin-top: 30px;
+}
 
 /* --- Imixs-Tabs ---------------------------------- */
 .imixs-form .imixs-body .imixs-tabs {
 	
-	
 }
 
 .imixs-tabs.ui-tabs.ui-corner-all.ui-widget.ui-widget-content {
-	border:none;
+	border: none;
 }
 
-.imixs-tabs .ui-tabs-nav  {
+.imixs-tabs .ui-tabs-nav {
 	background: none;
-	border:none;
+	border: none;
 }
 
 .imixs-tabs .ui-tabs-panel {
-    padding: 1em 0;
+	padding: 1em 0;
 }
 
 .imixs-tabs .ui-tabs-nav .ui-state-default {
@@ -336,10 +342,18 @@ span.tooltip:hover span.tip {
 .imixs-tabs .ui-tabs-nav .ui-state-active a {
 	color: #206B87;
 	outline: none;
-	
 }
 
-
+.code {
+	background-color: #2B2717;
+	color: #BDBCB8;
+	font-family: Consolas, "Courier New", monospace;
+	font-size: 14px;
+	margin: 8px 0px;
+	max-height: 312px;
+	overflow: auto;
+	padding: 16px;
+}
 
 .typcn.error {
 	color: #e83636d9;
@@ -364,9 +378,9 @@ th {
 }
 
 table, td, th {
-    border: none;
-    padding: 4px;
-    border-bottom: 1px solid #ddd;
+	border: none;
+	padding: 4px;
+	border-bottom: 1px solid #ddd;
 }
 
 .imixsdatatable a {
@@ -387,7 +401,6 @@ table, td, th {
 	{
 	color: #cb2431;
 }
-
 
 .pull-right {
 	float: right;

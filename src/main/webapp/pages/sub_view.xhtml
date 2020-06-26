@@ -5,26 +5,35 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs">
 
-
-
 	<f:view>
-
-
 		<h:form>
-			<h2>#{message.worklist}</h2>
+			<h2>#{title}</h2>
 
 			<h:dataTable class="imixsdatatable" style="width:100%"
-				value="#{viewHandler.getData(tasklistController)}" var="workitem">
-
+				value="#{view}" var="workitem">				
+				
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="#{message.summary}" />
 					</f:facet>
 						<h:link outcome="/pages/workflow/workitem">
-							<h:outputText value="#{workitem.item['$workflowSummary']}" />
+							<span class="typcn typcn-cog-outline"></span> <h:outputText value="#{workitem.item['$workflowSummary']}" />
 							<f:param name="id" value="#{workitem.item['$uniqueid']}" />
 					</h:link>
+				</h:column>
 
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{message.process}" />
+					</f:facet>
+					<h:outputText value="#{workitem.item['$workflowGroup']}" />
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{message.status}" />
+					</f:facet>
+					<h:outputText value="#{workitem.item['$workflowstatus']}" />
 				</h:column>
 
 				<h:column>
@@ -55,21 +64,15 @@
 					<h:outputText value="#{workitem.item['$modified']}">
 						<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />
 					</h:outputText>
-
 					<h:outputText
 						value=" #{message.by} #{workitem.item['$editor']}" />
 				</h:column>
 
 
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="#{message.status}" />
-					</f:facet>
-					<h:outputText value="#{workitem.item['$workflowstatus']}" />
-				</h:column>
+				
 
 				<h:column> 
-					<h:commandLink value="#{message.delete}"
+					<h:commandLink value="#{message.delete}" onclick="return confirm('Delete this entry?');"
 						action="/pages/welcome?faces-redirect=true" actionListener="#{documentController.delete(workitem.item['$uniqueid'])}"
 						rendered="#{workitem.item['$isAuthor']}">
 					</h:commandLink>
@@ -86,11 +89,6 @@
 				disabled="#{tasklistController.endOfList}" 
 				value="#{message.next} &gt;&gt;">
 			</h:commandButton>
-
-			<h:commandButton actionListener="#{workflowController.create('1.1',1000,'')}"
-				action="/pages/workflow/workitem" value="Create New Ticket">
-			</h:commandButton>
-
 
 		</h:form>
 	</f:view>

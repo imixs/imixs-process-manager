@@ -48,19 +48,9 @@
 				<li><a href="#tab-2">Files</a></li>
 
 			</ul>
-			<div id="tab-1">
-				<h:dataTable var="log"
-					value="#{workflowController.workitem.itemListArray['txtworkflowhistory']}">
-					<h:column>
-						<h:outputText value="#{log[0]}">
-							<f:convertDateTime timeZone="#{message.timeZone}" type="both"
-								pattern="#{message.dateTimePattern}" />
-						</h:outputText>
-					</h:column>
-					<h:column>
-						<h:outputText value="#{log[1]}" />
-					</h:column>
-				</h:dataTable>
+			<div id="tab-1" >
+			
+				<ui:include src="/pages/workflow/workitem_chronicle.xhtml" />
 			</div>
 			<div id="tab-2">
 				<ui:include src="/pages/workflow/sub_attachments.xhtml" />

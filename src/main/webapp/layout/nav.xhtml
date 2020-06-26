@@ -29,20 +29,30 @@
 					<li class="nav-item"><a
 						href="#{facesContext.externalContext.requestContextPath}/"><span
 							class="typcn typcn-home"></span><label>Home</label></a></li>
-					
-					<li class="nav-item"><h:commandLink
-							action="/pages/workflow/start" ><span class="typcn typcn-document"></span><label>New Process</label>
-						</h:commandLink></li>
 
+					<li class="nav-item"><h:commandLink
+							action="/pages/workflow/start">
+							<span class="typcn typcn-document"></span>
+							<label>New Process</label>
+						</h:commandLink></li>
+				</ul>
+				<hr />
+				<ul>
+					<li class="nav-item"><a
+						href="#{facesContext.externalContext.requestContextPath}/pages/my_tasklist.jsf"><span
+							class="typcn typcn-input-checked"></span><label>#{message.my_tasklist}</label></a></li>
 
 					<li class="nav-item"><a
-						href="#{facesContext.externalContext.requestContextPath}/pages/tasklist.jsf"><span
-							class="typcn typcn-th-list"></span><label>Tasklist</label></a></li>
+						href="#{facesContext.externalContext.requestContextPath}/pages/my_statuslist.jsf"><span
+							class="typcn typcn-th-list-outline"></span><label>#{message.my_statuslist}</label></a></li>
+
+					<li class="nav-item"><a
+						href="#{facesContext.externalContext.requestContextPath}/pages/all.jsf"><span
+							class="typcn typcn-th-menu-outline"></span><label>#{message.worklist}</label></a></li>
 
 				</ul>
 				<hr />
 				<ul>
-
 					<li class="nav-item"><h:commandLink
 							action="/pages/config/teamlist?faces-redirect=true">
 							<span class="typcn typcn-group"></span>
@@ -52,12 +62,6 @@
 					<li class="nav-item"><a target="_blank"
 						href="#{facesContext.externalContext.requestContextPath}/pages/admin/modellist.jsf">
 							<span class="typcn typcn-flow-merge"></span><label>Models</label>
-					</a></li>
-
-					<hr />
-					<li class="nav-item"><a target="admin"
-						href="http://localhost:8888/"> <span
-							class="typcn typcn-spanner"></span><label>Admin-Client</label>
 					</a></li>
 				</ul>
 

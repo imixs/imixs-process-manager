@@ -6,6 +6,8 @@ services:
     environment:
       POSTGRES_PASSWORD: adminadmin
       POSTGRES_DB: workflow-db
+    volumes: 
+      - dbdata:/var/lib/postgresql/data
   
   imixs-app:
     image: imixs/imixs-process-manager
@@ -20,3 +22,5 @@ services:
       - "8787:8787"
       - "9990:9990"
     
+volumes:
+  dbdata

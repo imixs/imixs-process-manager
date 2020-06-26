@@ -7,10 +7,14 @@
 	template="/layout/template.xhtml">
 
 	<ui:define name="content">
-	
-		<ui:include src="/pages/sub_view.xhtml">
-				<ui:param name="view" value="#{viewHandler.getData(searchController)}" />
-				<ui:param name="title" value="Search" />
-		</ui:include>
+		<!-- Show task list -->
+		<c:if test="#{loginController.authenticated}">
+			<ui:include src="/pages/sub_view.xhtml">
+				<ui:param name="view" value="#{viewHandler.getData(openTaskListController)}" />
+				<ui:param name="title" value="#{message.worklist}" />
+			
+			</ui:include>
+		</c:if>
+		
 	</ui:define>
 </ui:composition>

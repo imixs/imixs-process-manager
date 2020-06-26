@@ -1,4 +1,4 @@
-package org.imixs.application.ui;
+package org.imixs.application.ui.view;
 
 import java.io.Serializable;
 import java.util.logging.Logger;
@@ -29,9 +29,10 @@ public class SearchController extends ViewController implements Serializable {
 	public void init() {
 		super.init();
 		this.setQuery("(type:\"workitem\")");
-		this.setSortBy("$modified");
-		this.setSortReverse(true);
-		this.setLoadStubs(false);
+        this.setSortBy("$modified");
+        this.setSortReverse(true);
+        this.setLoadStubs(true);
+
 	}
 
 	public String getInput() {
