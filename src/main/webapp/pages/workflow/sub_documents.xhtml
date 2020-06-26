@@ -1,0 +1,97 @@
+<f:subview xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs">
+
+	<dl>
+		<dt style="clear: left;">
+			<h:outputText value="#{global.attachments}" />
+		</dt>
+		<dd>
+			<i:imixsFileUpload id="file_upload_id"
+				workitem="#{workflowController.workitem}"
+				context_url="#{facesContext.externalContext.requestContextPath}/api/workflow/workitem/#{workflowController.workitem.item['$uniqueid']}"
+				hideattachments="false" hideuploads="false" />
+		</dd>
+	</dl>
+	
+
+
+	<!-- Documents Preview -->
+	
+	
+	<!-- Note: the document height can be adjusted with the ui:param 'height' -->
+	<script type="text/javascript">
+		/*<![CDATA[*/
+			
+			/* reqlace special characters in attachemnt url */
+		$(document).ready(
+				function() {
+					
+					// hide documents-file-deeplink
+					$("#documents-file-deeplink").hide();
+					
+					// update the link action for each file
+					// we redirect the href into the iframe target
+					$(".imixsFileUpload_uploadlist .imixsFileUpload_file").each(
+						function(index, element) {
+							$(this).click(function(){
+								var file_link=$(this).attr('href');
+								updateIframe(file_link);
+								
+								// update documents-file-deeplink
+								$("#documents-file-deeplink").attr('href',file_link);
+								$("#documents-file-deeplink").show();
+								
+								// cancel link
+							    return false;
+							});
+						});
+
+					// autoload feature - load first pdf if available
+					$(".imixsFileUpload_uploadlist .imixsFileUpload_file").each(
+							function(index, element) {
+								var attachmentName=$(this).text();
+								if (attachmentName.endsWith('.pdf') || attachmentName.endsWith('.PDF')) {									
+									$(this).click();
+									return false;
+								}
+							});
+				
+				
+				
+				});
+
+
+		function updateIframe(docurl) {
+			//console.log(docurl);
+			$("#document_preview_helper").hide();
+			var iframe = document.getElementById('imixs_dms_iframe');
+			iframe.src = docurl;
+		}
+		/*]]>*/
+	</script>
+
+
+	<ui:param name="fileData" value="#{workflowController.workitem.fileData}"></ui:param>
+	
+	<div class="imixs-form-section imixs-form-attachments">
+	
+		<a href="#" class="pull-right" id="documents-file-deeplink" target="_blank"><span class="typcn typcn-cloud-storage" style="font-size:1.2em;"></span> Download</a>
+
+		<ui:fragment rendered="#{! empty fileData}">
+			<iframe id="imixs_dms_iframe" src="" width="100%" height="#{empty height?800:height}px">
+			</iframe>
+		</ui:fragment>
+		
+		
+	</div>
+	
+	
+	
+	
+	
+</f:subview>
+

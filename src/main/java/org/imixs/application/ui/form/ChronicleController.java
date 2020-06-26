@@ -43,12 +43,16 @@ import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.event.Observes;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.imixs.workflow.ItemCollection;
+import org.imixs.workflow.exceptions.AccessDeniedException;
+import org.imixs.workflow.exceptions.ModelException;
 import org.imixs.workflow.faces.data.WorkflowController;
+import org.imixs.workflow.faces.data.WorkflowEvent;
 
 /**
  * The ChronicleController collects all chronicle data
@@ -90,8 +94,8 @@ public class ChronicleController implements Serializable {
 	
 	private DateFormat dateFormat=null;
 
-	@SuppressWarnings("unchecked")
-	@PostConstruct
+//	@SuppressWarnings("unchecked")
+//	@PostConstruct
 	public void init() {
 		long l = System.currentTimeMillis();
 		originChronicleList = new ArrayList<ChronicleEntity>();
@@ -161,6 +165,30 @@ public class ChronicleController implements Serializable {
 		logger.fine("...init in " + (System.currentTimeMillis() - l) + "ms");
 	}
 
+	
+	/**
+     * WorkflowEvent listener to update the current FormDefinition.
+     * 
+     * @param workflowEvent
+     * @throws AccessDeniedException
+     * @throws ModelException
+     */
+    public void onWorkflowEvent(@Observes WorkflowEvent workflowEvent) {
+        if (workflowEvent == null)
+            return;
+
+
+        int eventType = workflowEvent.getEventType();
+        if (WorkflowEvent.WORKITEM_CHANGED == eventType || WorkflowEvent.WORKITEM_CREATED == eventType
+                || WorkflowEvent.WORKITEM_AFTER_PROCESS == eventType) {
+            //reset 
+            init();
+        }
+
+    }
+
+    
+    
 	/**
 	 * Returns the current active filter or null if no filter is active. 
 	 * @return
