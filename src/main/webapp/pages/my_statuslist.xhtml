@@ -7,12 +7,11 @@
 	template="/layout/template.xhtml">
 
 	<ui:define name="content">
-		
 		<!-- Show task list -->
 		<c:if test="#{loginController.authenticated}">
 			<ui:include src="/pages/sub_view.xhtml">
-				<ui:param name="view" value="#{viewHandler.getData(myTaskListController)}" />
-				<ui:param name="title" value="#{message.my_tasklist}" />
+				<ui:param name="view" value="#{viewHandler.getData(myStatusListController)}" />
+				<ui:param name="title" value="#{message.my_statuslist}" />
 			
 			</ui:include>
 		</c:if>
