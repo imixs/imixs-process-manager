@@ -7,19 +7,96 @@
 	template="/layout/template.xhtml">
 
 	<ui:define name="content">
-		<h1>Imixs Process Manager</h1>
-		<p class="lead">Welcome to the Imixs Business Process Manager Suite</p>
 
-		<p>
-			Imixs-Workflow is an open source workflow engine based on <a href="https://jakarta.ee/">Jakarta EE</a>. 
-			The Imixs-Workflow project provides
-			components to build human-centric workflow applications within a
-			flexible and robust framework. The business logic can be modeled and
-			executed using the Business Process Modelling Notation - BPMN 2.0
-			standard. See the Project Home for more information. Find out more on
-			<a href="http://www.imixs.org">www.imixs.org</a>
-		</p>
+		<div class="row">
+			<div class="col-7">
 
-		
+
+				<h1>Imixs Process Manager</h1>
+				<p class="lead">Welcome to the Imixs Business Process Manager
+					Suite</p>
+
+
+
+
+				<p>In order to successfully implement a business process, you
+					essentially need two things:</p>
+
+				<ul>
+
+					<li>a process description which you ideally create using the
+						BPMN 2.0 standard</li>
+					<li>a runtime environment which allows you to execute and to
+						persist your process instances</li>
+				</ul>
+
+
+				<p>
+					The Open Source project <a href="http://www.imixs.org"
+						target="imixs-workflow">Imixs-Workflow</a> provides you with a
+					powerful workflow management platform that combines the design and
+					the execution of business processes in a highly scalable and easy
+					to use environment.
+
+
+				</p>
+
+				<p>
+					With the Imixs Process Manager you can start quickly and develop
+					and test your own models. And of course you can customize and
+					extend this plantform and use it for development as well as for
+					production. Imixs-Workflow is based on <a
+						href="https://jakarta.ee/">Jakarta EE</a> providing you with a
+					highly scalable server platform for modern microservice
+					architecture.
+				</p>
+
+				<p>
+					You can define your own business process models using the <a
+						href="https://www.imixs.org/doc/modelling/index.html"
+						target="imixs-workflow">Imixs-BPMN modeller tool</a> and you can
+					upload and execute your models directly within Imixs Process
+					Manager. General information about how to model can be found <a
+						href="https://www.imixs.org/doc/modelling/howto.html"
+						target="imixs-workflow">here</a>.
+				</p>
+			</div>
+
+			<div class="col-5">
+
+
+
+
+
+
+				<h3>Process Design</h3>
+
+				<p>The Imixs Process Manager allows you to define custom forms
+					for your business process without programming. By defining an XML
+					template, you can store forms directly in a BPMN 2.0 model.</p>
+
+				<img src="/pages/model-example.png" />
+				<p>Example:</p>
+				<pre class="code">
+&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;imixs-form&gt;
+  &lt;imixs-form-section label=&quot;Order&quot;&gt;
+    &lt;item name=&quot;_orderid&quot; type=&quot;text&quot; label=&quot;Order ID:&quot; /&gt;
+    &lt;item name=&quot;_orderdate&quot; type=&quot;date&quot; label=&quot;Order Date:&quot; /&gt;
+  &lt;/imixs-form-section&gt;
+&lt;/imixs-form&gt;</pre>
+				<p>You can create and change your models at runtime without
+					interrupting your workflow instance.</p>
+
+
+
+
+
+
+
+			</div>
+		</div>
+
+
 	</ui:define>
 </ui:composition>
