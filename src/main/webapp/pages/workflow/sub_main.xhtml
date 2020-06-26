@@ -6,6 +6,10 @@
 	xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs">
 
 	<!-- **** General info ***** -->
+	
+	
+	
+	
 	<dl>
 		<dt>
 			<h:outputLabel value="#{global.subject}">
@@ -33,14 +37,7 @@
 					showDetail="false" />
 			</h:outputLabel>
 		</dt>
-		<dd>
-			<h:selectOneMenu id="team_id"
-				value="#{workflowController.workitem.item['team']}" required="false">
-				<f:selectItem required="true" itemLabel="#{global.please_select}"
-					itemValue="" />
-				<f:selectItems value="#{teamController.teamSelection}" />
-			</h:selectOneMenu>
-		</dd>
+		
 
 
 		<dt style="clear: left;">#{global.details}</dt>

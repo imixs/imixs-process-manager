@@ -22,31 +22,74 @@
 
 			<h:form id="workitem_form_id">
 
-				<h1>#{workflowController.workitem.item['txtWorkflowGroup']}</h1>
-				<h2>#{workflowController.workitem.item['txtWorkflowStatus']}</h2>
+				<div class="row">
+					<div class="col-7" style="border-right: 1px solid #ccc;">
+					
+					
+						<h2>#{workflowController.workitem.item['$WorkflowGroup']} ▹
+							#{workflowController.workitem.item['$WorkflowStatus']}</h2>
+							
+						<div class="row nested">
+						<div class="col-6">
+							<h:panelGrid columns="3">
+								<h:outputLabel value="#{message.created}: " />
+								<h:outputText
+									value="#{workflowController.workitem.item['$created']} ">
+									<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />
+								</h:outputText>
+								<h:outputText
+									value=" #{message.by} #{workflowController.workitem.item['namcreator']} " />
+								<h:outputLabel value="#{message.modified}: " />
+								<h:outputText
+									value="#{workflowController.workitem.item['$modified']} ">
+									<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />
+								</h:outputText>
+								<h:outputText
+									value=" #{message.by} #{workflowController.workitem.item['namcurrenteditor']}" />
+							</h:panelGrid>
+						</div>
+						<div class="col-6 ">
+						<dl>
+									<dt>Team:</dt>
+									<dd>
+										<h:selectOneMenu id="team_id" style="width:100%"
+											value="#{workflowController.workitem.item['team']}"
+											required="false">
+											<f:selectItem required="true"
+												itemLabel="#{global.please_select}" itemValue="" />
+											<f:selectItems value="#{teamController.teamSelection}" />
+										</h:selectOneMenu>
+									</dd>
 
-				<!-- Error  -->
-				<ui:include src="error.xhtml" />
+								</dl>
+						</div>
+						
+						</div>
+							
+						
 
+						<!-- Error  -->
+						<ui:include src="error.xhtml" />
 
-				<div class="imixs-tabs">
-					<ul>
-						<li><a href="#tab-1">General</a></li>
-						<li><a href="#tab-2">Files</a></li>
+						
+							<div class="imixs-form-section-2">
+								
+							</div>
 
-					</ul>
-					<div id="tab-1">
-						<ui:include src="/pages/workflow/sub_main.xhtml" />
+							
+							<ui:include src="/pages/workflow/sub_main.xhtml" />
+								</div>
+
+						<div class="col-5">
+							<!-- **** Workflow Actions & History  ***** -->
+							<ui:include src="/pages/workflow/sub_workflowtoolbar.xhtml" />
+						</div>
 					</div>
-					<div id="tab-2">
-						<ui:include src="/pages/workflow/sub_attachments.xhtml" />
-						<div style="clear: left;" />
-					</div>
 
-				</div>
 
-				<!-- **** Workflow Actions & History  ***** -->
-				<ui:include src="/pages/workflow/sub_workflowtoolbar.xhtml" />
+				
+
+
 
 			</h:form>
 		</f:view>

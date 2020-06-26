@@ -8,13 +8,7 @@
 
 	<ui:define name="content">
 		<h1>Search</h1>
-		
-
-	
-		<!-- Show search result -->
-		
-
-	<f:view>
+		<f:view>
 
 
 		<h:form>
@@ -25,7 +19,7 @@
 
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="#{global.summary}" />
+						<h:outputText value="#{message.summary}" />
 					</f:facet>
 						<h:link outcome="/pages/workflow/workitem">
 							<h:outputText value="#{workitem.item['$workflowSummary']}" />
@@ -36,7 +30,7 @@
 
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="#{global.owner}" />
+						<h:outputText value="#{message.owner}" />
 					</f:facet>
 					<ui:repeat var="owner" value="#{workitem.itemList['namOwner']}">
 						<h:outputText value="#{owner}" />
@@ -46,37 +40,37 @@
 
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="#{global.created}" />
+						<h:outputText value="#{message.created}" />
 					</f:facet>
 					<h:outputText value="#{workitem.item['$created']}">
 						<f:convertDateTime timeZone="CET" type="date" dateStyle="medium" />
 					</h:outputText>
-					<h:outputText value=" #{global.by} #{workitem.item['$creator']}" />
+					<h:outputText value=" #{message.by} #{workitem.item['$creator']}" />
 				</h:column>
 
 
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="#{global.modified}" />
+						<h:outputText value="#{message.modified}" />
 					</f:facet>
 					<h:outputText value="#{workitem.item['$modified']}">
 						<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />
 					</h:outputText>
 
 					<h:outputText
-						value=" #{global.by} #{workitem.item['$editor']}" />
+						value=" #{message.by} #{workitem.item['$editor']}" />
 				</h:column>
 
 
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="#{global.status}" />
+						<h:outputText value="#{message.status}" />
 					</f:facet>
 					<h:outputText value="#{workitem.item['$workflowstatus']}" />
 				</h:column>
 
 				<h:column>
-					<h:commandLink value="#{global.delete}"
+					<h:commandLink value="#{message.delete}"
 						action="#{workflowController.delete(workitem.item['$uniqueid'],'worklist')}"
 						rendered="#{workitem.item['$isAuthor']}">
 					</h:commandLink>

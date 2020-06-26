@@ -11,14 +11,14 @@
 
 
 		<h:form>
-			<h2>#{global.worklist}</h2>
+			<h2>#{message.worklist}</h2>
 
 			<h:dataTable class="imixsdatatable" style="width:100%"
 				value="#{viewHandler.getData(tasklistController)}" var="workitem">
 
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="#{global.summary}" />
+						<h:outputText value="#{message.summary}" />
 					</f:facet>
 						<h:link outcome="/pages/workflow/workitem">
 							<h:outputText value="#{workitem.item['$workflowSummary']}" />
@@ -29,7 +29,7 @@
 
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="#{global.owner}" />
+						<h:outputText value="#{message.owner}" />
 					</f:facet>
 					<ui:repeat var="owner" value="#{workitem.itemList['namOwner']}">
 						<h:outputText value="#{owner}" />
@@ -39,37 +39,37 @@
 
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="#{global.created}" />
+						<h:outputText value="#{message.created}" />
 					</f:facet>
 					<h:outputText value="#{workitem.item['$created']}">
 						<f:convertDateTime timeZone="CET" type="date" dateStyle="medium" />
 					</h:outputText>
-					<h:outputText value=" #{global.by} #{workitem.item['$creator']}" />
+					<h:outputText value=" #{message.by} #{workitem.item['$creator']}" />
 				</h:column>
 
 
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="#{global.modified}" />
+						<h:outputText value="#{message.modified}" />
 					</f:facet>
 					<h:outputText value="#{workitem.item['$modified']}">
 						<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />
 					</h:outputText>
 
 					<h:outputText
-						value=" #{global.by} #{workitem.item['$editor']}" />
+						value=" #{message.by} #{workitem.item['$editor']}" />
 				</h:column>
 
 
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="#{global.status}" />
+						<h:outputText value="#{message.status}" />
 					</f:facet>
 					<h:outputText value="#{workitem.item['$workflowstatus']}" />
 				</h:column>
 
 				<h:column> 
-					<h:commandLink value="#{global.delete}"
+					<h:commandLink value="#{message.delete}"
 						action="/pages/welcome?faces-redirect=true" actionListener="#{documentController.delete(workitem.item['$uniqueid'])}"
 						rendered="#{workitem.item['$isAuthor']}">
 					</h:commandLink>
@@ -80,11 +80,11 @@
 
 			<h:commandButton actionListener="#{viewHandler.back(tasklistController)}"
 				disabled="#{!(tasklistController.pageIndex>0)}"
-				value="&lt;&lt; #{global.prev}">
+				value="&lt;&lt; #{message.prev}">
 			</h:commandButton>
 			<h:commandButton actionListener="#{viewHandler.forward(tasklistController)}"
 				disabled="#{tasklistController.endOfList}" 
-				value="#{global.next} &gt;&gt;">
+				value="#{message.next} &gt;&gt;">
 			</h:commandButton>
 
 			<h:commandButton actionListener="#{workflowController.create('1.1',1000,'')}"
