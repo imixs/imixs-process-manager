@@ -16,7 +16,7 @@ With the *Imixs Process Manager* you can start quickly and develop and test your
 
 The *Imixs Process Manager* comes with a Docker profile which enables you to start within  seconds. If you haven't already installed Docker, follow the instructions [here](https://docs.docker.com/get-docker/).
 
-Download the [docker-compose.yml]() file 
+Download the [docker-compose.yml](https://raw.githubusercontent.com/imixs/imixs-process-manager/master/docker-compose.yml) file...
 
 	version: "3.6"
 	services:
@@ -43,7 +43,7 @@ Download the [docker-compose.yml]() file
 	volumes:
 	  dbdata: 
 
-and run
+... and run
 
 	$ docker-compose up
 	
@@ -60,7 +60,7 @@ After a few seconds the Imixs Process Manager is up and running. You cann acces 
 
 Imixs-Workflow is a human-centric workflow engine which means that each actor need to authenticate against the service to interact. 
 
-The default setup of the Imixs Process Manager provides a set of predefined users which can be used for testing purpose. The test users are stored in a separate user and roles properties file named 'sampleapp-roles.roperties' and 'sampleapp-users.properties'. The property files are configured in a file based security domain within the server configuration. See the following list of predefined test user accounts:
+The default setup of the *Imixs Process Manager* provides a set of predefined users which can be used for testing purpose. The test users are stored in a separate user and roles properties files.  See the following list of predefined test user accounts:
 
 | User    | Role                   | Password |
 |---------|------------------------|----------|
@@ -71,7 +71,7 @@ The default setup of the Imixs Process Manager provides a set of predefined user
 | gloria  | IMIXS-WORKFLOW-Author  | password |
 | skipper | IMIXS-WORKFLOW-Author  | password |
 
-You can add additional accounts or change the default account later, by updated the files "_sampleapp-roles.properties_" and "_sampleapp-users.properties_". You can also configure a different custom security realm (e.g. LDAP or Database).
+You can add accounts or change the default account later, by updating the files "_sampleapp-roles.properties_" and "_sampleapp-users.properties_". You can also configure a different custom security realm (e.g. LDAP or Database).
 
 You will find more information about the security concept in the [Imixs-Workflow Deployent guide](https://www.imixs.org/doc/deployment/index.html).
 
