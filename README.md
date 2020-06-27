@@ -62,7 +62,14 @@ Imixs-Workflow is a human-centric workflow engine which means that each actor ne
 
 The default setup of the Imixs Process Manager provides a set of predefined users which can be used for testing purpose. The test users are stored in a separate user and roles properties file named 'sampleapp-roles.roperties' and 'sampleapp-users.properties'. The property files are configured in a file based security domain within the server configuration. See the following list of predefined test user accounts:
 
-| User | Role | Password | |---------|------------------------|----------| | admin | IMIXS-WORKFLOW-Manager | adminadmin | | manfred | IMIXS-WORKFLOW-Manager | password | | alex | IMIXS-WORKFLOW-Manager | password | | anna | IMIXS-WORKFLOW-Author | password | | marty | IMIXS-WORKFLOW-Author | password | | melman | IMIXS-WORKFLOW-Author | password | | gloria | IMIXS-WORKFLOW-Author | password | | skipper | IMIXS-WORKFLOW-Author | password | | kowalski| IMIXS-WORKFLOW-Author | password | | private | IMIXS-WORKFLOW-Author | password | | rico | IMIXS-WORKFLOW-Author | password |
+| User    | Role                   | Password |
+|---------|------------------------|----------|
+| admin   | IMIXS-WORKFLOW-Manager | adminadmin |
+| alex    | IMIXS-WORKFLOW-Manager | password |
+| marty   | IMIXS-WORKFLOW-Author  | password |
+| melman  | IMIXS-WORKFLOW-Author  | password |
+| gloria  | IMIXS-WORKFLOW-Author  | password |
+| skipper | IMIXS-WORKFLOW-Author  | password |
 
 You can add additional accounts or change the default account later, by updated the files "_sampleapp-roles.properties_" and "_sampleapp-users.properties_". You can also configure a different custom security realm (e.g. LDAP or Database).
 
