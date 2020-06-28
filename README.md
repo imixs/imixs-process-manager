@@ -50,6 +50,10 @@ Download the [docker-compose.yml](https://raw.githubusercontent.com/imixs/imixs-
 After a few seconds the Imixs Process Manager is up and running. You cann acces it from your web browser at: [http://localhost:8080/](http://localhost:8080/)
 
 
+<img src="./screen-002.png" />
+
+You can upload your own process model and create customized forms. You can view and search running process instances.
+
 <img src="./screen-001.png" />
 
 
