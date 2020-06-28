@@ -23,8 +23,8 @@
 			<redirect />
 		</navigation-case>
 		<navigation-case>
-			<from-outcome>worklist</from-outcome>
-			<to-view-id>/pages/welcome.xhtml</to-view-id>
+			<from-outcome>tasklist</from-outcome>
+			<to-view-id>/pages/my_statuslist.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 		<navigation-case>

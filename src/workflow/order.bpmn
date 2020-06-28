@@ -3,9 +3,9 @@
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:imixs="http://www.imixs.org/bpmn2" xmlns:tl="http://www.w3.org/2001/XMLSchema" id="Definitions_1" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.5.2.SNAPSHOT-v20200602-1600-B1" targetNamespace="http://www.imixs.org/bpmn2">
   <bpmn2:extensionElements>
     <imixs:item name="txtfieldmapping" type="xs:string">
-      <imixs:value><![CDATA[Sales Department | salesTeam]]></imixs:value>
-      <imixs:value><![CDATA[Management | managementTeam]]></imixs:value>
-      <imixs:value><![CDATA[Finance Department | financeTeam]]></imixs:value>
+      <imixs:value><![CDATA[Team | teamMembers]]></imixs:value>
+      <imixs:value><![CDATA[Creator | namCreator]]></imixs:value>
+      <imixs:value><![CDATA[CurrentEditor | namCurrentEditor]]></imixs:value>
     </imixs:item>
     <imixs:item name="txtworkflowmodelversion" type="xs:string">
       <imixs:value><![CDATA[order-model-1.0.0]]></imixs:value>
@@ -20,7 +20,7 @@
       <imixs:value><![CDATA[org.imixs.application.plugin.CommentPlugin]]></imixs:value>
     </imixs:item>
   </bpmn2:extensionElements>
-  <bpmn2:collaboration id="Collaboration_1" name="Collaboration 1">
+  <bpmn2:collaboration id="Collaboration_1" name="Order">
     <bpmn2:participant id="Participant_1" name="Order" processRef="Process_1">
       <bpmn2:documentation id="Documentation_3"><![CDATA[This is an example for an Order process]]></bpmn2:documentation>
     </bpmn2:participant>
@@ -51,7 +51,7 @@
           <imixs:value><![CDATA[Order forwarded by <itemvalue>namcurrentEditor</itemvalue>]]></imixs:value>
         </imixs:item>
         <imixs:item name="txtactivityresult" type="CDATA">
-          <imixs:value><![CDATA[<item name="action">worklist</item>]]></imixs:value>
+          <imixs:value><![CDATA[<item name="action">tasklist</item>]]></imixs:value>
         </imixs:item>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
@@ -63,6 +63,14 @@
         <imixs:item name="txtworkflowsummary" type="xs:string">
           <imixs:value><![CDATA[<itemvalue>_orderid</itemvalue> (<itemvalue>_teamName</itemvalue>)]]></imixs:value>
         </imixs:item>
+        <imixs:item name="keyupdateacl" type="xs:boolean">
+          <imixs:value>true</imixs:value>
+        </imixs:item>
+        <imixs:item name="keyaddwritefields" type="xs:string">
+          <imixs:value><![CDATA[namCurrentEditor]]></imixs:value>
+          <imixs:value><![CDATA[teamMembers]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="keyownershipfields" type="xs:string"/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
       <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
@@ -79,14 +87,13 @@
           <imixs:value>true</imixs:value>
         </imixs:item>
         <imixs:item name="keyownershipfields" type="xs:string">
-          <imixs:value><![CDATA[managementTeam]]></imixs:value>
+          <imixs:value><![CDATA[namCurrentEditor]]></imixs:value>
+          <imixs:value><![CDATA[teamMembers]]></imixs:value>
         </imixs:item>
-        <imixs:item name="keyaddreadfields" type="xs:string">
-          <imixs:value><![CDATA[salesTeam]]></imixs:value>
-          <imixs:value><![CDATA[managementTeam]]></imixs:value>
-        </imixs:item>
+        <imixs:item name="keyaddreadfields" type="xs:string"/>
         <imixs:item name="keyaddwritefields" type="xs:string">
-          <imixs:value><![CDATA[managementTeam]]></imixs:value>
+          <imixs:value><![CDATA[teamMembers]]></imixs:value>
+          <imixs:value><![CDATA[namCurrentEditor]]></imixs:value>
         </imixs:item>
         <imixs:item name="txtworkflowsummary" type="xs:string">
           <imixs:value><![CDATA[<itemvalue>_orderid</itemvalue> (<itemvalue>_teamName</itemvalue>)]]></imixs:value>
@@ -101,6 +108,16 @@
       <bpmn2:extensionElements>
         <imixs:item name="txtworkflowsummary" type="xs:string">
           <imixs:value><![CDATA[<itemvalue>_orderid</itemvalue> (<itemvalue>_teamName</itemvalue>)]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="keyupdateacl" type="xs:boolean">
+          <imixs:value>true</imixs:value>
+        </imixs:item>
+        <imixs:item name="keyownershipfields" type="xs:string">
+          <imixs:value><![CDATA[namCurrentEditor]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="keyaddwritefields" type="xs:string">
+          <imixs:value><![CDATA[namCurrentEditor]]></imixs:value>
+          <imixs:value><![CDATA[teamMembers]]></imixs:value>
         </imixs:item>
       </bpmn2:extensionElements>
       <bpmn2:documentation id="Documentation_4"><![CDATA[Start new purchase order process]]></bpmn2:documentation>
@@ -117,7 +134,7 @@
           <imixs:value><![CDATA[Order forwarded by <itemvalue>namcurrentEditor</itemvalue>]]></imixs:value>
         </imixs:item>
         <imixs:item name="txtactivityresult" type="CDATA">
-          <imixs:value><![CDATA[<item name="action">worklist</item>]]></imixs:value>
+          <imixs:value><![CDATA[<item name="action">tasklist</item>]]></imixs:value>
         </imixs:item>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
@@ -165,6 +182,13 @@
         <imixs:item name="txtworkflowsummary" type="xs:string">
           <imixs:value><![CDATA[<itemvalue>_orderid</itemvalue> (<itemvalue>_teamName</itemvalue>)]]></imixs:value>
         </imixs:item>
+        <imixs:item name="keyupdateacl" type="xs:boolean">
+          <imixs:value>true</imixs:value>
+        </imixs:item>
+        <imixs:item name="keyaddwritefields" type="xs:string">
+          <imixs:value><![CDATA[namCurrentEditor]]></imixs:value>
+          <imixs:value><![CDATA[teamMembers]]></imixs:value>
+        </imixs:item>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_11</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
@@ -175,7 +199,7 @@
           <imixs:value><![CDATA[Order forwarded by <itemvalue>namcurrentEditor</itemvalue>]]></imixs:value>
         </imixs:item>
         <imixs:item name="txtactivityresult" type="CDATA">
-          <imixs:value><![CDATA[<item name="action">worklist</item>]]></imixs:value>
+          <imixs:value><![CDATA[<item name="action">tasklist</item>]]></imixs:value>
         </imixs:item>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_10</bpmn2:incoming>

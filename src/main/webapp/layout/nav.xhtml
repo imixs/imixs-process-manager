@@ -39,15 +39,15 @@
 				<hr />
 				<ul>
 					<li class="nav-item"><a
-						href="#{facesContext.externalContext.requestContextPath}/pages/my_tasklist.jsf"><span
+						href="#{facesContext.externalContext.requestContextPath}/pages/my_tasklist.xhtml"><span
 							class="typcn typcn-input-checked"></span><label>#{message.my_tasklist}</label></a></li>
 
 					<li class="nav-item"><a
-						href="#{facesContext.externalContext.requestContextPath}/pages/my_statuslist.jsf"><span
+						href="#{facesContext.externalContext.requestContextPath}/pages/my_statuslist.xhtml"><span
 							class="typcn typcn-th-list-outline"></span><label>#{message.my_statuslist}</label></a></li>
 
 					<li class="nav-item"><a
-						href="#{facesContext.externalContext.requestContextPath}/pages/all.jsf"><span
+						href="#{facesContext.externalContext.requestContextPath}/pages/all.xhtml"><span
 							class="typcn typcn-th-menu-outline"></span><label>#{message.worklist}</label></a></li>
 
 				</ul>
@@ -59,10 +59,10 @@
 							<label>Teams</label>
 						</h:commandLink></li>
 
-					<li class="nav-item"><a target="_blank"
-						href="#{facesContext.externalContext.requestContextPath}/pages/admin/modellist.jsf">
+					<li class="nav-item"><h:commandLink
+							action="/pages/admin/modellist?faces-redirect=true">
 							<span class="typcn typcn-flow-merge"></span><label>Models</label>
-					</a></li>
+					</h:commandLink></li>
 				</ul>
 
 
