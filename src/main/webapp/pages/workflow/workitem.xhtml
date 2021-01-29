@@ -28,41 +28,20 @@
 						<!-- Error  -->
 						<ui:include src="error.xhtml" />
 							
-						<div class="row nested">
-						<div class="col-6">
-							<h:panelGrid columns="3">
-								<h:outputLabel value="#{message.created}: " />
-								<h:outputText
-									value="#{workflowController.workitem.item['$created']} ">
-									<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />
-								</h:outputText>
-								<h:outputText
-									value=" #{message.by} #{workflowController.workitem.item['namcreator']} " />
-								<h:outputLabel value="#{message.modified}: " />
-								<h:outputText
-									value="#{workflowController.workitem.item['$modified']} ">
-									<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />
-								</h:outputText>
-								<h:outputText
-									value=" #{message.by} #{workflowController.workitem.item['namcurrenteditor']}" />
-							</h:panelGrid>
-						</div>
-						<div class="col-6 ">
+						
 						<dl>
-									<dt>Team:</dt>
-									<dd>
-										<h:selectOneMenu id="team_id" style="width:100%"
-											value="#{workflowController.workitem.item['team']}"
-											required="false">
-											<f:selectItem required="true"
-												itemLabel="#{global.please_select}" itemValue="" />
-											<f:selectItems value="#{teamController.teamSelection}" />
-										</h:selectOneMenu>
-									</dd>
+							<dt>Team:</dt>
+							<dd>
+								<h:selectOneMenu id="team_id" style="width:100%"
+									value="#{workflowController.workitem.item['team']}"
+									required="false">
+									<f:selectItem required="true"
+										itemLabel="#{global.please_select}" itemValue="" />
+									<f:selectItems value="#{teamController.teamSelection}" />
+								</h:selectOneMenu>
+							</dd>
 
-								</dl>
-							</div>						
-						</div>
+						</dl>
 						
 						
 						<ui:fragment rendered="#{! empty customFormController.sections}">

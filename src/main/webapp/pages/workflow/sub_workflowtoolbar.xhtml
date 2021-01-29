@@ -40,8 +40,25 @@
 			</dd>
 		</dl>
 
+		<h:panelGrid columns="3">
+			<h:outputLabel value="#{message.created}: " />
+			<h:outputText
+				value="#{workflowController.workitem.item['$created']} ">
+				<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />
+			</h:outputText>
+			<h:outputText
+				value=" #{message.by} #{workflowController.workitem.item['namcreator']} " />
+			<h:outputLabel value="#{message.modified}: " />
+			<h:outputText
+				value="#{workflowController.workitem.item['$modified']} ">
+				<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />
+			</h:outputText>
+			<h:outputText
+				value=" #{message.by} #{workflowController.workitem.item['namcurrenteditor']}" />
+		</h:panelGrid>
 
-
+							
+							
 		<div class="imixs-tabs">
 			<ul>
 				<li><a href="#tab-1">Activities</a></li>
