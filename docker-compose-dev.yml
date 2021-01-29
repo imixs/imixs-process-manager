@@ -12,6 +12,9 @@ services:
   imixs-app:
     image: imixs/imixs-process-manager
     environment:
+      TZ: "CET" 
+      LANG: "en_US.UTF-8"  
+      JAVA_OPTS: "-Dnashorn.args=--no-deprecation-warning"
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "adminadmin"
       POSTGRES_CONNECTION: "jdbc:postgresql://imixs-db/workflow-db"
@@ -22,10 +25,10 @@ services:
     volumes:
       - ./docker/deployments:/opt/jboss/wildfly/standalone/deployments/
 
-#  imixsadmin:
-#    image: imixs/imixs-admin
-#    ports:
-#      - "8888:8080"      
+  imixsadmin:
+    image: imixs/imixs-admin
+    ports:
+      - "8888:8080"      
       
 volumes:
   dbdata:   

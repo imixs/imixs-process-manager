@@ -12,8 +12,9 @@ services:
   imixs-app:
     image: imixs/imixs-process-manager
     environment:
-      WILDFLY_PASS: adminadmin
-      DEBUG: "true"
+      TZ: "CET" 
+      LANG: "en_US.UTF-8"  
+      JAVA_OPTS: "-Dnashorn.args=--no-deprecation-warning"
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "adminadmin"
       POSTGRES_CONNECTION: "jdbc:postgresql://imixs-db/workflow-db"
