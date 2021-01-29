@@ -103,3 +103,14 @@ Example:
 
 You can create and change your models at runtime without interrupting your workflow instance.
 
+
+
+## Build
+
+To build the artifact from sources run:
+
+	$ mvn clean install
+	
+To build the new Docker Image run:
+
+	$ mvn clean install -Pdocker

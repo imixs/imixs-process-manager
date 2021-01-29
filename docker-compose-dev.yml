@@ -10,10 +10,8 @@ services:
       - dbdata:/var/lib/postgresql/data
   
   imixs-app:
-    image: imixs/imixs-jsf-example
+    image: imixs/imixs-process-manager
     environment:
-      WILDFLY_PASS: adminadmin
-      DEBUG: "true"
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "adminadmin"
       POSTGRES_CONNECTION: "jdbc:postgresql://imixs-db/workflow-db"
@@ -22,7 +20,7 @@ services:
       - "8787:8787"
       - "9990:9990"
     volumes:
-      - ~/git/imixs-process-manager/src/docker/deployments:/opt/wildfly/standalone/deployments/    
+      - ./docker/deployments:/opt/jboss/wildfly/standalone/deployments/
 
 #  imixsadmin:
 #    image: imixs/imixs-admin
