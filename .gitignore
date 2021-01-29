@@ -15,5 +15,5 @@ target/
 .metadata
 
 # ignore docker deployments
-src/docker/deployments/
+docker/deployments/
 
