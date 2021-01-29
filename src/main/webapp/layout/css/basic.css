@@ -386,7 +386,12 @@ table, td, th {
 .imixsdatatable a {
 	color: #428bca !important;
 }
-
+.imixsdatatable tr:hover a {
+	color: #fff !important;
+}
+.imixsdatatable a:hover {
+	color: #fff !important;
+}
 .danger-zone {
 	border: 1px solid #cb2431;
 	border-radius: 4px;
