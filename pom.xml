@@ -5,7 +5,7 @@
 	<groupId>org.imixs.workflow</groupId>
 	<artifactId>imixs-process-manager</artifactId>
 	<packaging>war</packaging>
-	<name>Imixs Process Manager</name>
+	<name>imixs-process-manager</name>
 	<version>1.0.0</version>
 	<description>Imixs Process Manager</description>
 	<url>https://github.com/imixs/imixs-process-manager</url>
@@ -316,7 +316,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
-			</plugin>
+			</plugin>	
 
 		</plugins>
 
