@@ -4,7 +4,7 @@ This folder contains configuration files used to build a docker container runnin
 
 To build the Docker Image run:
 
-	$ mvn clean install -Pdocker-build-openliberty
+	$ mvn clean install -Pdocker-openliberty
 	
 After you have build the image with the sample application you can start the corresponding Docker-Stack with:
 

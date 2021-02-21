@@ -1,0 +1,17 @@
+FROM open-liberty:kernel
+
+# Imixs-Process-Manager
+MAINTAINER ralph.soika@imixs.com
+
+# Copy postgres JDBC driver
+COPY ./docker/configuration/openliberty/postgresql-9.4.1212.jar /opt/ol/wlp/lib
+
+# Add config
+COPY --chown=1001:0 ./docker/configuration/openliberty/server.xml /config/
+
+# Activate Debug Mode...
+#COPY --chown=1001:0 ./docker/configuration/openliberty/jvm.options /config/
+
+# Copy sample application
+COPY ./target/*.war /config/dropins/
+

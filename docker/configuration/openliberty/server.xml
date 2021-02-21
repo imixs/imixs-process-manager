@@ -59,9 +59,9 @@
 	 -->
 	<applicationMonitor dropinsEnabled="false" />
 	
-	<application name="imixs-jsf-example"  context-root="/" type="war" 
-		id="imixs-jsf-example"
-    	location="${server.config.dir}dropins/imixs-jsf-example.war">
+	<application name="imixs-process-manager"  context-root="/" type="war" 
+		id="imixs-process-manager"
+    	location="${server.config.dir}dropins/imixs-process-manager.war">
     
 	    <application-bnd>
 	        <security-role name="org.imixs.ACCESSLEVEL.MANAGERACCESS" >
