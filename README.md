@@ -114,3 +114,9 @@ To build the artifact from sources run:
 To build the new Docker Image run:
 
 	$ mvn clean install -Pdocker
+	
+To run Wildfly Server in debug mode (port 8787) you can build the Docker Image with:
+
+	$ mvn clean install -Pdebug
+	
+	
