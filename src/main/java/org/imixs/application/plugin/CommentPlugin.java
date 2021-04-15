@@ -73,7 +73,7 @@ public class CommentPlugin extends AbstractPlugin {
 
 		documentContext = adocumentContext;
 	
-		ItemCollection evalItemCollection = this.getWorkflowService().evalWorkflowResult(documentActivity, adocumentContext);
+		ItemCollection evalItemCollection = this.getWorkflowService().evalWorkflowResult(documentActivity, "item", adocumentContext);
 
 		// test if comment is defined in model
 		if (evalItemCollection != null) {
