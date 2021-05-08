@@ -57,6 +57,17 @@
 				value=" #{message.by} #{workflowController.workitem.item['namcurrenteditor']}" />
 		</h:panelGrid>
 
+
+		<hr />
+		<h3>WOPI Test</h3>
+			<!-- show no attachments from workitem -->
+			<ui:param name="fileDataList" value="#{workflowController.workitem.fileData}"></ui:param>
+	
+			<ul>
+				<ui:repeat value="#{fileDataList}" var="fileData">
+					<li>#{fileData.name} -> #{wopiController.getWopiAccessURLByFileName(fileData.name)}</li>
+				</ui:repeat>	
+			</ul>
 							
 							
 		<div class="imixs-tabs">

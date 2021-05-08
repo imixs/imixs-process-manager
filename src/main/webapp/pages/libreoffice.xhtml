@@ -1,0 +1,23 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs"
+	template="/layout/template.xhtml">
+
+	<ui:define name="content">
+
+				<h1>Libreoffice</h1>
+
+				<p>Test Page</p>
+
+			<form action="http://localhost:9980/lool/convert-to/docx" enctype="multipart/form-data" method="post">
+    File: <input type="file" name="data"/><br/>
+    <input type="submit" value="Convert to DOCX" />
+    
+</form>
+
+
+	</ui:define>
+</ui:composition>

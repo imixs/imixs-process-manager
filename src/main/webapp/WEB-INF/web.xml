@@ -26,10 +26,25 @@
 	-->
 
 	<security-constraint>
+	<!-- 
 		<web-resource-collection>
 			<web-resource-name>restricted</web-resource-name>
 			<url-pattern>/*</url-pattern>
 		</web-resource-collection>
+	 -->
+		<web-resource-collection>
+			<web-resource-name>AUTHENTICATED_RESOURCE</web-resource-name>
+			<url-pattern>/pages/*</url-pattern>
+			<url-pattern>/api/workflow/*</url-pattern>
+			<url-pattern>/api/model/*</url-pattern>
+			<url-pattern>/api/documents/*</url-pattern>
+			<url-pattern>/api/report/*</url-pattern>
+			<url-pattern>/api/snapshot/*</url-pattern>
+			<url-pattern>/api/adminp/*</url-pattern>
+			<url-pattern>/api/eventlog/*</url-pattern>
+			<url-pattern>/api/logout</url-pattern>
+			<!-- exclude /api/metrics -->
+		</web-resource-collection>		
 		<auth-constraint>
 			<role-name>org.imixs.ACCESSLEVEL.READERACCESS</role-name>
 			<role-name>org.imixs.ACCESSLEVEL.AUTHORACCESS</role-name>

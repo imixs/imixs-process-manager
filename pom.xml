@@ -402,9 +402,30 @@
 		</dependency>
 
 
+		<!-- JSON Parser -->
+		<dependency>
+			<groupId>javax.json</groupId>
+			<artifactId>javax.json-api</artifactId>
+			<version>1.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.json</artifactId>
+			<version>1.1</version>
+			<scope>test</scope>
+		</dependency>
 		<!-- Apache Lucene Solr <dependency> <groupId>org.imixs.workflow</groupId> 
 			<artifactId>imixs-workflow-index-solr</artifactId> <version>${org.imixs.workflow.version}</version> 
 			</dependency> -->
+			
+		<!-- add wopi adapter -->
+		<dependency>
+			<groupId>org.imixs.workflow</groupId>
+    		<artifactId>imixs-adapters-wopi</artifactId>
+    		<version>2.2.7-SNAPSHOT</version>
+    	</dependency>
 
 	</dependencies>
 </project>
