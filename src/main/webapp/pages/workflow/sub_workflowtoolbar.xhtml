@@ -5,7 +5,6 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs">
 
-
 	<div class="imixs-panel">
 		<h2>#{message.workflow}</h2>
 
@@ -65,9 +64,12 @@
 	
 			<ul>
 				<ui:repeat value="#{fileDataList}" var="fileData">
-					<li>#{fileData.name} -> #{wopiController.getWopiAccessURLByFileName(fileData.name)}</li>
+					<li>#{fileData.name} -> <a href="javascript:void;" onclick="imixsWopi.loadLibreOffice('#{wopiController.getWopiAccessURLByFileName(workflowController.workitem.uniqueID,fileData.name)}');">
+					Edit</a></li>
 				</ui:repeat>	
 			</ul>
+			
+		<hr />	
 							
 							
 		<div class="imixs-tabs">
@@ -82,9 +84,6 @@
 			</div>
 			<div id="tab-2">
 				<ui:include src="/pages/workflow/sub_documents.xhtml" />
-				
-				
-
 			</div>
 
 		</div>

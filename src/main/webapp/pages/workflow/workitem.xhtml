@@ -19,42 +19,43 @@
 
 				<div class="row">
 					<div class="col-7" style="border-right: 1px solid #ccc;">
-					
-					
+
+
 						<h2>#{workflowController.workitem.item['$WorkflowGroup']} ▹
 							#{workflowController.workitem.item['$WorkflowStatus']}</h2>
-							
-							
-						<!-- Error  -->
-						<ui:include src="error.xhtml" />
-							
-						
-						<dl>
-							<dt>Team:</dt>
-							<dd>
-								<h:selectOneMenu id="team_id" style="width:100%"
-									value="#{workflowController.workitem.item['team']}"
-									required="false">
-									<f:selectItem required="true"
-										itemLabel="#{global.please_select}" itemValue="" />
-									<f:selectItems value="#{teamController.teamSelection}" />
-								</h:selectOneMenu>
-							</dd>
 
-						</dl>
-						
-						
-						<ui:fragment rendered="#{! empty customFormController.sections}">
-							<!-- Display the custom form  -->
-							<ui:include src="/pages/workflow/custom.xhtml">
-								<ui:param name="workitem" value="#{workflowController.workitem}" />
-							</ui:include>
-						</ui:fragment>
+						<div id="workitem_form_body">
+							<!-- Error  -->
+							<ui:include src="error.xhtml" />
+
+
+							<dl>
+								<dt>Team:</dt>
+								<dd>
+									<h:selectOneMenu id="team_id" style="width:100%"
+										value="#{workflowController.workitem.item['team']}"
+										required="false">
+										<f:selectItem required="true"
+											itemLabel="#{global.please_select}" itemValue="" />
+										<f:selectItems value="#{teamController.teamSelection}" />
+									</h:selectOneMenu>
+								</dd>
+
+							</dl>
+
+
+							<ui:fragment rendered="#{! empty customFormController.sections}">
+								<!-- Display the custom form  -->
+								<ui:include src="/pages/workflow/custom.xhtml">
+									<ui:param name="workitem"
+										value="#{workflowController.workitem}" />
+								</ui:include>
+							</ui:fragment>
 							<ui:fragment rendered="#{empty customFormController.sections}">
-							 <p class="lead">You process definition does not define any form elements. You can add a form layout by your model
-							 </p>
-							 <p>Example:</p>
-							 <pre class="code">
+								<p class="lead">You process definition does not define any
+									form elements. You can add a form layout by your model</p>
+								<p>Example:</p>
+								<pre class="code">
 &lt;?xml version=&quot;1.0&quot;?&gt;
 &lt;imixs-form&gt;
   &lt;imixs-form-section&gt;
@@ -67,15 +68,31 @@
 &lt;/imixs-form&gt;
 							 </pre>
 							</ui:fragment>
+
+
 						</div>
+						<!-- form body end -->
+
+
 						
-						
-						<div class="col-5">
-							<!-- **** Workflow Actions & History  ***** -->
-							<ui:include src="/pages/workflow/sub_workflowtoolbar.xhtml" />
-						</div>
 					</div>
+
+
+					<div class="col-5">
+						<!-- **** Workflow Actions & History  ***** -->
+						<ui:include src="/pages/workflow/sub_workflowtoolbar.xhtml" />
+					</div>
+				</div>
 			</h:form>
+			
+			
+			<!-- LibreOffice Editor -->
+			<div id="libreoffice_viewer" style="display: none;">
+
+
+				<iframe id="libreoffice_online-viewer" src="/libreoffice-form.html" width="100%" height="1000"></iframe>
+
+			</div>
 		</f:view>
 	</ui:define>
 

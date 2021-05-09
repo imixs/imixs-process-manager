@@ -31,6 +31,10 @@
 	<script type="text/javascript"
 		src="#{facesContext.externalContext.requestContextPath}/layout/js/basic.js"></script>
 
+	<!-- WOPI -->
+	<script type="text/javascript"
+		src="#{facesContext.externalContext.requestContextPath}/layout/js/imixs-wopi.js"></script>
+
 	<!-- Fonts
 	    ================================================== -->
 	<link rel="stylesheet" type="text/css"
@@ -99,9 +103,17 @@
 
 	<script type="text/javascript">
 		/*<![CDATA[*/
+			
+		// define script name spaces
+		var imixs = IMIXS.org.imixs.core;
+		
 		
 		$(document).ready(function() {
 			layoutEditor();
+			
+			// init wopi viewr...
+			imixsWopi.formID="workitem_form_body";
+			imixsWopi.viewerID="libreoffice_viewer";
 		});
 
 		/* laest sich im moment nicht auslagern (script_url!) see issue #87 */

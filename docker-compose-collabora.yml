@@ -19,11 +19,11 @@ services:
       JAVA_OPTS: "-Dnashorn.args=--no-deprecation-warning"
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "adminadmin"
-      POSTGRES_CONNECTION: "jdbc:postgresql://imixs-db/libreoffice-appworkflow-db"
+      POSTGRES_CONNECTION: "jdbc:postgresql://imixs-db/workflow-db"
 
       WOPI_DISCOVERY_ENDPOINT: "http://libreoffice-app:9980/hosting/discovery"
-      WOPI_HOST_ENDPOINT: "http://imixs-app:8080//api/wopi/"
-   
+      WOPI_HOST_ENDPOINT: "http://imixs-app:8080/api/wopi/"
+      
     ports:
       - "8080:8080"
       - "8787:8787"
