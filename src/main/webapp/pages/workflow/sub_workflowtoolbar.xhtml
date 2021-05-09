@@ -59,12 +59,14 @@
 
 		<hr />
 		<h3>WOPI Test</h3>
+		
+			<h:commandScript name="wopiControllerUpdateFile" action="#{wopiController.updateFile()}" />
 			<!-- show no attachments from workitem -->
 			<ui:param name="fileDataList" value="#{workflowController.workitem.fileData}"></ui:param>
 	
 			<ul>
 				<ui:repeat value="#{fileDataList}" var="fileData">
-					<li>#{fileData.name} -> <a href="javascript:void;" onclick="imixsWopi.loadLibreOffice('#{wopiController.getWopiAccessURLByFileName(workflowController.workitem.uniqueID,fileData.name)}');">
+					<li>#{fileData.name} -> <a href="javascript:void;" onclick="imixsWopi.openViewer('#{wopiController.getWopiAccessURLByFileName(workflowController.workitem.uniqueID,fileData.name)}');">
 					Edit</a></li>
 				</ui:repeat>	
 			</ul>
