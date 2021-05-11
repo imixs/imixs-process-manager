@@ -119,4 +119,6 @@ To run Wildfly Server in debug mode (port 8787) you can build the Docker Image w
 
 	$ mvn clean install -Pdebug
 	
-	
+# Wopi 
+
+https://wopi.readthedocs.io/en/latest/scenarios/postmessage.html	

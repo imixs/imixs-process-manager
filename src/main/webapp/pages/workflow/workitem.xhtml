@@ -87,10 +87,39 @@
 			
 			
 			<!-- LibreOffice Editor -->
-			<div id="libreoffice_viewer" style="display: none;">
+			<div id="wopi_controlls">
+				<button onclick="imixsWopi.save(); return false;">Update</button><button onclick="closeWopiViewer(); return false;">Close</button>
+				<hr />
+			</div>
+			<div id="wopi_canvas" style="display: none;">
 
 
 			</div>
+			<script>
+			
+			// open the wopi viewer
+			function openWopiViewer(url) {
+				// hide the workflow form
+				var imixsform = $('#workitem_form_id');
+				imixsform.hide();
+				
+				// open viewer...		
+				imixsWopi.openViewer('wopi_canvas', url);
+				
+				// define save callback for close
+				imixsWopi.saveCallback=closeWopiViewer;
+				
+			}
+			
+			// close the wopi viewer
+			function closeWopiViewer() {
+				console.log("close ");
+				imixsWopi.closeViewer();
+				// show workflow form
+				var imixsform = $('#workitem_form_id');
+				imixsform.show();
+			}
+			</script>
 		</f:view>
 	</ui:define>
 

@@ -65,9 +65,13 @@
 			<ui:param name="fileDataList" value="#{workflowController.workitem.fileData}"></ui:param>
 	
 			<ul>
+			    <ui:param name="userid" value="admin"></ui:param>
+				<ui:param name="username" value="Administrator"></ui:param>
 				<ui:repeat value="#{fileDataList}" var="fileData">
-					<li>#{fileData.name} -> <a href="javascript:void;" onclick="imixsWopi.openViewer('#{wopiController.getWopiAccessURLByFileName(workflowController.workitem.uniqueID,fileData.name)}');">
-					Edit</a></li>
+					<li>#{fileData.name} -> <a href="javascript:void;" onclick="openWopiViewer('#{wopiController.getWopiAccessURL(workflowController.workitem.uniqueID,fileData.name,userid,username)}');">
+					Edit</a>
+					
+					</li>
 				</ui:repeat>	
 			</ul>
 			

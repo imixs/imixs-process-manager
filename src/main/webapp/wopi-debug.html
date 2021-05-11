@@ -1,0 +1,232 @@
+
+
+<!DOCTYPE html>
+<!-- Proof of concept of running loleaflet.html in an iframe. Also      shows how to, from outside the iframe, invoke Python scripting in      the underlying LibreOffice instance that manipulates the document      being edited.      This demonstrates using the Python InsertText.py and Capitalise.py      scripts from javascript across iframes.      To test this, do 'make run', and then in your browser open the      equivalent of      http://snorken.local:9980/loleaflet/3304e9093/framed.doc.html if the      browser is running on a different machine, or      http://localhost:9980/loleaflet/3304e9093/framed.doc.html if running      on the same machine. -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Online Editor</title>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="user-select: none;">
+	<form id="insert-text-form">
+	<h1>WOPI Debug Page</h1>
+	<p>This is a debug page to test the wopi post messages.
+	</p>
+		Enter new wopi-url: <input type="text" id="wopiuri"/>
+		<input type="button" value="load editor"  onclick="loadeditor();"></input>
+		
+	<hr />
+				
+		<button onclick="save(); return false;">Save</button>
+		<button onclick="closeDocument(); return false;">Close</button>
+		</br>
+		Some demo Commands
+		</br>
+		<button onclick="hide_commands('save'); return false;">Hide
+			Save Commands</button>
+		<button onclick="show_commands('save'); return false;">Show
+			Save Commands</button>
+				
+		<button onclick="insertCloseButton(); return false;">Insert Close Button</button>
+		<button onclick="insertSaveButton(); return false;">Insert Save Button</button>
+			
+		
+		<button
+			onclick="disable_default_uiaction('UI_Save', true); return false;">Disable
+			default save action</button>
+		
+		<button
+			onclick="disable_default_uiaction('UI_Save', false); return false;">Enable
+			default save action</button>
+		</br>
+		</br>
+	</form>
+	<p>
+		Modified Status: <span id="ModifiedStatus">Saved</span>
+	</p>
+	<!-- The hostname and pathnames below are obviously specific to my 
+	    personal environment and need to be changed appropriately. Also
+	    the hex string needs to be changed of course, to the right one as
+	    shown by 'make run'. -->
+	<iframe id="wopi_iframe"
+		src=""
+		height="1000" width="100%"></iframe>
+		
+		
+		
+		
+<script>
+
+	function loadeditor() {
+	    var url=document.getElementById("wopiuri").value;
+	    console.log("loding editor..."+ url);
+	    
+	    // build the iframe....
+	    var iframe=document.getElementById("wopi_iframe");
+	    iframe = iframe.contentWindow || (iframe.contentDocument.document || iframe.contentDocument);
+		// build a dummy form where we can post the wopi client URL....
+		iframe.document.open();
+		iframe.document.write('<html><body><form action="' + url + '" enctype="multipart/form-data" method="post" id="libreoffice-form"><input name="dummy" value="" type="hidden" id="dummy"/> <input type="submit" value="Load..." /></form></body></html>');
+		iframe.document.close();
+		// submit form	
+	    //document.getElementById("wopi_iframe").src = url; 
+	}
+
+	function post(msg) {
+		console.log("ich sende eine message : " + JSON.stringify(msg));
+		window.frames[0].postMessage(JSON.stringify(msg), '*');
+	}
+	
+
+	// This function is invoked when the iframe posts a message back.
+	function receiveMessage(event) {
+		console.log('==== wopi-debug receiveMessage: ' + event.data);
+		
+		var msg = JSON.parse(event.data);
+		if (!msg) {
+			return;
+		}
+		if (msg.MessageId == 'App_LoadingStatus') {
+			if (msg.Values) {
+				if (msg.Values.Status == 'Document_Loaded') {
+					console.log('==== Document loaded we will inform the wopi client that we are ready!');
+					var iframe=window.frames[0];
+					iframe.postMessage(JSON.stringify({ 'MessageId': 'Host_PostmessageReady' }), '*');
+				}
+			}
+		} else if (msg.MessageId == 'Action_Save_Resp') {
+			if (msg.Values &&  msg.Values.success == true) {
+				console.log('==== Saved');
+				alert('document saved!');
+			} else {
+				console.log('==== Error during save');
+			}
+		} else if (msg.MessageId == 'Clicked_Button') {
+			if (msg.Values && msg.Values.Id=="save42") {
+				console.log('====  UI_Save42');
+				save();
+			} else {
+				console.log('==== Error during save');
+			}
+		}
+		
+	}
+
+	
+	// external save function with notification
+	function save() {
+		var date=Date.now();
+		console.log('save '+date);
+		post({
+			"MessageId" : "Action_Save",
+			//"SendTime" :  date,
+			"Values" : {
+				"DontTerminateEdit" : true,
+				"DontSaveIfUnmodified": false,
+				"Notify" : true
+			}
+		});
+	}
+	function closeDocument() {
+		console.log("achtunt ich close ");
+		post({
+			'MessageId' : 'Action_Close',
+			'SendTime' : Date.now()
+			//,
+			//'Values' : null
+		});
+	}
+	function hide_commands(id) {
+		post({
+			'MessageId' : 'Hide_Menu_Item',
+			'Values' : {
+				'id' : id,
+			}
+		});
+		post({
+			'MessageId' : 'Hide_Button',
+			'Values' : {
+				'id' : id,
+			}
+		});
+	}
+	function show_commands(id) {
+		post({
+			'MessageId' : 'Show_Menu_Item',
+			'Values' : {
+				'id' : id,
+			}
+		});
+		post({
+			'MessageId' : 'Show_Button',
+			'Values' : {
+				'id' : id,
+			}
+		});
+	}
+	
+	
+	
+	
+	function insertCloseButton() {		
+		post({
+			'MessageId' : 'Insert_Button',
+			'Values' : {
+				'id': 'close42',
+				'imgurl': 'http://localhost:8080/layout/icons/close.png',
+			    'hint': 'close editor',
+			    'mobile': true,
+			    'label': 'close',
+			    'insertBefore': 'undo'
+			    //'unoCommand': 'imixs'
+				//'action' : action,
+				//'disable' : disable
+			}
+		}
+		);
+	}	
+	
+	function disable_default_uiaction(action, disable) {
+		post({
+			'MessageId' : 'Disable_Default_UIAction',
+			'Values' : {
+				'action' : action,
+				'disable' : disable
+			}
+		});
+	} 
+	
+	
+
+
+		
+		
+	function insertSaveButton() {			
+		post({
+			'MessageId' : 'Insert_Button',
+			'Values' : {
+				'id': 'save42',
+				'imgurl': 'http://localhost:8080/layout/icons/close.png',
+			    'hint': 'save editor',
+			    'mobile': true,
+			    'label': 'save',
+			    'insertBefore': 'save'
+			    //'unoCommand': 'imixs'
+				//'action' : action,
+				//'disable' : disable
+			}
+		});
+	}
+	
+	
+	//  Install the wopi message listener.
+	// receive messages form libreoffice online
+	window.addEventListener("message", receiveMessage, false);
+	
+
+</script>		
+</body>
+</html>
