@@ -57,24 +57,30 @@
 		</h:panelGrid>
 
 
-		<hr />
-		<h3>WOPI Test</h3>
-		
+		<!-- Imixs WOPI Integration -->
+		<ui:fragment rendered="#{wopiController!=null}">
+			<hr />
+			<h3>WOPI Test</h3>
+			
 			<h:commandScript name="wopiControllerUpdateFile" action="#{wopiController.updateFile()}" />
 			<!-- show no attachments from workitem -->
 			<ui:param name="fileDataList" value="#{workflowController.workitem.fileData}"></ui:param>
 	
 			<ul>
 			    <ui:param name="userid" value="admin"></ui:param>
-				<ui:param name="username" value="Administrator"></ui:param>
+				<ui:param name="username" value="Administrator"></ui:param>			
 				<ui:repeat value="#{fileDataList}" var="fileData">
-					<li>#{fileData.name} -> <a href="javascript:void;" onclick="openWopiViewer('#{wopiController.getWopiAccessURL(workflowController.workitem.uniqueID,fileData.name,userid,username)}');">
+					<ui:param name="uri" value="#{wopiController.getWopiAccessURL(workflowController.workitem.uniqueID,fileData.name,userid,username)}"></ui:param>
+					<li>#{fileData.name} -> <a href="javascript:void;" onclick="openWopiViewer('#{uri}','#{fileData.name}');">
 					Edit</a>
 					
 					</li>
 				</ui:repeat>	
 			</ul>
 			
+		</ui:fragment>
+			
+				
 		<hr />	
 							
 							

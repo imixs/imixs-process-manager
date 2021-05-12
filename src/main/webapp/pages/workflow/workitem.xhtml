@@ -88,6 +88,7 @@
 			
 			<!-- LibreOffice Editor -->
 			<div id="wopi_controlls">
+			    <h1 id="wopi_header_filename_id"></h1>
 				<button onclick="imixsWopi.save(); return false;">Update</button><button onclick="closeWopiViewer(); return false;">Close</button>
 				<hr />
 			</div>
@@ -98,10 +99,10 @@
 			<script>
 			
 			// open the wopi viewer
-			function openWopiViewer(url) {
+			function openWopiViewer(url,filename) {
+				$('#wopi_header_filename_id').html(filename);
 				// hide the workflow form
-				var imixsform = $('#workitem_form_id');
-				imixsform.hide();
+				$('#workitem_form_id').hide();
 				
 				// open viewer...		
 				imixsWopi.openViewer('wopi_canvas', url);
@@ -114,11 +115,14 @@
 			// close the wopi viewer
 			function closeWopiViewer() {
 				console.log("close ");
+				$('#wopi_controlls').hide();
 				imixsWopi.closeViewer();
 				// show workflow form
 				var imixsform = $('#workitem_form_id');
 				imixsform.show();
 			}
+		
+		
 			</script>
 		</f:view>
 	</ui:define>

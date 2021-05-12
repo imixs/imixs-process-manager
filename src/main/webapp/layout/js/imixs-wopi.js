@@ -25,22 +25,6 @@ $(document).ready(function() {
 });
 
 
-// Customize the editor toolbar. This method is called after the 
-// editor was initalized. 
-function customizeToolbar() {
-	// hide default UI_save button
-	postMessage({
-		'MessageId' : 'Hide_Button',
-		'Values' : {
-			'id' : "save"
-		}
-	});
-}
-
-
-			
-
-
 
 // The imixsWopi core module
 // Provide method for UI integration
@@ -74,27 +58,13 @@ IMIXS.org.imixs.workflow.wopi = (function() {
 			if (!msg) {
 				return;
 			}
-			/*if (!event.data.includes("MessageId")) {
-				return;
-			}*/
 			console.log('==== framed.doc.html receiveMessage: ' + event.data);
-			//var msg = JSON.parse(event.data);
-			
-			
 			
 			if (msg.MessageId == 'App_LoadingStatus') {
 				if (msg.Values) {
 					if (msg.Values.Status == 'Document_Loaded') {
-						console.log('==== Document loaded we will inform the wopi client that we are ready!');
-						var iframe = document.getElementById('wopi-iframe');
-						iframe = iframe.contentWindow || (iframe.contentDocument.document || iframe.contentDocument);
-		
-						iframe.postMessage(JSON.stringify({ 'MessageId': 'Host_PostmessageReady' }), '*');
-						//window.frames[0].postMessage(JSON.stringify({ 'MessageId': 'Host_PostmessageReady' }), '*');
-						console.log('==== Host_PostmessageReady message send');
-						
-						// try to customize the toolbar
-						customizeToolbar();
+						console.log('==== Document loaded ...init viewer...');
+						initViewer();
 					}
 				}
 			// custom click events
@@ -118,14 +88,17 @@ IMIXS.org.imixs.workflow.wopi = (function() {
 						if (imixsWopi.saveCallback) {
 							imixsWopi.saveCallback();
 						}
-						if (wopiControllerUpdateFile) {
+						if (typeof wopiControllerUpdateFile !== "undefined") {
 							wopiControllerUpdateFile();
+						} else {
+							console.log("callback method 'wopiControllerUpdateFile' is undefined!")
 						}
 					} else {
 						console.log('==== Error during save');
 					}
 				}
 			}
+			
 		},
 		
 		// send a message to the Editor to customize the behaviour
@@ -143,10 +116,6 @@ IMIXS.org.imixs.workflow.wopi = (function() {
 			var wopiuri = ref;			
 			var wopiViewer = $('#' + imixsWopi.viewerID);
 			wopiViewer.show();
-			
-			// hack.....
-			wopiuri = wopiuri.replace("libreoffice-app", "localhost");
-			
 			buildViewer(imixsWopi.viewerID,wopiuri);			
 			var form = $('#wopi-iframe').contents().find('#libreoffice-form');
 			form.submit();
@@ -177,6 +146,25 @@ IMIXS.org.imixs.workflow.wopi = (function() {
 			wopiviewer.hide();
 		},
 		
+		// method to initalize the PostMessage communication
+		// and to customize the editor
+		initViewer = function() {
+			var iframe = document.getElementById('wopi-iframe');
+				iframe = iframe.contentWindow || (iframe.contentDocument.document || iframe.contentDocument);
+
+				iframe.postMessage(JSON.stringify({ 'MessageId': 'Host_PostmessageReady' }), '*');
+				//window.frames[0].postMessage(JSON.stringify({ 'MessageId': 'Host_PostmessageReady' }), '*');
+				console.log('==== Host_PostmessageReady message send....');
+				
+				// hide default UI_save button
+				imixsWopi.postMessage({
+					'MessageId' : 'Hide_Button',
+					'Values' : {
+						'id' : "save"
+					}
+				});	
+			
+			},
 		
 		// sends a post mesage to save the document
 		save = function() {
