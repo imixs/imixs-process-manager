@@ -47,7 +47,6 @@ services:
       - password=adminadmin
     volumes:
       - ./loolwsd.xml:/etc/loolwsd/loolwsd.xml
-    restart: always
 
       
 volumes:
