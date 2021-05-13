@@ -36,7 +36,9 @@ IMIXS.org.imixs.workflow.wopi = (function() {
 	var imixs = IMIXS.org.imixs.core,
 
 		viewerID = "",
-		saveCallback = null,		
+		saveCallback = null,	
+		isModified = false,	
+		filename = filename,
 		
 		// Receive Editor Messages
 		// This function is invoked when the editor posts a message back.
@@ -65,8 +67,17 @@ IMIXS.org.imixs.workflow.wopi = (function() {
 					if (msg.Values.Status == 'Document_Loaded') {
 						console.log('==== Document loaded ...init viewer...');
 						initViewer();
+						imixsWopi.isModified=false;
 					}
 				}
+				
+			} else if (msg.MessageId == 'Doc_ModifiedStatus') {
+				if (msg.Values) {
+					if (msg.Values.Modified == true) {
+						console.log('====  document modified.');
+						imixsWopi.isModified=true;
+					}
+				}				
 			// custom click events
 			} else if (msg.MessageId == 'Clicked_Button') {
 				if (msg.Values && msg.Values.Id=="imixs.save") {
@@ -85,13 +96,9 @@ IMIXS.org.imixs.workflow.wopi = (function() {
 				if (msg.Values) {
 					if (msg.Values.success == true) {
 						console.log('==== Saved');
+						imixsWopi.isModified=false;
 						if (imixsWopi.saveCallback) {
-							imixsWopi.saveCallback();
-						}
-						if (typeof wopiControllerUpdateFile !== "undefined") {
-							wopiControllerUpdateFile();
-						} else {
-							console.log("callback method 'wopiControllerUpdateFile' is undefined!")
+							imixsWopi.saveCallback(imixsWopi.filename);
 						}
 					} else {
 						console.log('==== Error during save');
@@ -105,14 +112,14 @@ IMIXS.org.imixs.workflow.wopi = (function() {
 		postMessage = function(msg) {
 			console.log(msg);
 			var iframe = document.getElementById('wopi-iframe');
-			iframe = iframe.contentWindow || (iframe.contentDocument.document || iframe.contentDocument);
-						
+			iframe = iframe.contentWindow || (iframe.contentDocument.document || iframe.contentDocument);						
 			iframe.postMessage(JSON.stringify(msg), '*');
 		},
 
 		// switch to iframe mode and load editor
-		openViewer = function(viewerID,ref) {
+		openViewer = function(viewerID,ref,filename) {
 			imixsWopi.viewerID=viewerID;
+			imixsWopi.filename=filename;
 			var wopiuri = ref;			
 			var wopiViewer = $('#' + imixsWopi.viewerID);
 			wopiViewer.show();
@@ -187,10 +194,12 @@ IMIXS.org.imixs.workflow.wopi = (function() {
 	// public API
 	return {
 		viewerID: viewerID,
+		filename: filename,
 		receiveMessage: receiveMessage,
 		postMessage: postMessage,
 		openViewer: openViewer,
 		closeViewer: closeViewer,
+		isModified: isModified,
 		save: save,
 		saveCallback: saveCallback
 	};
