@@ -14,7 +14,7 @@ public class MyStatusListController extends ViewController {
 
     private static final long serialVersionUID = 1L;
 
-    @Inject
+    @Inject 
     LoginController loginController;
 
     /**

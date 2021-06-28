@@ -57,7 +57,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.imixs.workflow.version>5.2.10</org.imixs.workflow.version>
+		<org.imixs.workflow.version>5.2.11-SNAPSHOT</org.imixs.workflow.version>
 		<custom.webResources>src/main/webapp</custom.webResources>
 		<custom.unpackTypes>war</custom.unpackTypes>
 	</properties>
@@ -144,6 +144,42 @@
 			</build>
 		</profile>
 
+
+
+		<profile>
+			<id>jakarta-ee9</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.8</version>
+						<executions>
+							<execution>
+								<phase>install</phase>
+								<configuration>
+
+									<target>
+										<exec executable="docker">
+											<arg value="build" />
+											<arg value="-f" />
+											<arg value="Dockerfile-wildfly-jakarta-ee9" />
+											<arg value="-t" />
+											<arg value="imixs/imixs-process-manager" />
+											<arg value="./" />
+										</exec>
+									</target>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
 
 		<profile>
 			<id>docker-payara</id>
@@ -307,12 +343,14 @@
 			</resource>
 		</resources>
 		<plugins>
+			<!-- use JDK settings for compiling -->
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>3.8.1</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>11</source>
+					<target>11</target>
 				</configuration>
 			</plugin>
 

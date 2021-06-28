@@ -8,7 +8,9 @@
 
 	<!-- eclipselink -->
 	<persistence-unit name="org.imixs.workflow.jpa" transaction-type="JTA">	
-		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>	
+	<!-- 
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+	 -->	
 		<jta-data-source>jdbc/workflow</jta-data-source>
 		<jar-file>lib/imixs-workflow-engine-${org.imixs.workflow.version}.jar</jar-file>
 		<properties>
