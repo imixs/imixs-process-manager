@@ -38,6 +38,12 @@
         <extension module="org.wildfly.extension.security.manager"/>
         <extension module="org.wildfly.extension.undertow"/>
     </extensions>
+    
+    <system-properties>
+        <property name="eclipselink.archive.factory" value="org.jipijapa.eclipselink.JBossArchiveFactoryImpl"/>
+    </system-properties>
+    
+    
     <management>
         <security-realms>
             <security-realm name="ManagementRealm">
@@ -290,6 +296,14 @@
                     <realm name="ManagementRealm" role-decoder="groups-to-roles"/>
                     <realm name="local" role-mapper="super-user-mapper"/>
                 </security-domain>
+              <!--    -->
+                <security-domain name="imixsrealm" permission-mapper="default-permission-mapper">
+                    <realm name="ApplicationRealm" role-decoder="groups-to-roles"/>
+                    <realm name="local"/>
+                </security-domain>
+             	 
+             	 
+             	 
             </security-domains>
             <security-realms>
                 <identity-realm name="local" identity="$local"/>
@@ -301,7 +315,39 @@
                     <users-properties path="mgmt-users.properties" relative-to="jboss.server.config.dir" digest-realm-name="ManagementRealm"/>
                     <groups-properties path="mgmt-groups.properties" relative-to="jboss.server.config.dir"/>
                 </properties-realm>
+                
+                <!-- 
+                <properties-realm name="ImixsRealm">
+                    <users-properties path="sampleapp-users.properties" relative-to="jboss.server.config.dir"/>
+                    <groups-properties path="sampleapp-roles.properties" relative-to="jboss.server.config.dir"/>
+                </properties-realm>
+                 -->
             </security-realms>
+            
+            
+            
+            
+            <!-- 
+              	<security-domain name="imixsrealm">
+			        <authentication>
+		                <login-module code="UsersRoles" flag="required">  
+		                    <module-option name="usersProperties" value="${jboss.server.config.dir}/sampleapp-users.properties"/>  
+		                    <module-option name="rolesProperties" value="${jboss.server.config.dir}/sampleapp-roles.properties"/>  
+		                </login-module>  
+		                <login-module code="RoleMapping" flag="required">
+	            			<module-option name="rolesProperties" value="file:${jboss.server.config.dir}/imixsrealm.properties"/>
+	                		<module-option name="replaceRole" value="false"/>
+	           			</login-module>
+			        </authentication>
+			    </security-domain>   
+             -->
+            
+            
+            
+            
+            
+            
+            
             <mappers>
                 <simple-permission-mapper name="default-permission-mapper" mapping-mode="first">
                     <permission-mapping>
@@ -386,6 +432,20 @@
                 </server-ssl-contexts>
             </tls>
         </subsystem>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         <subsystem xmlns="urn:wildfly:health:1.0" security-enabled="false"/>
         <subsystem xmlns="urn:jboss:domain:infinispan:13.0">
             <cache-container name="ejb" default-cache="passivation" marshaller="PROTOSTREAM" aliases="sfsb" modules="org.wildfly.clustering.ejb.infinispan">

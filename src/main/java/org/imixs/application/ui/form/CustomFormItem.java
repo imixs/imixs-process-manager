@@ -30,7 +30,7 @@ package org.imixs.application.ui.form;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.model.SelectItem;
+import jakarta.faces.model.SelectItem;
 
 /**
  * This CustomFormItem provides the informations from a single item inside a

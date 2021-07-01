@@ -119,4 +119,21 @@ To run Wildfly Server in debug mode (port 8787) you can build the Docker Image w
 
 	$ mvn clean install -Pdebug
 	
+
+
+### Jakarta EE 9
+
+To build Wildfly for Jakarta EE 9 preview run:
+
+
+	$ docker build -f Dockerfile-wildfly-jakarta-ee9 -t imixs/imixs-process-manager ./
 	
+run with:
+
+	$ docker-compose -f docker-compose-dev.yaml up
+	
+
+
+
+
+												

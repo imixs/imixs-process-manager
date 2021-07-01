@@ -15,7 +15,9 @@
 	<!-- Basic authentication -->
 	<login-config>
 		<auth-method>BASIC</auth-method>
-		<realm-name>imixsrealm</realm-name>
+		<!-- 
+		<realm-name>ApplicationRealm</realm-name>
+		 -->
 	</login-config>
 	
 	<!-- SSO 

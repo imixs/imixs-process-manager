@@ -26,11 +26,16 @@ USER jboss
 
 # Expose the ports in which we're interested
 EXPOSE 8080
+EXPOSE 9990
 
 
 
 # Copy Postgre JDB Driver
 COPY ./docker/configuration/wildfly-jee9/modules/org /opt/jboss/wildfly/modules/org
+# Copy Eclipselink
+
+COPY ./docker/configuration/wildfly-jee9/modules/system /opt/jboss/wildfly/modules/system
+
 # Setup configuration
 COPY ./docker/configuration/wildfly-jee9/*.properties /opt/jboss/wildfly/standalone/configuration/
 COPY ./docker/configuration/wildfly-jee9/standalone.xml /opt/jboss/wildfly/standalone/configuration/

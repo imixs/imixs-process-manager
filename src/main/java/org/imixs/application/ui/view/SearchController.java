@@ -3,9 +3,9 @@ package org.imixs.application.ui.view;
 import java.io.Serializable;
 import java.util.logging.Logger;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Named;
 
 import org.imixs.workflow.faces.data.ViewController;
 

@@ -8,9 +8,9 @@
 
 	<!-- eclipselink -->
 	<persistence-unit name="org.imixs.workflow.jpa" transaction-type="JTA">	
-	<!-- 
+	<!--  -->
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-	 -->	
+		
 		<jta-data-source>jdbc/workflow</jta-data-source>
 		<jar-file>lib/imixs-workflow-engine-${org.imixs.workflow.version}.jar</jar-file>
 		<properties>
@@ -23,7 +23,11 @@
 			<!-- disable 2nd level cache 
 			<property name="eclipselink.cache.shared.default" value="false" />
 			<property name="eclipselink.query-results-cache" value="false"/>
--->
+			-->
+			
+			<!--  hybernate 
+			<property name="hibernate.hbm2ddl.auto" value="update"/>
+			-->
 		</properties>				
 	</persistence-unit>
 	

@@ -30,7 +30,7 @@ package org.imixs.application.adapter;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.ejb.EJB;
+import jakarta.ejb.EJB;
 
 import org.imixs.workflow.ItemCollection;
 import org.imixs.workflow.SignalAdapter;
