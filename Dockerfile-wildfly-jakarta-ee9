@@ -40,6 +40,8 @@ COPY ./docker/configuration/wildfly-jee9/modules/system /opt/jboss/wildfly/modul
 COPY ./docker/configuration/wildfly-jee9/*.properties /opt/jboss/wildfly/standalone/configuration/
 COPY ./docker/configuration/wildfly-jee9/standalone.xml /opt/jboss/wildfly/standalone/configuration/
 
+
+
 # Set the default command to run on boot
 # This will boot WildFly in standalone mode and bind to all interfaces
 CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0"]

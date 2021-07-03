@@ -11,9 +11,9 @@
 	<default-encoding>UTF-8</default-encoding>
 	<context-root>/</context-root>
 	
-	<!-- imixsrealm 
-	<security-domain>ApplicationRealm</security-domain>
--->
+	<!-- imixsrealm -->
+	<security-domain>imixsrealm</security-domain>
+
 
 
 

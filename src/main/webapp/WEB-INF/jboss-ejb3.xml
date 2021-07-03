@@ -8,6 +8,7 @@
 	<assembly-descriptor>
 		<s:security>
 			<ejb-name>*</ejb-name>
+			<!-- <s:security-domain>ApplicationRealm</s:security-domain> -->
 			<s:security-domain>imixsrealm</s:security-domain>
 			<!-- This configuration is necessary to enable @runAs for the AdminPService  -->
 			<s:missing-method-permissions-deny-access>false</s:missing-method-permissions-deny-access>

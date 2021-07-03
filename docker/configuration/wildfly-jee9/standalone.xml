@@ -269,7 +269,13 @@
             </thread-pools>
             <default-security-domain value="other"/>
             <application-security-domains>
+                <!-- maybe important -->
+                 <application-security-domain name="imixsrealm" security-domain="imixsrealm"/>
+
+
                 <application-security-domain name="other" security-domain="ApplicationDomain"/>
+                
+                
             </application-security-domains>
             <default-missing-method-permissions-deny-access value="true"/>
             <statistics enabled="${wildfly.ejb3.statistics-enabled:${wildfly.statistics-enabled:false}}"/>
@@ -296,14 +302,10 @@
                     <realm name="ManagementRealm" role-decoder="groups-to-roles"/>
                     <realm name="local" role-mapper="super-user-mapper"/>
                 </security-domain>
-              <!--    -->
-                <security-domain name="imixsrealm" permission-mapper="default-permission-mapper">
-                    <realm name="ApplicationRealm" role-decoder="groups-to-roles"/>
-                    <realm name="local"/>
+              	<!-- imixsrealm filerealm configuration   -->
+                <security-domain name="imixsrealm"  default-realm="imixsrealm"  permission-mapper="default-permission-mapper">
+                    <realm name="imixsrealm" role-decoder="groups-to-roles"/>
                 </security-domain>
-             	 
-             	 
-             	 
             </security-domains>
             <security-realms>
                 <identity-realm name="local" identity="$local"/>
@@ -316,12 +318,12 @@
                     <groups-properties path="mgmt-groups.properties" relative-to="jboss.server.config.dir"/>
                 </properties-realm>
                 
-                <!-- 
-                <properties-realm name="ImixsRealm">
+                <!-- imixsrealm filerealm property files -->
+                <properties-realm name="imixsrealm">
                     <users-properties path="sampleapp-users.properties" relative-to="jboss.server.config.dir"/>
                     <groups-properties path="sampleapp-roles.properties" relative-to="jboss.server.config.dir"/>
                 </properties-realm>
-                 -->
+                 
             </security-realms>
             
             
@@ -572,7 +574,11 @@
                 <file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>
             </handlers>
             <application-security-domains>
+                <application-security-domain name="imixsrealm" security-domain="imixsrealm"/>
                 <application-security-domain name="other" security-domain="ApplicationDomain"/>
+                
+                
+              
             </application-security-domains>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:webservices:2.0" statistics-enabled="${wildfly.webservices.statistics-enabled:${wildfly.statistics-enabled:false}}">
