@@ -191,12 +191,6 @@
                 		<driver-class>org.postgresql.Driver</driver-class>
             		</driver>
                 </drivers>
-
-
-
-
-
-
             </datasources>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:deployment-scanner:2.0">
@@ -269,13 +263,9 @@
             </thread-pools>
             <default-security-domain value="other"/>
             <application-security-domains>
-                <!-- maybe important -->
-                 <application-security-domain name="imixsrealm" security-domain="imixsrealm"/>
-
-
+                <!-- imixs realm ref -->
+                <application-security-domain name="imixsrealm" security-domain="imixsrealm"/>
                 <application-security-domain name="other" security-domain="ApplicationDomain"/>
-                
-                
             </application-security-domains>
             <default-missing-method-permissions-deny-access value="true"/>
             <statistics enabled="${wildfly.ejb3.statistics-enabled:${wildfly.statistics-enabled:false}}"/>
@@ -302,10 +292,9 @@
                     <realm name="ManagementRealm" role-decoder="groups-to-roles"/>
                     <realm name="local" role-mapper="super-user-mapper"/>
                 </security-domain>
-              	<!-- imixsrealm filerealm configuration   -->
-                <security-domain name="imixsrealm"  default-realm="imixsrealm"  permission-mapper="default-permission-mapper">
-                    <realm name="imixsrealm" role-decoder="groups-to-roles"/>
-                </security-domain>
+			    <security-domain name="imixsrealm" default-realm="imixsrealm" permission-mapper="default-permission-mapper">
+				      <realm name="imixsrealm"/>
+				</security-domain>
             </security-domains>
             <security-realms>
                 <identity-realm name="local" identity="$local"/>
@@ -317,39 +306,13 @@
                     <users-properties path="mgmt-users.properties" relative-to="jboss.server.config.dir" digest-realm-name="ManagementRealm"/>
                     <groups-properties path="mgmt-groups.properties" relative-to="jboss.server.config.dir"/>
                 </properties-realm>
-                
-                <!-- imixsrealm filerealm property files -->
-                <properties-realm name="imixsrealm">
-                    <users-properties path="sampleapp-users.properties" relative-to="jboss.server.config.dir"/>
-                    <groups-properties path="sampleapp-roles.properties" relative-to="jboss.server.config.dir"/>
-                </properties-realm>
-                 
+              
+                <properties-realm name="imixsrealm" groups-attribute="Roles">
+			      <users-properties path="sampleapp-users.properties" relative-to="jboss.server.config.dir" 
+			            digest-realm-name="Application Security" plain-text="true"/>
+			      <groups-properties path="sampleapp-roles.properties" relative-to="jboss.server.config.dir"/>
+			    </properties-realm>
             </security-realms>
-            
-            
-            
-            
-            <!-- 
-              	<security-domain name="imixsrealm">
-			        <authentication>
-		                <login-module code="UsersRoles" flag="required">  
-		                    <module-option name="usersProperties" value="${jboss.server.config.dir}/sampleapp-users.properties"/>  
-		                    <module-option name="rolesProperties" value="${jboss.server.config.dir}/sampleapp-roles.properties"/>  
-		                </login-module>  
-		                <login-module code="RoleMapping" flag="required">
-	            			<module-option name="rolesProperties" value="file:${jboss.server.config.dir}/imixsrealm.properties"/>
-	                		<module-option name="replaceRole" value="false"/>
-	           			</login-module>
-			        </authentication>
-			    </security-domain>   
-             -->
-            
-            
-            
-            
-            
-            
-            
             <mappers>
                 <simple-permission-mapper name="default-permission-mapper" mapping-mode="first">
                     <permission-mapping>
@@ -434,19 +397,6 @@
                 </server-ssl-contexts>
             </tls>
         </subsystem>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         <subsystem xmlns="urn:wildfly:health:1.0" security-enabled="false"/>
         <subsystem xmlns="urn:jboss:domain:infinispan:13.0">
@@ -576,9 +526,6 @@
             <application-security-domains>
                 <application-security-domain name="imixsrealm" security-domain="imixsrealm"/>
                 <application-security-domain name="other" security-domain="ApplicationDomain"/>
-                
-                
-              
             </application-security-domains>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:webservices:2.0" statistics-enabled="${wildfly.webservices.statistics-enabled:${wildfly.statistics-enabled:false}}">

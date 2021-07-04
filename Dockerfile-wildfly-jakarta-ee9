@@ -3,6 +3,7 @@
 FROM jboss/base-jdk:11
 
 # Set the WILDFLY_VERSION env variable
+#ENV WILDFLY_VERSION 24.0.0.Final
 ENV WILDFLY_VERSION preview-24.0.0.Final
 #ENV WILDFLY_SHA1 391346c9ed2772647ff07aeae39deb838ee11dcf
 ENV JBOSS_HOME /opt/jboss/wildfly
@@ -33,9 +34,7 @@ EXPOSE 9990
 # Copy Postgre JDB Driver
 COPY ./docker/configuration/wildfly-jee9/modules/org /opt/jboss/wildfly/modules/org
 # Copy Eclipselink
-
 COPY ./docker/configuration/wildfly-jee9/modules/system /opt/jboss/wildfly/modules/system
-
 # Setup configuration
 COPY ./docker/configuration/wildfly-jee9/*.properties /opt/jboss/wildfly/standalone/configuration/
 COPY ./docker/configuration/wildfly-jee9/standalone.xml /opt/jboss/wildfly/standalone/configuration/
@@ -44,4 +43,8 @@ COPY ./docker/configuration/wildfly-jee9/standalone.xml /opt/jboss/wildfly/stand
 
 # Set the default command to run on boot
 # This will boot WildFly in standalone mode and bind to all interfaces
-CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0"]
+#CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0"]
+
+CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0", "--debug", "*:8787"]
+
+
