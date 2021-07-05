@@ -11,7 +11,7 @@
 		<!-- Show task list -->
 		<c:if test="#{loginController.authenticated}">
 			<ui:include src="/pages/sub_view.xhtml">
-				<ui:param name="view" value="#{viewHandler.getData(myTaskListController)}" />
+				<ui:param name="viewController" value="#{myTaskListController}" />
 				<ui:param name="title" value="#{message.my_tasklist}" />
 			
 			</ui:include>

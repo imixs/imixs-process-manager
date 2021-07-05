@@ -10,7 +10,7 @@
 			<h2>#{title}</h2>
 
 			<h:dataTable class="imixsdatatable" style="width:100%"
-				value="#{view}" var="workitem">				
+				value="#{viewHandler.getData(viewController)}" var="workitem">				
 				
 				<h:column>
 					<f:facet name="header">
@@ -81,12 +81,12 @@
 			</h:dataTable>
 
 
-			<h:commandButton actionListener="#{viewHandler.back(tasklistController)}"
-				disabled="#{!(tasklistController.pageIndex>0)}"
+			<h:commandButton actionListener="#{viewHandler.back(viewController)}"
+				disabled="#{!(viewController.pageIndex>0)}"
 				value="&lt;&lt; #{message.prev}">
 			</h:commandButton>
-			<h:commandButton actionListener="#{viewHandler.forward(tasklistController)}"
-				disabled="#{tasklistController.endOfList}" 
+			<h:commandButton actionListener="#{viewHandler.forward(viewController)}"
+				disabled="#{viewController.endOfList}" 
 				value="#{message.next} &gt;&gt;">
 			</h:commandButton>
 
