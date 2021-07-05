@@ -105,6 +105,12 @@ You can create and change your models at runtime without interrupting your workf
 
 
 
+## Jakarta EE 9
+
+**Note:** Imixs-Workflow and the Imixs-Process-Manager are based on [Jakarta EE 9](https://jakarta.ee/). The project is currently developed based on Wildfly version preview-24.0.0.Final.
+
+If you want to run the project using Java EE 8 or Jakarta EE 8 than switch to [version 1.0.0](https://github.com/imixs/imixs-process-manager/releases). 
+
 ## Build
 
 To build the artifact from sources run:
