@@ -1,11 +1,12 @@
+# We are building our own jakarta 9 sever
+#
 # See: https://github.com/jboss-dockerfiles/wildfly
 # Use latest jboss/base-jdk:11 image as the base
 FROM jboss/base-jdk:11
 
 # Set the WILDFLY_VERSION env variable
-#ENV WILDFLY_VERSION 24.0.0.Final
-ENV WILDFLY_VERSION preview-24.0.0.Final
-#ENV WILDFLY_SHA1 391346c9ed2772647ff07aeae39deb838ee11dcf
+ENV WILDFLY_MAIN_VERSION 24.0.1.Final
+ENV WILDFLY_VERSION preview-24.0.1.Final
 ENV JBOSS_HOME /opt/jboss/wildfly
 
 USER root
@@ -13,7 +14,7 @@ USER root
 # Add the WildFly distribution to /opt, and make wildfly the owner of the extracted tar content
 # Make sure the distribution is available from a well-known place
 RUN cd $HOME \
-    && curl -O https://download.jboss.org/wildfly/24.0.0.Final/wildfly-$WILDFLY_VERSION.tar.gz \
+    && curl -O https://download.jboss.org/wildfly/$ENV WILDFLY_MAIN_VERSION/wildfly-$WILDFLY_VERSION.tar.gz \
     && tar xf wildfly-$WILDFLY_VERSION.tar.gz \
     && mv $HOME/wildfly-$WILDFLY_VERSION $JBOSS_HOME \
     && rm wildfly-$WILDFLY_VERSION.tar.gz \
