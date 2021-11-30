@@ -198,7 +198,7 @@
 										<exec executable="docker">
 											<arg value="build" />
 											<arg value="-f" />
-											<arg value="Dockerfile-Payara" />
+											<arg value="Dockerfile-payara-micro" />
 											<arg value="-t" />
 											<arg value="imixs/imixs-process-manager" />
 											<arg value="./" />
