@@ -105,11 +105,10 @@ You can create and change your models at runtime without interrupting your workf
 
 
 
-## Jakarta EE 9
+## Jakarta EE 10
 
-**Note:** Imixs-Workflow and the Imixs-Process-Manager are based on [Jakarta EE 9](https://jakarta.ee/). The project is currently developed based on Wildfly version preview-24.0.0.Final.
+**Note:** Imixs-Workflow and the Imixs-Process-Manager are based on [Jakarta EE 10](https://jakarta.ee/). The project is currently developed based on [Wildfly version 27.0.0.Final](https://wildfly.org).
 
-If you want to run the project using Java EE 8 or Jakarta EE 8 than switch to [version 1.0.0](https://github.com/imixs/imixs-process-manager/releases). 
 
 ## Build
 
@@ -134,7 +133,15 @@ To start the Imixs-Process Manger with docker-compose, run:
 	$ docker-compose -f docker-compose-dev.yaml up
 	
 
+## Autodeploy & Hot Deploy
 
+We use the [Manik Hot-Deploy Plugin](https://manik.imixs.org/) to auto deploy the application during development. 
+To update the deployment just run:
 
+	$ mvn install
+	
+During development of Jakarta EE Faces you can run the autodeploy mode to update your Web Frontend autoamtically:
 
-												
+	$ mvn manik-hotdeploy:hotdeploy
+
+In this mode the Manik-Plugin will detect updates of the Web Frontend and updates your running applicaton. 												
