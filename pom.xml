@@ -399,7 +399,7 @@
 					<hotdeployments>
 						<deployment>
 							<source>src/main/webapp</source>
-							<target>./docker/deployments/office-asta-tu-dortmund-app.war</target>
+							<target>./docker/deployments/imixs-process-manager.war</target>
 						</deployment>
 					</hotdeployments>
 				</configuration>

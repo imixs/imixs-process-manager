@@ -9,8 +9,9 @@
 	<ui:define name="content">
 	
 		<ui:include src="/pages/sub_view.xhtml">
-				<ui:param name="view" value="#{viewHandler.getData(searchController)}" />
+				<ui:param name="viewController" value="#{searchController}" />
 				<ui:param name="title" value="Search" />
 		</ui:include>
+		
 	</ui:define>
 </ui:composition>

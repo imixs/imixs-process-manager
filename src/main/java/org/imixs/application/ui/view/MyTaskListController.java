@@ -8,7 +8,6 @@ import jakarta.inject.Named;
 import org.imixs.workflow.faces.data.ViewController;
 import org.imixs.workflow.faces.util.LoginController;
 
-
 @Named
 @ViewScoped
 public class MyTaskListController extends ViewController {
@@ -17,7 +16,6 @@ public class MyTaskListController extends ViewController {
 
 	@Inject
 	LoginController loginController;
-	
 
 	/**
 	 * Initialize default behavior configured by the BASIC configuration entity.
@@ -27,11 +25,9 @@ public class MyTaskListController extends ViewController {
 	public void init() {
 		super.init();
 		this.setQuery("(type:\"workitem\" AND $owner:\"" + loginController.getRemoteUser() + "\")");
-	      this.setSortBy("$modified");
-	        this.setSortReverse(true);
-	        this.setLoadStubs(true);
-
+		this.setSortBy("$modified");
+		this.setSortReverse(true);
+		this.setLoadStubs(true);
 	}
-
 
 }
