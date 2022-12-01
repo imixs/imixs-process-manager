@@ -10,7 +10,7 @@ services:
       - dbdata:/var/lib/postgresql/data
   
   imixs-app:
-    image: imixs/imixs-process-manager
+    image: imixs/imixs-process-manager:latest
     environment:
       TZ: "CET" 
       LANG: "en_US.UTF-8"  

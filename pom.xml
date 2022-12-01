@@ -1,6 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.imixs.workflow</groupId>
 	<artifactId>imixs-process-manager</artifactId>
@@ -71,7 +69,6 @@
 			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
 		</repository>
 	</repositories>
-
 
 
 	<profiles>
@@ -145,7 +142,6 @@
 		</profile>
 
 
-
 		<profile>
 			<id>jakarta-ee9</id>
 			<build>
@@ -217,7 +213,6 @@
 		</profile>
 
 
-
 		<profile>
 			<id>docker-openliberty</id>
 			<build>
@@ -254,10 +249,6 @@
 		</profile>
 
 
-
-
-
-
 		<profile>
 			<id>docker-hub</id>
 			<build>
@@ -274,14 +265,12 @@
 										<exec executable="docker">
 											<arg value="build" />
 											<arg value="-t" />
-											<arg
-												value="imixs/imixs-process-manager:${project.version}" />
+											<arg value="imixs/imixs-process-manager:${project.version}" />
 											<arg value="." />
 										</exec>
 										<exec executable="docker">
 											<arg value="push" />
-											<arg
-												value="imixs/imixs-process-manager:${project.version}" />
+											<arg value="imixs/imixs-process-manager:${project.version}" />
 										</exec>
 									</target>
 								</configuration>
@@ -311,14 +300,12 @@
 										<exec executable="docker">
 											<arg value="build" />
 											<arg value="-t" />
-											<arg
-												value="imixs/imixs-process-manager" />
+											<arg value="imixs/imixs-process-manager" />
 											<arg value="." />
 										</exec>
 										<exec executable="docker">
 											<arg value="push" />
-											<arg
-												value="imixs/imixs-process-manager" />
+											<arg value="imixs/imixs-process-manager" />
 										</exec>
 									</target>
 								</configuration>
@@ -385,11 +372,44 @@
 			</plugin>
 
 
+			<plugin>
+				<groupId>org.imixs.maven</groupId>
+				<artifactId>manik-hotdeploy-maven-plugin</artifactId>
+				<version>2.0.0</version>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!--
+ 						List Source and Target folders for Autodeploy and Hotdeploy 
+					-->
+					<autodeployments>
+						<deployment>
+							<!-- wildcard deployment -->
+							<source>target/*.{war,ear,jar}</source>
+							<target>./docker/deployments/</target>
+							<unpack>true</unpack>
+						</deployment>
+					</autodeployments>
+					<hotdeployments>
+						<deployment>
+							<source>src/main/webapp</source>
+							<target>./docker/deployments/office-asta-tu-dortmund-app.war</target>
+						</deployment>
+					</hotdeployments>
+				</configuration>
+			</plugin>
+
 			<!-- relase management -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
-			</plugin>	
+			</plugin>
 
 		</plugins>
 
@@ -398,7 +418,7 @@
 
 	<dependencies>
 		<!-- JEE Dependencies -->
-		
+
 		<!-- 
 		<dependency>
 			<groupId>javax</groupId>
@@ -408,10 +428,10 @@
 		</dependency>
 		 -->
 		<dependency>
-		    <groupId>jakarta.platform</groupId>
-		    <artifactId>jakarta.jakartaee-api</artifactId>
-		    <version>9.0.0</version>
-		    <scope>provided</scope>
+			<groupId>jakarta.platform</groupId>
+			<artifactId>jakarta.jakartaee-api</artifactId>
+			<version>9.0.0</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
