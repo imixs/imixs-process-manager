@@ -35,18 +35,11 @@
         <extension module="org.wildfly.extension.metrics"/>
         <extension module="org.wildfly.extension.microprofile.config-smallrye"/>
         <extension module="org.wildfly.extension.microprofile.jwt-smallrye"/>
-        <!-- added microprofile health -->
-        <extension module="org.wildfly.extension.microprofile.health-smallrye"/>
         <extension module="org.wildfly.extension.microprofile.opentracing-smallrye"/>
         <extension module="org.wildfly.extension.request-controller"/>
         <extension module="org.wildfly.extension.security.manager"/>
         <extension module="org.wildfly.extension.undertow"/>
     </extensions>
-    <!-- EclipseLink Integration -->
-    <system-properties>
-        <property name="eclipselink.archive.factory" value="org.jipijapa.eclipselink.JBossArchiveFactoryImpl"/>
-    </system-properties>
-
     <management>
         <audit-log>
             <formatters>
@@ -142,31 +135,10 @@
                         <password>sa</password>
                     </security>
                 </datasource>
-              
-              	<!-- imixs-workflow datasource -->
-                <datasource jta="true" jndi-name="java:/jdbc/workflow" pool-name="workflow" enabled="true" use-ccm="true">
-                	<connection-url>${env.POSTGRES_CONNECTION}</connection-url>
-				    <driver-class>org.postgresql.Driver</driver-class>
-				    <driver>postgresql</driver>
-				    <security>
-				      <user-name>${env.POSTGRES_USER}</user-name>
-				      <password>${env.POSTGRES_PASSWORD}</password>
-				    </security>
-                     <validation>
-                        <valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLValidConnectionChecker"/>
-                        <!-- any background-validation-millis > 0 will enable background validation. See https://jira.jboss.org/browse/JBAS-4088. -->
-                        <background-validation-millis>60000</background-validation-millis>
-                        <exception-sorter class-name="org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLExceptionSorter"></exception-sorter>
-                    </validation>                
-                </datasource>                
                 <drivers>
                     <driver name="h2" module="com.h2database.h2">
                         <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
                     </driver>
-                    <!-- Postgres Integration -->
-                    <driver name="postgresql" module="org.postgresql">
-                		<driver-class>org.postgresql.Driver</driver-class>
-            		</driver>
                 </drivers>
             </datasources>
         </subsystem>
@@ -243,8 +215,6 @@
             </thread-pools>
             <default-security-domain value="other"/>
             <application-security-domains>
-                <!-- imixs realm ref -->
-                <application-security-domain name="imixsrealm" security-domain="imixsrealm"/>
                 <application-security-domain name="other" security-domain="ApplicationDomain"/>
             </application-security-domains>
             <default-missing-method-permissions-deny-access value="true"/>
@@ -272,9 +242,6 @@
                     <realm name="ApplicationRealm" role-decoder="groups-to-roles"/>
                     <realm name="local"/>
                 </security-domain>
-			    <security-domain name="imixsrealm" default-realm="imixsrealm" permission-mapper="default-permission-mapper">
-				      <realm name="imixsrealm"/>
-				</security-domain>
             </security-domains>
             <security-realms>
                 <identity-realm name="local" identity="$local"/>
@@ -286,12 +253,6 @@
                     <users-properties path="mgmt-users.properties" relative-to="jboss.server.config.dir" digest-realm-name="ManagementRealm"/>
                     <groups-properties path="mgmt-groups.properties" relative-to="jboss.server.config.dir"/>
                 </properties-realm>
-              
-                <properties-realm name="imixsrealm" groups-attribute="Roles">
-			      <users-properties path="sampleapp-users.properties" relative-to="jboss.server.config.dir" 
-			            digest-realm-name="Application Security" plain-text="true"/>
-			      <groups-properties path="sampleapp-roles.properties" relative-to="jboss.server.config.dir"/>
-			    </properties-realm>
             </security-realms>
             <mappers>
                 <simple-permission-mapper name="default-permission-mapper" mapping-mode="first">
@@ -474,9 +435,6 @@
             <mail-session name="default" jndi-name="java:jboss/mail/Default">
                 <smtp-server outbound-socket-binding-ref="mail-smtp"/>
             </mail-session>
-            <mail-session name="java:/mail/org.imixs.workflow.mail" jndi-name="java:/mail/org.imixs.workflow.mail" debug="false">
-            	<smtp-server outbound-socket-binding-ref="mail-smtp"/>
-            </mail-session>            
         </subsystem>
         <subsystem xmlns="urn:wildfly:metrics:1.0" security-enabled="false" exposed-subsystems="*" prefix="${wildfly.metrics.prefix:wildfly}"/>
         <subsystem xmlns="urn:wildfly:microprofile-config-smallrye:2.0"/>
@@ -532,7 +490,6 @@
                 <file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>
             </handlers>
             <application-security-domains>
-                <application-security-domain name="imixsrealm" security-domain="imixsrealm"/>
                 <application-security-domain name="other" security-domain="ApplicationDomain"/>
             </application-security-domains>
         </subsystem>

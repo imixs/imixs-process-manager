@@ -1,9 +1,9 @@
-FROM jboss/wildfly:20.0.1.Final
+FROM quay.io/wildfly/wildfly:27.0.0.Final-jdk11
 
 LABEL description="Imixs-Process-Manager"
 LABEL maintainer="ralph.soika@imixs.com"
 
-# Copy EclipseLink
+# Copy EclipseLink and Postgres Driver
 COPY ./docker/configuration/wildfly/modules/ /opt/jboss/wildfly/modules/
 
 # Setup configuration
@@ -12,6 +12,6 @@ COPY ./docker/configuration/wildfly/standalone.xml /opt/jboss/wildfly/standalone
 
 # Deploy artefact
 ADD ./target/*.war /opt/jboss/wildfly/standalone/deployments/
-
+WORKDIR /opt/jboss/wildfly
 # Run with management interface
 CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0"]
