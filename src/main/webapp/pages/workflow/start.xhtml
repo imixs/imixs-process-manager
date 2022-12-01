@@ -20,7 +20,7 @@
 			<h:form id="workitem_form_id">
 
 				<h1>Start a New Business Process</h1>
-				<p class="lead">Select a Workflowgroup to start a new process:</p>
+				<p class="lead">Select a Workflowgroup to start a new task:</p>
 
 
 				<!-- Error  -->
@@ -39,13 +39,13 @@
 								<h:commandLink title=" " styleClass="action-create"
 									actionListener="#{workflowController.create(model.version,initialTask.item['numprocessid'],process.item['$uniqueid'])}"
 									action="/pages/workflow/workitem">
-									<span class="typcn typcn-folder-add"></span>
+									<span class="typcn typcn-folder-add" style="margin-right:5px;"></span>
 									<h:outputText value="#{group}" />
 								</h:commandLink>
 									<p><h:outputText
 											value="#{initialTask.item['rtfdescription']}" escape="false" />
 									</p>
-								<span class="imixs-tooltip"> <h:outputText
+								<span class="imixs-tooltip" > <h:outputText
 										value="#{initialTask.item['rtfdescription']}" escape="false" />
 								</span>
 							</h:panelGroup> <h:outputText style="color:red" rendered="#{empty initialTask}"
