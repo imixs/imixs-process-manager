@@ -4,7 +4,7 @@
 	<artifactId>imixs-process-manager</artifactId>
 	<packaging>war</packaging>
 	<name>imixs-process-manager</name>
-	<version>2.0.1</version>
+	<version>2.0.2</version>
 	<description>Imixs Process Manager</description>
 	<url>https://github.com/imixs/imixs-process-manager</url>
 	<organization>
