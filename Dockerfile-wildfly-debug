@@ -1,4 +1,4 @@
-FROM quay.io/wildfly/wildfly:27.0.0.Final-jdk11
+FROM quay.io/wildfly/wildfly:27.0.1.Final-jdk11
 
 LABEL description="Imixs-Process-Manager"
 LABEL maintainer="ralph.soika@imixs.com"
