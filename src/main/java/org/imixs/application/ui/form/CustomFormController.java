@@ -90,7 +90,6 @@ public class CustomFormController implements Serializable {
      * 
      * @param workflowEvent
      * @throws AccessDeniedException
-     * @throws ModelException
      */
     public void onWorkflowEvent(@Observes WorkflowEvent workflowEvent) {
         if (workflowEvent == null)
@@ -117,11 +116,10 @@ public class CustomFormController implements Serializable {
      * checks the workitem field txtWorkflowEditorCustomForm which holds the last
      * parsed custom form definition
      * 
-     * @return
-     * @throws ModelException
+     * @param workitem
      */
     public void computeFieldDefinition(ItemCollection workitem) {
-        sections = new ArrayList<CustomFormSection>();
+        sections = new ArrayList<>();
         String content = fetchFormDefinitionFromModel(workitem);
         if (content.isEmpty()) {
             // lets see if we already have a custom form definition
@@ -207,7 +205,7 @@ public class CustomFormController implements Serializable {
      * @return
      */
     private List<CustomFormItem> findItems(Element sectionElement) {
-        List<CustomFormItem> result = new ArrayList<CustomFormItem>();
+        List<CustomFormItem> result = new ArrayList<>();
         NodeList itemList = sectionElement.getElementsByTagName("item");
         for (int temp = 0; temp < itemList.getLength(); temp++) {
             Node itemNode = itemList.item(temp);

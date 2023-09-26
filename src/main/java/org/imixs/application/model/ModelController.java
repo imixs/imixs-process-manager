@@ -90,7 +90,7 @@ public class ModelController implements Serializable {
 	@EJB
 	protected SetupService setupService;
 
-	private Map<String, ItemCollection> modelEntityCache = new HashMap<String, ItemCollection>();
+	private final Map<String, ItemCollection> modelEntityCache = new HashMap<>();
 
 	private static Logger logger = Logger.getLogger(ModelController.class.getName());
 
@@ -108,7 +108,7 @@ public class ModelController implements Serializable {
 			logger.warning("Unable to load groups:" + e.getMessage());
 		}
 		// return empty result
-		return new ArrayList<String>();
+		return new ArrayList<>();
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class ModelController implements Serializable {
 	 */
 	public List<String> getWorkflowGroups() {
 
-		Set<String> set = new HashSet<String>();
+		Set<String> set = new HashSet<>();
 		List<String> versions = modelService.getVersions();
 		for (String version : versions) {
 			try {
@@ -169,7 +169,7 @@ public class ModelController implements Serializable {
 	 */
 	public List<String> getSubWorkflowGroups(String parentWorkflowGroup) {
 
-		Set<String> set = new HashSet<String>();
+		Set<String> set = new HashSet<>();
 		List<String> versions = modelService.getVersions();
 		for (String version : versions) {
 			try {
@@ -196,6 +196,12 @@ public class ModelController implements Serializable {
 
 	}
 
+	/**
+	 * Returns a model object for corresponding workitem.
+	 * 
+	 * @param workitem
+	 * @return
+	 */
 	public Model getModelByWorkitem(ItemCollection workitem) {
 		try {
 			return modelService.getModelByWorkitem(workitem);
@@ -290,6 +296,7 @@ public class ModelController implements Serializable {
 	 * This Method deletes the given model from the database and the internal model
 	 * cache.
 	 * 
+         * @param modelversion
 	 * @throws AccessDeniedException
 	 * @throws ModelException
 	 */
@@ -302,12 +309,11 @@ public class ModelController implements Serializable {
 	 * entity exists.
 	 * 
 	 * 
-	 * @param modelVersion
+	 * @param modelversion
 	 *            - version for the model to search the process entity
 	 * @param processid
 	 *            - id of the process entity
 	 * @return an instance of the matching process entity
-	 * @throws ModelException
 	 */
 	public ItemCollection getProcessEntity(int processid, String modelversion) {
 		try {
@@ -325,8 +331,8 @@ public class ModelController implements Serializable {
 	 * 
 	 * @param processid
 	 * @param modelversion
+         * @param documentContext
 	 * @return
-	 * @throws ModelException
 	 */
 	public String getProcessDescription(int processid, String modelversion, ItemCollection documentContext) {
 		ItemCollection pe = null;

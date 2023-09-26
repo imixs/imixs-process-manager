@@ -12,39 +12,31 @@ import java.util.Locale;
  * 
  */
 public class ChronicleEntityComparator implements Comparator<ChronicleEntity> {
-	@SuppressWarnings("unused")
-	private final Collator collator;
 	private final boolean ascending;
 
 	public ChronicleEntityComparator(boolean ascending, Locale locale) {
-		this.collator = Collator.getInstance(locale);
 		this.ascending = ascending;
 	}
 
 	/**
-	 * This method sorts by the default locale
+	 * This method sorts by date value
 	 * 
-	 * @param aItemName
 	 * @param ascending
 	 */
 	public ChronicleEntityComparator(boolean ascending) {
-		this.collator = Collator.getInstance(Locale.getDefault());
 		this.ascending = ascending;
 
 	}
 
 	/**
-	 * This method sorts by the default locale ascending
-	 * 
-	 * @param aItemName
-	 * @param ascending
+	 * This method sorts by date value ascending
 	 */
 	public ChronicleEntityComparator() {
-		this.collator = Collator.getInstance(Locale.getDefault());
 		this.ascending = true;
 
 	}
 
+        @Override
 	public int compare(ChronicleEntity a, ChronicleEntity b) {
 
 		Date dateA = a.getDate();
