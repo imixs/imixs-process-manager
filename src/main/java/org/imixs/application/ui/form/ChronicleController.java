@@ -47,6 +47,7 @@ import jakarta.enterprise.event.Observes;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import java.util.logging.Level;
 
 import org.imixs.workflow.ItemCollection;
 import org.imixs.workflow.exceptions.AccessDeniedException;
@@ -83,7 +84,7 @@ public class ChronicleController implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Inject
 	protected WorkflowController workflowController;
-	private static Logger logger = Logger.getLogger(ChronicleController.class.getName());
+	private static final Logger logger = Logger.getLogger(ChronicleController.class.getName());
 
 	List<ChronicleEntity> originChronicleList;
 	List<ChronicleEntity> filteredChronicleList;
@@ -162,7 +163,7 @@ public class ChronicleController implements Serializable {
 		filteredChronicleList = new ArrayList<ChronicleEntity>();
 		filteredChronicleList.addAll(originChronicleList);
 
-		logger.fine("...init in " + (System.currentTimeMillis() - l) + "ms");
+		logger.log(Level.FINE, "...init in {0}ms", System.currentTimeMillis() - l);
 	}
 
 	
@@ -247,7 +248,7 @@ public class ChronicleController implements Serializable {
 			}
 		}
 		
-		logger.finest("......getChroniclePerMonth - found " + result.size() +  " chronicle entities");		
+		logger.log(Level.FINEST, "......getChroniclePerMonth - found {0} chronicle entities", result.size());		
 		return result;
 	}
 
@@ -259,7 +260,7 @@ public class ChronicleController implements Serializable {
 	 */
 	public void toggleFilter(String category) {
 		long l = System.currentTimeMillis();
-		logger.finest("......toggleFilter : " + category);
+		logger.log(Level.FINEST, "......toggleFilter : {0}", category);
 
 		if (category != null && !category.isEmpty() && category.equals(filter)) {
 			// toggle existing category
@@ -291,8 +292,8 @@ public class ChronicleController implements Serializable {
 		
 		computeTimeData(filteredChronicleList);
 
-		logger.finest("......filter=" + filter + " size= " + filteredChronicleList.size());
-		logger.fine("...computed filter in " + (System.currentTimeMillis() - l) + "ms");
+		logger.log(Level.FINEST, "......filter={0} size= {1}", new Object[]{filter, filteredChronicleList.size()});
+		logger.log(Level.FINE, "...computed filter in {0}ms", System.currentTimeMillis() - l);
 	}
 
 	/**

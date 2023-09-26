@@ -37,6 +37,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
+import java.util.logging.Level;
 
 import org.imixs.workflow.ItemCollection;
 import org.imixs.workflow.WorkflowKernel;
@@ -67,7 +68,7 @@ public class LoadRestService {
 	@jakarta.ws.rs.core.Context
 	private HttpServletRequest servletRequest;
 
-	private static Logger logger = Logger.getLogger(LoadRestService.class.getName());
+	private static final Logger logger = Logger.getLogger(LoadRestService.class.getName());
 
 	@EJB
 	private WorkflowService workflowService;
@@ -96,7 +97,7 @@ public class LoadRestService {
 			try {
 				workflowService.processWorkItem(workitem);
 			} catch (AccessDeniedException | ProcessingErrorException | PluginException | ModelException e) {
-				e.printStackTrace();
+				logger.log(Level.SEVERE, "load test failed: {0}", e.getMessage());
 
 				return "load test failed: " + e.getMessage();
 			}

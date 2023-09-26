@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import jakarta.ejb.EJB;
+import java.util.logging.Level;
 
 import org.imixs.workflow.ItemCollection;
 import org.imixs.workflow.WorkflowContext;
@@ -52,7 +53,7 @@ public class DemoPlugin extends AbstractPlugin {
 	@EJB
 	ModelService modelService;
 
-	private static Logger logger = Logger.getLogger(DemoPlugin.class.getName());
+	private static final Logger logger = Logger.getLogger(DemoPlugin.class.getName());
 
 	public void init(WorkflowContext actx) throws PluginException {
 
@@ -65,7 +66,7 @@ public class DemoPlugin extends AbstractPlugin {
 		// test model service
 		List<String> versions = modelService.getVersions();
 		for (String aversion : versions) {
-			logger.info("ModelVersion found: " + aversion);
+			logger.log(Level.INFO, "ModelVersion found: {0}", aversion);
 		}
 
 		return adocumentContext;

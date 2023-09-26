@@ -59,7 +59,7 @@ import org.imixs.workflow.exceptions.PluginException;
 public class CommentPlugin extends AbstractPlugin {
 	ItemCollection documentContext;
 
-	private static Logger logger = Logger.getLogger(CommentPlugin.class.getName());
+	private static final Logger logger = Logger.getLogger(CommentPlugin.class.getName());
 
 	/**
 	 * This method updates the comment list. There for the method copies the

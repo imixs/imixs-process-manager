@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import jakarta.ejb.EJB;
+import java.util.logging.Level;
 
 import org.imixs.workflow.ItemCollection;
 import org.imixs.workflow.engine.DocumentService;
@@ -55,7 +56,7 @@ public class TeamPlugin extends AbstractPlugin {
 	@EJB
 	DocumentService documentService;
 
-	private static Logger logger = Logger.getLogger(TeamPlugin.class.getName());
+	private static final Logger logger = Logger.getLogger(TeamPlugin.class.getName());
 
 	/**
 	 * The run method looks up the team entity and copies the member list into the
@@ -65,7 +66,7 @@ public class TeamPlugin extends AbstractPlugin {
 	public ItemCollection run(ItemCollection documentContext, ItemCollection event) throws PluginException {
 
 		String teamRef = documentContext.getItemValueString("team");
-		logger.info("...lookup team reference: " + teamRef);
+		logger.log(Level.INFO, "...lookup team reference: {0}", teamRef);
 
 		// now we load the team configuration
 		ItemCollection team = documentService.load(teamRef);
@@ -75,7 +76,7 @@ public class TeamPlugin extends AbstractPlugin {
 			documentContext.replaceItemValue("teamMembers", teamMembers);
 			// write new team list into the server log....
 			for (String member : teamMembers) {
-				logger.info("...... add team member " + member);
+				logger.log(Level.INFO, "...... add team member {0}", member);
 			}
 		}
 		return documentContext;

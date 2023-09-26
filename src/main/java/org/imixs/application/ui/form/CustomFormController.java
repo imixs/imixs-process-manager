@@ -40,6 +40,7 @@ import jakarta.ejb.EJB;
 import jakarta.enterprise.context.ConversationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Named;
+import java.util.logging.Level;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -73,7 +74,7 @@ public class CustomFormController implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private static Logger logger = Logger.getLogger(CustomFormController.class.getName());
+    private static final Logger logger = Logger.getLogger(CustomFormController.class.getName());
 
     private List<CustomFormSection> sections;
 
@@ -151,7 +152,7 @@ public class CustomFormController implements Serializable {
                     }
                 }
             } catch (ParserConfigurationException | SAXException | IOException e) {
-                logger.warning("Unable to parse custom form definition: " + e.getMessage());
+                logger.log(Level.WARNING, "Unable to parse custom form definition: {0}", e.getMessage());
                 return;
 
             }
@@ -177,7 +178,7 @@ public class CustomFormController implements Serializable {
             model = modelService.getModelByWorkitem(workitem);
             task = model.getTask(workitem.getTaskID());
         } catch (ModelException e) {
-            logger.warning("unable to parse data object in model: " + e.getMessage());
+            logger.log(Level.WARNING, "unable to parse data object in model: {0}", e.getMessage());
             return "";
         }
 
@@ -189,8 +190,8 @@ public class CustomFormController implements Serializable {
             String content = dataObject.get(1);
             // we expect that the content contains at least one occurrence of <imixs-form>
             if (content.contains("<imixs-form>")) {
-                logger.finest("......DataObject name=" + templateName);
-                logger.finest("......DataObject content=" + content);
+                logger.log(Level.FINEST, "......DataObject name={0}", templateName);
+                logger.log(Level.FINEST, "......DataObject content={0}", content);
                 return content;
             } else {
                 // seems not to be a imixs-form definition!

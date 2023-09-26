@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import jakarta.ejb.EJB;
+import java.util.logging.Level;
 
 import org.imixs.workflow.ItemCollection;
 import org.imixs.workflow.SignalAdapter;
@@ -51,7 +52,7 @@ public class DemoAdapter implements SignalAdapter {
 	@EJB
 	ModelService modelService;
 
-	private static Logger logger = Logger.getLogger(DemoAdapter.class.getName());
+	private static final Logger logger = Logger.getLogger(DemoAdapter.class.getName());
 
 
 	
@@ -63,7 +64,7 @@ public class DemoAdapter implements SignalAdapter {
 		// test model service
 		List<String> versions = modelService.getVersions();
 		for (String aversion : versions) {
-			logger.info("ModelVersion found: " + aversion);
+			logger.log(Level.INFO, "ModelVersion found: {0}", aversion);
 		}
 
 		return document;
