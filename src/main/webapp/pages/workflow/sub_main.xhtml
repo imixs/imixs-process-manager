@@ -1,4 +1,4 @@
-<f:subview xmlns="http://www.w3.org/1999/xhtml"
+<f:subview id="sub_main" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
@@ -12,7 +12,7 @@
 	
 	<dl>
 		<dt>
-			<h:outputLabel value="#{global.subject}">
+			<h:outputLabel value="#{message.subject}">
 				<h:message style="color: red" for="subject_id" showSummary="true"
 					showDetail="false" />
 			</h:outputLabel>
@@ -25,7 +25,7 @@
 		</dd>
 
 		<dt>
-			<h:outputLabel value="#{global.date}"></h:outputLabel>
+			<h:outputLabel value="#{message.date}"></h:outputLabel>
 		</dt>
 		<dd style="width: 350px;">
 			<i:imixsDateInput value="#{workflowController.workitem.item['date']}"  showtime="true" minuteinterval="5"/>
@@ -40,7 +40,7 @@
 		
 
 
-		<dt style="clear: left;">#{global.details}</dt>
+		<dt style="clear: left;">#{message.details}</dt>
 		<dd>
 			<h:inputTextarea class="imixs-editor"
 				value="#{workflowController.workitem.item['description']}" />
