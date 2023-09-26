@@ -65,7 +65,9 @@ public class CommentPlugin extends AbstractPlugin {
 	 * This method updates the comment list. There for the method copies the
 	 * txtComment into the txtCommentList and clears the txtComment field
 	 * 
-	 * @param workflowEvent
+         * @param adocumentContext
+         * @param documentActivity
+         * @throws org.imixs.workflow.exceptions.PluginException
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -87,13 +89,13 @@ public class CommentPlugin extends AbstractPlugin {
 		// create new Comment data - important: property names in lower
 		// case
 		List<Map<String, Object>> vCommentList = documentContext.getItemValue("txtCommentLog");
-		Map<String, Object> log = new HashMap<String, Object>();
+		Map<String, Object> log = new HashMap<>();
 		String remoteUser = this.getWorkflowService().getUserName();
 		log.put("datcomment", documentContext.getItemValueDate(WorkflowKernel.LASTEVENTDATE));
 		log.put("nameditor", remoteUser);
 
 		// test for fixed comment
-		String sComment = null;
+		String sComment;
 		if (evalItemCollection != null && evalItemCollection.hasItem("comment")) {
 			sComment = evalItemCollection.getItemValueString("comment");
 		} else {

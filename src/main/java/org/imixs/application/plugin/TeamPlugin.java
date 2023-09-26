@@ -61,8 +61,11 @@ public class TeamPlugin extends AbstractPlugin {
 	/**
 	 * The run method looks up the team entity and copies the member list into the
 	 * item 'teamMembers'
+         * @param documentContext
+         * @throws org.imixs.workflow.exceptions.PluginException
 	 */
 	@SuppressWarnings("unchecked")
+        @Override
 	public ItemCollection run(ItemCollection documentContext, ItemCollection event) throws PluginException {
 
 		String teamRef = documentContext.getItemValueString("team");

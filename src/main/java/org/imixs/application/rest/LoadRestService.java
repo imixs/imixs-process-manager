@@ -32,7 +32,6 @@ import java.util.logging.Logger;
 
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -53,7 +52,7 @@ import org.imixs.workflow.exceptions.ProcessingErrorException;
  * 
  * Example URL:
  * 
- * http://localhost:8080/workflow/test?modelversion=1.0.1&processid=1000&activityid=10&maxcount=2
+ * http://localhost:8080/load/test?modelversion=1.0.1&processid=1000&activityid=10&maxcount=2
  * 
  * 
  * 
@@ -65,9 +64,6 @@ import org.imixs.workflow.exceptions.ProcessingErrorException;
 @Stateless
 public class LoadRestService {
 
-	@jakarta.ws.rs.core.Context
-	private HttpServletRequest servletRequest;
-
 	private static final Logger logger = Logger.getLogger(LoadRestService.class.getName());
 
 	@EJB
@@ -77,6 +73,10 @@ public class LoadRestService {
 	 * GET Method to start an internal load test
 	 * 
 	 * @param requestBodyStream
+         * @param modelversion
+         * @param processid
+         * @param activityid
+         * @param maxcount
 	 * @return
 	 */
 	@GET

@@ -55,10 +55,15 @@ public class DemoPlugin extends AbstractPlugin {
 
 	private static final Logger logger = Logger.getLogger(DemoPlugin.class.getName());
 
+        @Override
 	public void init(WorkflowContext actx) throws PluginException {
 
 	}
 
+        /**
+         * {@inheritDoc}
+         */
+        @Override
 	public ItemCollection run(ItemCollection adocumentContext, ItemCollection adocumentActivity)
 			throws PluginException {
 
