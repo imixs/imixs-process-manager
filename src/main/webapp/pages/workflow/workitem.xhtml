@@ -35,8 +35,8 @@
 								<h:selectOneMenu id="team_id" style="width:100%"
 									value="#{workflowController.workitem.item['team']}"
 									required="false">
-									<f:selectItem required="true"
-										itemLabel="#{global.please_select}" itemValue="" />
+									<f:selectItem
+										itemLabel="#{message.please_select}" itemValue="" />
 									<f:selectItems value="#{teamController.teamSelection}" />
 								</h:selectOneMenu>
 							</dd>
