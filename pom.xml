@@ -56,6 +56,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.imixs.workflow.version>6.0.3</org.imixs.workflow.version>
+		<microprofile.version>6.0</microprofile.version>
+		<microprofile-metrics.version>4.0</microprofile-metrics.version>	
 		<custom.webResources>src/main/webapp</custom.webResources>
 		<custom.unpackTypes>war</custom.unpackTypes>
 	</properties>
@@ -431,6 +433,15 @@
 			<version>2.1</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- Microprofile -->
+		<dependency>
+			<groupId>org.eclipse.microprofile</groupId>
+			<artifactId>microprofile</artifactId>
+			<version>${microprofile.version}</version>
+			<type>pom</type>
+			<scope>provided</scope>
+		</dependency>		
 
 		<!-- Imixs Workflow -->
 		<dependency>
