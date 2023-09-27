@@ -391,7 +391,7 @@
 					<autodeployments>
 						<deployment>
 							<!-- wildcard deployment -->
-							<source>target/*.{war,ear,jar}</source>
+							<source>target/imixs-process-manager.war</source>
 							<target>./docker/deployments/</target>
 							<unpack>true</unpack>
 						</deployment>
@@ -418,15 +418,6 @@
 
 	<dependencies>
 		<!-- JEE Dependencies -->
-
-		<!-- 
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>8.0</version>
-			<scope>provided</scope>
-		</dependency>
-		 -->
 		<dependency>
 			<groupId>jakarta.platform</groupId>
 			<artifactId>jakarta.jakartaee-api</artifactId>
@@ -442,7 +433,6 @@
 		</dependency>
 
 		<!-- Imixs Workflow -->
-
 		<dependency>
 			<groupId>org.imixs.workflow</groupId>
 			<artifactId>imixs-workflow-engine</artifactId>
