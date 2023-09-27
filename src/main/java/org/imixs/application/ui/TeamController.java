@@ -89,7 +89,7 @@ public class TeamController implements Serializable {
 	 */
 	public ArrayList<SelectItem> getTeamSelection() {
 
-		teamSelection = new ArrayList<SelectItem>();
+		teamSelection = new ArrayList<>();
 
 		List<ItemCollection> col = documentSerivce.getDocumentsByType("team");
 

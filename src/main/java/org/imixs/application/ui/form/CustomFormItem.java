@@ -121,7 +121,7 @@ public class CustomFormItem {
      */
     public List<SelectItem> getSelectItems() throws Exception {
         ArrayList<SelectItem> selection;
-        selection = new ArrayList<SelectItem>();
+        selection = new ArrayList<>();
 
         // check if a value for this param is available...
         // if not return an empty list
@@ -135,7 +135,7 @@ public class CustomFormItem {
             // test if aValue has a | as an delimiter
             String sValue = aValue;
             String sName = sValue;
-            if (sValue.indexOf("|") > -1) {
+            if (sValue.contains("|")) {
                 sValue = sValue.substring(0, sValue.indexOf("|"));
                 sName = sName.substring(sName.indexOf("|") + 1);
             }

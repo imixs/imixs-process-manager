@@ -20,7 +20,7 @@ public class OpenTaskListController extends ViewController implements Serializab
 	private static final long serialVersionUID = 1L;
 
 	@SuppressWarnings("unused")
-	private static Logger logger = Logger.getLogger(OpenTaskListController.class.getName());
+	private static final Logger logger = Logger.getLogger(OpenTaskListController.class.getName());
 
 	@Override
 	@PostConstruct

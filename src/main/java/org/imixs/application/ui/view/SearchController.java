@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
+import java.util.logging.Level;
 
 import org.imixs.workflow.faces.data.ViewController;
 
@@ -22,7 +23,7 @@ public class SearchController extends ViewController implements Serializable {
 	private String input;
 	
 	
-	private static Logger logger = Logger.getLogger(SearchController.class.getName());
+	private static final Logger logger = Logger.getLogger(SearchController.class.getName());
 
 	@Override
 	@PostConstruct
@@ -47,7 +48,7 @@ public class SearchController extends ViewController implements Serializable {
 	public void search() {
 		this.setQuery("(type:\"workitem\" OR type:\"workitemarchive\") AND ("+input+"*)");
 		
-		logger.info("serach query=" + this.getQuery());
+		logger.log(Level.INFO, "serach query={0}", this.getQuery());
 	}
 	
 }

@@ -44,6 +44,7 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.event.ActionEvent;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import java.util.logging.Level;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.imixs.workflow.FileData;
@@ -90,9 +91,9 @@ public class ModelController implements Serializable {
 	@EJB
 	protected SetupService setupService;
 
-	private Map<String, ItemCollection> modelEntityCache = new HashMap<String, ItemCollection>();
+	private final Map<String, ItemCollection> modelEntityCache = new HashMap<>();
 
-	private static Logger logger = Logger.getLogger(ModelController.class.getName());
+	private static final Logger logger = Logger.getLogger(ModelController.class.getName());
 
 
 	/**
@@ -105,10 +106,10 @@ public class ModelController implements Serializable {
 		try {
 			return modelService.getModel(version).getGroups();
 		} catch (ModelException e) {
-			logger.warning("Unable to load groups:" + e.getMessage());
+			logger.log(Level.WARNING, "Unable to load groups:{0}", e.getMessage());
 		}
 		// return empty result
-		return new ArrayList<String>();
+		return new ArrayList<>();
 	}
 
 	/**
@@ -125,7 +126,7 @@ public class ModelController implements Serializable {
 	 */
 	public List<String> getWorkflowGroups() {
 
-		Set<String> set = new HashSet<String>();
+		Set<String> set = new HashSet<>();
 		List<String> versions = modelService.getVersions();
 		for (String version : versions) {
 			try {
@@ -133,7 +134,7 @@ public class ModelController implements Serializable {
 					continue;
 				set.addAll(modelService.getModel(version).getGroups());
 			} catch (ModelException e) {
-				e.printStackTrace();
+				logger.log(Level.SEVERE, "Unable to find model version:{0}", e.getMessage());
 			}
 		}
 		List<String> result = new ArrayList<>();
@@ -169,7 +170,7 @@ public class ModelController implements Serializable {
 	 */
 	public List<String> getSubWorkflowGroups(String parentWorkflowGroup) {
 
-		Set<String> set = new HashSet<String>();
+		Set<String> set = new HashSet<>();
 		List<String> versions = modelService.getVersions();
 		for (String version : versions) {
 			try {
@@ -177,7 +178,7 @@ public class ModelController implements Serializable {
 					continue;
 				set.addAll(modelService.getModel(version).getGroups());
 			} catch (ModelException e) {
-				e.printStackTrace();
+				logger.log(Level.SEVERE, "Unable to find model version:{0}", e.getMessage());
 			}
 		}
 		List<String> result = new ArrayList<>();
@@ -196,6 +197,12 @@ public class ModelController implements Serializable {
 
 	}
 
+	/**
+	 * Returns a model object for corresponding workitem.
+	 * 
+	 * @param workitem
+	 * @return
+	 */
 	public Model getModelByWorkitem(ItemCollection workitem) {
 		try {
 			return modelService.getModelByWorkitem(workitem);
@@ -265,7 +272,7 @@ public class ModelController implements Serializable {
 			return;
 		}
 		for (FileData file : fileList) {
-			logger.info("Import bpmn-model: " + file.getName());
+			logger.log(Level.INFO, "Import bpmn-model: {0}", file.getName());
 
 			// test if bpmn model?
 			if (file.getName().endsWith(".bpmn")) {
@@ -290,6 +297,7 @@ public class ModelController implements Serializable {
 	 * This Method deletes the given model from the database and the internal model
 	 * cache.
 	 * 
+         * @param modelversion
 	 * @throws AccessDeniedException
 	 * @throws ModelException
 	 */
@@ -302,19 +310,17 @@ public class ModelController implements Serializable {
 	 * entity exists.
 	 * 
 	 * 
-	 * @param modelVersion
+	 * @param modelversion
 	 *            - version for the model to search the process entity
 	 * @param processid
 	 *            - id of the process entity
 	 * @return an instance of the matching process entity
-	 * @throws ModelException
 	 */
 	public ItemCollection getProcessEntity(int processid, String modelversion) {
 		try {
 			return modelService.getModel(modelversion).getTask(processid);
 		} catch (ModelException e) {
-			logger.warning("Unable to load task " + processid + " in model version '" + modelversion + "' - "
-					+ e.getMessage());
+			logger.log(Level.WARNING, "Unable to load task {0} in model version ''{1}'' - {2}", new Object[]{processid, modelversion, e.getMessage()});
 		}
 		return null;
 	}
@@ -325,16 +331,15 @@ public class ModelController implements Serializable {
 	 * 
 	 * @param processid
 	 * @param modelversion
+         * @param documentContext
 	 * @return
-	 * @throws ModelException
 	 */
 	public String getProcessDescription(int processid, String modelversion, ItemCollection documentContext) {
 		ItemCollection pe = null;
 		try {
 			pe = modelService.getModel(modelversion).getTask(processid);
 		} catch (ModelException e1) {
-			logger.warning("Unable to load task " + processid + " in model version '" + modelversion + "' - "
-					+ e1.getMessage());
+			logger.log(Level.WARNING, "Unable to load task {0} in model version ''{1}'' - {2}", new Object[]{processid, modelversion, e1.getMessage()});
 
 		}
 		if (pe == null) {
@@ -345,7 +350,7 @@ public class ModelController implements Serializable {
 		try {
 			desc = workflowService.adaptText(desc, documentContext);
 		} catch (PluginException e) {
-			logger.warning("Unable to update processDescription: " + e.getMessage());
+			logger.log(Level.WARNING, "Unable to update processDescription: {0}", e.getMessage());
 		}
 
 		return desc;

@@ -20,7 +20,7 @@ public class TeamlistController extends ViewController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@SuppressWarnings("unused")
-	private static Logger logger = Logger.getLogger(TeamlistController.class.getName());
+	private static final Logger logger = Logger.getLogger(TeamlistController.class.getName());
 
 	@Override
 	@PostConstruct

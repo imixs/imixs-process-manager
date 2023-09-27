@@ -10,7 +10,7 @@
 		<!-- Show task list -->
 		<c:if test="#{loginController.authenticated}">
 			<ui:include src="/pages/sub_view.xhtml">
-				<ui:param name="view" value="#{viewHandler.getData(openTaskListController)}" />
+				<ui:param name="viewController" value="#{openTaskListController}" />
 				<ui:param name="title" value="#{message.worklist}" />
 			
 			</ui:include>

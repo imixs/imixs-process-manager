@@ -24,8 +24,6 @@
 package org.imixs.application.ui.form;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -34,23 +32,19 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.logging.Logger;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ConversationScoped;
 import jakarta.enterprise.event.Observes;
-import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import java.util.logging.Level;
 
 import org.imixs.workflow.ItemCollection;
 import org.imixs.workflow.exceptions.AccessDeniedException;
-import org.imixs.workflow.exceptions.ModelException;
 import org.imixs.workflow.faces.data.WorkflowController;
 import org.imixs.workflow.faces.data.WorkflowEvent;
 
@@ -83,7 +77,7 @@ public class ChronicleController implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Inject
 	protected WorkflowController workflowController;
-	private static Logger logger = Logger.getLogger(ChronicleController.class.getName());
+	private static final Logger logger = Logger.getLogger(ChronicleController.class.getName());
 
 	List<ChronicleEntity> originChronicleList;
 	List<ChronicleEntity> filteredChronicleList;
@@ -92,32 +86,20 @@ public class ChronicleController implements Serializable {
 	Map<Integer, Set<Integer>> yearsMonths;
 
 	
-	private DateFormat dateFormat=null;
-
-//	@SuppressWarnings("unchecked")
-//	@PostConstruct
+	@SuppressWarnings("unchecked")
+	@PostConstruct
 	public void init() {
 		long l = System.currentTimeMillis();
-		originChronicleList = new ArrayList<ChronicleEntity>();
+		originChronicleList = new ArrayList<>();
 
-		yearsMonths = new HashMap<Integer, Set<Integer>>();
+		yearsMonths = new HashMap<>();
 		
-		try {
-            Locale browserLocale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-            ResourceBundle rb = ResourceBundle.getBundle("bundle.messages", browserLocale);
-            String sDatePattern = rb.getString("dateTimePattern");
-             dateFormat = new SimpleDateFormat(sDatePattern);
-        } catch (MissingResourceException mre) {
-            dateFormat=null;
-        }
-
-
 		/* collect history */
 		List<List<Object>> history = workflowController.getWorkitem().getItemValue("txtworkflowhistory");
 		// change order
 		Collections.reverse(history);
 		// do we have real history entries?
-		if (history.size() > 0 && history.get(0) instanceof List) {
+		if (!history.isEmpty() && history.get(0) instanceof List) {
 			for (List<Object> entries : history) {
 
 				Date date = (Date) entries.get(0);
@@ -159,10 +141,10 @@ public class ChronicleController implements Serializable {
 		computeTimeData(originChronicleList);
 
 		// set full filtered list
-		filteredChronicleList = new ArrayList<ChronicleEntity>();
+		filteredChronicleList = new ArrayList<>();
 		filteredChronicleList.addAll(originChronicleList);
 
-		logger.fine("...init in " + (System.currentTimeMillis() - l) + "ms");
+		logger.log(Level.FINE, "...init in {0}ms", System.currentTimeMillis() - l);
 	}
 
 	
@@ -171,7 +153,6 @@ public class ChronicleController implements Serializable {
      * 
      * @param workflowEvent
      * @throws AccessDeniedException
-     * @throws ModelException
      */
     public void onWorkflowEvent(@Observes WorkflowEvent workflowEvent) {
         if (workflowEvent == null)
@@ -237,7 +218,7 @@ public class ChronicleController implements Serializable {
 	 * @return
 	 */
 	public List<ChronicleEntity> getChroniclePerMonth(int year, int month) {
-		ArrayList<ChronicleEntity> result = new ArrayList<ChronicleEntity>();
+		ArrayList<ChronicleEntity> result = new ArrayList<>();
 		for (ChronicleEntity entry : filteredChronicleList) {
 			Date date = entry.getDate();
 
@@ -247,7 +228,7 @@ public class ChronicleController implements Serializable {
 			}
 		}
 		
-		logger.finest("......getChroniclePerMonth - found " + result.size() +  " chronicle entities");		
+		logger.log(Level.FINEST, "......getChroniclePerMonth - found {0} chronicle entities", result.size());		
 		return result;
 	}
 
@@ -259,7 +240,7 @@ public class ChronicleController implements Serializable {
 	 */
 	public void toggleFilter(String category) {
 		long l = System.currentTimeMillis();
-		logger.finest("......toggleFilter : " + category);
+		logger.log(Level.FINEST, "......toggleFilter : {0}", category);
 
 		if (category != null && !category.isEmpty() && category.equals(filter)) {
 			// toggle existing category
@@ -269,10 +250,10 @@ public class ChronicleController implements Serializable {
 		}
 
 		if (filter == null || filter.isEmpty()) {
-			filteredChronicleList = new ArrayList<ChronicleEntity>();
+			filteredChronicleList = new ArrayList<>();
 			filteredChronicleList.addAll(originChronicleList);
 		} else {
-			filteredChronicleList = new ArrayList<ChronicleEntity>();
+			filteredChronicleList = new ArrayList<>();
 			// build a new filtered list with only data of the given category
 			for (ChronicleEntity chronicleEntry : originChronicleList) {
 				List<ItemCollection> entries = chronicleEntry.getEntries();
@@ -291,8 +272,8 @@ public class ChronicleController implements Serializable {
 		
 		computeTimeData(filteredChronicleList);
 
-		logger.finest("......filter=" + filter + " size= " + filteredChronicleList.size());
-		logger.fine("...computed filter in " + (System.currentTimeMillis() - l) + "ms");
+		logger.log(Level.FINEST, "......filter={0} size= {1}", new Object[]{filter, filteredChronicleList.size()});
+		logger.log(Level.FINE, "...computed filter in {0}ms", System.currentTimeMillis() - l);
 	}
 
 	/**
@@ -326,7 +307,7 @@ public class ChronicleController implements Serializable {
 	 * This method recalculates the yeas/months for the current entry list
 	 */
 	private void computeTimeData(List<ChronicleEntity> chronicleList) {
-		yearsMonths = new HashMap<Integer, Set<Integer>>();
+		yearsMonths = new HashMap<>();
 	
 		for (ChronicleEntity chronicleEntity : chronicleList) {
 			// update years table
@@ -343,7 +324,7 @@ public class ChronicleController implements Serializable {
 		int month = localDate.getMonthValue();
 		Set<Integer> mothsPerYear = yearsMonths.get(year);
 		if (mothsPerYear == null) {
-			mothsPerYear = new HashSet<Integer>();
+			mothsPerYear = new HashSet<>();
 		}
 		mothsPerYear.add(month);
 		yearsMonths.put(year, mothsPerYear);
