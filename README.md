@@ -1,3 +1,6 @@
+[![Java CI with Maven](https://github.com/imixs/imixs-process-manager/actions/workflows/maven.yml/badge.svg)](https://github.com/imixs/imixs-process-manager/actions/workflows/maven.yml)
+[![Join a discussion](https://img.shields.io/badge/discuss-on%20github-4CB697)](https://github.com/imixs/imixs-workflow/discussions)
+
 # The Imixs Process Manager
 
 
