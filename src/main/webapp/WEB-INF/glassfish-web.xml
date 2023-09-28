@@ -4,29 +4,22 @@
 
 	<context-root>/</context-root>
 
-<!-- 
 	<security-role-mapping>
 		<role-name>org.imixs.ACCESSLEVEL.NOACCESS</role-name>
-		<group-name>IMIXS-WORKFLOW-Noaccess</group-name>
+		<group-name>org.imixs.ACCESSLEVEL.NOACCESS</group-name>
 	</security-role-mapping>
 	<security-role-mapping>
 		<role-name>org.imixs.ACCESSLEVEL.READERACCESS</role-name>
-		<group-name>IMIXS-WORKFLOW-Reader</group-name>
+		<group-name>org.imixs.ACCESSLEVEL.READERACCESS</group-name>
 	</security-role-mapping>
 	<security-role-mapping>
 		<role-name>org.imixs.ACCESSLEVEL.AUTHORACCESS</role-name>
-		<group-name>IMIXS-WORKFLOW-Author</group-name>
+		<group-name>org.imixs.ACCESSLEVEL.AUTHORACCESS</group-name>
 	</security-role-mapping>
 	<security-role-mapping>
 		<role-name>org.imixs.ACCESSLEVEL.EDITORACCESS</role-name>
-		<group-name>IMIXS-WORKFLOW-Editor</group-name>
+		<group-name>org.imixs.ACCESSLEVEL.EDITORACCESS</group-name>
 	</security-role-mapping>
-	<security-role-mapping>
-		<role-name>org.imixs.ACCESSLEVEL.MANAGERACCESS</role-name>
-		<group-name>IMIXS-WORKFLOW-Manager</group-name>
-		<principal-name>imixs-workflow-service</principal-name>
-	</security-role-mapping>
- -->
 
 	<security-role-mapping>
 		<role-name>org.imixs.ACCESSLEVEL.MANAGERACCESS</role-name>
