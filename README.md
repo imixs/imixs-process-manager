@@ -21,36 +21,40 @@ The *Imixs Process Manager* comes with a Docker profile which enables you to sta
 
 Download the [docker-compose.yml](https://raw.githubusercontent.com/imixs/imixs-process-manager/master/docker-compose.yml) file...
 
-	version: "3.6"
-	services:
-	
-	  imixs-db:
-	    image: postgres:9.6.1
-	    environment:
-	      POSTGRES_PASSWORD: adminadmin
-	      POSTGRES_DB: workflow-db
-	    volumes: 
-	      - dbdata:/var/lib/postgresql/data
-	  
-	  imixs-app:
-	    image: imixs/imixs-process-manager
-	    environment:
-	      WILDFLY_PASS: adminadmin
-	      DEBUG: "true"
-	      POSTGRES_USER: "postgres"
-	      POSTGRES_PASSWORD: "adminadmin"
-	      POSTGRES_CONNECTION: "jdbc:postgresql://imixs-db/workflow-db"
-	    ports:
-	      - "8080:8080"
-	
-	volumes:
-	  dbdata: 
+```yaml
+version: "3.6"
+services:
+
+  imixs-db:
+    image: postgres:9.6.1
+    environment:
+      POSTGRES_PASSWORD: adminadmin
+      POSTGRES_DB: workflow-db
+    volumes: 
+      - dbdata:/var/lib/postgresql/data
+  
+  imixs-app:
+    image: imixs/imixs-process-manager:latest
+    environment:
+      TZ: "CET" 
+      LANG: "en_US.UTF-8"  
+      JAVA_OPTS: "-Dnashorn.args=--no-deprecation-warning"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "adminadmin"
+      POSTGRES_CONNECTION: "jdbc:postgresql://imixs-db/workflow-db"
+    ports:
+      - "8080:8080"
+      - "8787:8787"
+      - "9990:9990"      
+volumes:
+  dbdata:
+```
 
 ... and run
 
 	$ docker-compose up
 	
-After a few seconds the Imixs Process Manager is up and running. You cann acces it from your web browser at: [http://localhost:8080/](http://localhost:8080/)
+After a few seconds the Imixs Process Manager is up and running. You can access it from your web browser at: [http://localhost:8080/](http://localhost:8080/)
 
 
 <img src="./screen-002.png" />
