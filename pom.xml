@@ -4,7 +4,7 @@
 	<artifactId>imixs-process-manager</artifactId>
 	<packaging>war</packaging>
 	<name>imixs-process-manager</name>
-	<version>2.0.2</version>
+	<version>2.0.3</version>
 	<description>Imixs Process Manager</description>
 	<url>https://github.com/imixs/imixs-process-manager</url>
 	<organization>
@@ -55,7 +55,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.imixs.workflow.version>6.0.3</org.imixs.workflow.version>
+		<org.imixs.workflow.version>6.0.5-SNAPSHOT</org.imixs.workflow.version>
 		<microprofile.version>6.0</microprofile.version>
 		<custom.webResources>src/main/webapp</custom.webResources>
 		<custom.unpackTypes>war</custom.unpackTypes>
