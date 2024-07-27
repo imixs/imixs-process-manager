@@ -2,7 +2,7 @@ version: "3.6"
 services:
 
   imixs-db:
-    image: postgres:13.11
+    image: postgres:9.6.1
     environment:
       POSTGRES_PASSWORD: adminadmin
       POSTGRES_DB: workflow-db
@@ -18,19 +18,9 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "adminadmin"
       POSTGRES_CONNECTION: "jdbc:postgresql://imixs-db/workflow-db"
-      METRICS_ENABLED: "true"
     ports:
       - "8080:8080"
       - "8787:8787"
-      - "9990:9990"
-    volumes:
-      - ./docker/deployments:/opt/jboss/wildfly/standalone/deployments/
-
-
-  imixsadmin:
-    image: imixs/imixs-admin:latest
-    ports:
-      - "8888:8080"      
-      
+      - "9990:9990"      
 volumes:
   dbdata:   
