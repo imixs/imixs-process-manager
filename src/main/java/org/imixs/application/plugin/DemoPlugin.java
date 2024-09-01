@@ -69,7 +69,7 @@ public class DemoPlugin extends AbstractPlugin {
 
 		logger.info("...running demo plugin...");
 		// test model service
-		List<String> versions = modelService.getVersions();
+		List<String> versions = modelService.getModelManager().getVersions();
 		for (String aversion : versions) {
 			logger.log(Level.INFO, "ModelVersion found: {0}", aversion);
 		}

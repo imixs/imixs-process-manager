@@ -55,7 +55,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.imixs.workflow.version>6.0.6</org.imixs.workflow.version>
+		<org.imixs.workflow.version>6.1.0-SNAPSHOT</org.imixs.workflow.version>
 		<microprofile.version>6.0</microprofile.version>
 		<custom.webResources>src/main/webapp</custom.webResources>
 		<custom.unpackTypes>war</custom.unpackTypes>
@@ -438,10 +438,14 @@
 		<!-- Imixs Workflow -->
 		<dependency>
 			<groupId>org.imixs.workflow</groupId>
+			<artifactId>imixs-workflow-core</artifactId>
+			<version>${org.imixs.workflow.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.imixs.workflow</groupId>
 			<artifactId>imixs-workflow-engine</artifactId>
 			<version>${org.imixs.workflow.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.imixs.workflow</groupId>
 			<artifactId>imixs-workflow-jax-rs</artifactId>

@@ -65,17 +65,17 @@ public class CommentPlugin extends AbstractPlugin {
 	 * This method updates the comment list. There for the method copies the
 	 * txtComment into the txtCommentList and clears the txtComment field
 	 * 
-         * @param adocumentContext
-         * @param documentActivity
+         * @param workitem
+         * @param event
          * @throws org.imixs.workflow.exceptions.PluginException
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public ItemCollection run(ItemCollection adocumentContext, ItemCollection documentActivity) throws PluginException {
+	public ItemCollection run(ItemCollection workitem, ItemCollection event) throws PluginException {
 
-		documentContext = adocumentContext;
+		documentContext = workitem;
 	
-		ItemCollection evalItemCollection = this.getWorkflowService().evalWorkflowResult(documentActivity, "item", adocumentContext);
+		ItemCollection evalItemCollection = this.getWorkflowService().evalWorkflowResult(event, "item", workitem);
 
 		// test if comment is defined in model
 		if (evalItemCollection != null) {

@@ -34,19 +34,14 @@ import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import jakarta.ejb.EJB;
-import jakarta.enterprise.context.ConversationScoped;
-import jakarta.enterprise.event.Observes;
-import jakarta.inject.Named;
-import java.util.logging.Level;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.imixs.workflow.ItemCollection;
-import org.imixs.workflow.Model;
 import org.imixs.workflow.engine.ModelService;
 import org.imixs.workflow.exceptions.AccessDeniedException;
 import org.imixs.workflow.exceptions.ModelException;
@@ -56,6 +51,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import jakarta.ejb.EJB;
+import jakarta.enterprise.context.ConversationScoped;
+import jakarta.enterprise.event.Observes;
+import jakarta.inject.Named;
 
 /**
  * The CustomFormController computes a set of fields based on a data object
@@ -170,11 +170,9 @@ public class CustomFormController implements Serializable {
      */
     @SuppressWarnings("unchecked")
     private String fetchFormDefinitionFromModel(ItemCollection workitem) {
-        Model model;
         ItemCollection task;
         try {
-            model = modelService.getModelByWorkitem(workitem);
-            task = model.getTask(workitem.getTaskID());
+            task = modelService.getModelManager().loadTask(workitem);
         } catch (ModelException e) {
             logger.log(Level.WARNING, "unable to parse data object in model: {0}", e.getMessage());
             return "";
