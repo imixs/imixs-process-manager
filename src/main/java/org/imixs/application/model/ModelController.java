@@ -104,7 +104,7 @@ public class ModelController implements Serializable {
 		try {
 			BPMNModel model;
 			model = modelService.getModelManager().getModel(version);
-			return modelService.getModelManager().findAllGroups(model);
+			return modelService.getModelManager().findAllGroupsByModel(model);
 		} catch (ModelException e) {
 			logger.log(Level.WARNING, "Unable to load groups:{0}", e.getMessage());
 		}
@@ -123,20 +123,18 @@ public class ModelController implements Serializable {
 	 * The worflowGroup list is used to assign a workflow Group to a core process.
 	 * 
 	 * @return list of workflow groups
+	 * @throws ModelException
 	 */
-	public List<String> getWorkflowGroups() {
+	public List<String> getWorkflowGroups() throws ModelException {
 
-		// Set<String> set = new HashSet<>();
-		// List<String> versions = modelService.getModelManager().getVersions();
 		List<String> result = new ArrayList<>();
-
 		for (BPMNModel model : modelService.getModelManager().getAllModels()) {
 			String version = BPMNUtil.getVersion(model);
 			// Skip system model..
 			if (version.startsWith("system-")) {
 				continue;
 			}
-			Set<String> groups = modelService.getModelManager().findAllGroups(model);
+			Set<String> groups = modelService.getModelManager().findAllGroupsByModel(model);
 			for (String groupName : groups) {
 				if (result.contains(groupName))
 					continue;
@@ -173,15 +171,12 @@ public class ModelController implements Serializable {
 		ItemCollection result = null;
 		BPMNModel model = modelService.getModelManager().getModel(version);
 		List<ItemCollection> startTasks;
-		try {
-			startTasks = modelService.getModelManager().findStartTasks(model, group);
-			if (startTasks.size() > 0) {
-				result = startTasks.get(0);
-			}
-		} catch (BPMNModelException e) {
-			throw new ModelException(ModelException.INVALID_MODEL,
-					"Unable to create new workitem by group '" + group + "'", e);
+
+		startTasks = modelService.getModelManager().findStartTasks(model, group);
+		if (startTasks.size() > 0) {
+			result = startTasks.get(0);
 		}
+
 		if (result == null) {
 			logger.warning("No Model found for Group '" + group + "'");
 		}
@@ -211,12 +206,14 @@ public class ModelController implements Serializable {
 	}
 
 	/**
-	 * returns all model versions. Used by the Model View
+	 * Returns a sorted set of all model versions.
+	 * <p>
+	 * Used by the Model View.
 	 * 
 	 * @return
 	 */
-	public List<String> getVersions() {
-		return modelService.getModelManager().getVersions();
+	public Set<String> getVersions() {
+		return modelService.getModelEntityStore().keySet();
 	}
 
 	/**
@@ -257,7 +254,6 @@ public class ModelController implements Serializable {
 				BPMNModel model;
 				try {
 					model = BPMNModelFactory.read(inputStream);
-
 					modelService.saveModel(model);
 					continue;
 				} catch (BPMNModelException e) {
