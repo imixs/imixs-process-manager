@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.imixs.workflow</groupId>
 	<artifactId>imixs-process-manager</artifactId>
@@ -63,14 +65,14 @@
 
 
 	<repositories>
-		<!-- Sonatype Snapshot repository -->
 		<repository>
-			<id>sonatype-snaptshots</id>
-			<name>Sonatype Snapshot repository</name>
-			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
+			<id>oss-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
 		</repository>
 	</repositories>
-
 
 	<profiles>
 
@@ -266,12 +268,14 @@
 										<exec executable="docker">
 											<arg value="build" />
 											<arg value="-t" />
-											<arg value="imixs/imixs-process-manager:${project.version}" />
+											<arg
+												value="imixs/imixs-process-manager:${project.version}" />
 											<arg value="." />
 										</exec>
 										<exec executable="docker">
 											<arg value="push" />
-											<arg value="imixs/imixs-process-manager:${project.version}" />
+											<arg
+												value="imixs/imixs-process-manager:${project.version}" />
 										</exec>
 									</target>
 								</configuration>
@@ -433,7 +437,7 @@
 			<version>${microprofile.version}</version>
 			<type>pom</type>
 			<scope>provided</scope>
-		</dependency>		
+		</dependency>
 
 		<!-- Imixs Workflow -->
 		<dependency>
