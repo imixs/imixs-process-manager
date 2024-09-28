@@ -30,29 +30,25 @@ package org.imixs.application.ui.form;
 import java.util.List;
 
 /**
- * This CustomFormSection provides the informations from a custom form
- * definition
+ * This CustomSubFormSection divides sections into sub forms
  * 
  * 
  * @author rsoika
  * @version 1.0
  */
-public class CustomFormSection {
+public class CustomSubForm {
 
 	String label;
-	String columns;
-	String path;
+	String id;
 	boolean readonly;
-	List<CustomFormItem> items;
+	List<CustomFormSection> sections;
 
-	public CustomFormSection(String label, String columns, String path, boolean readonly) {
+	public CustomSubForm(String id, String label, boolean readonly) {
 		super();
 		this.label = label;
 		this.readonly = readonly;
-		this.columns = columns;
-		if (path != null) {
-			this.path = path.trim();
-		}
+		this.id = id;
+
 	}
 
 	public String getLabel() {
@@ -63,28 +59,12 @@ public class CustomFormSection {
 		this.label = label;
 	}
 
-	public String getColumns() {
-		return columns;
+	public String getId() {
+		return id;
 	}
 
-	public void setColumns(String columns) {
-		this.columns = columns;
-	}
-
-	public List<CustomFormItem> getItems() {
-		return items;
-	}
-
-	public void setItems(List<CustomFormItem> items) {
-		this.items = items;
-	}
-
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public boolean isReadonly() {
@@ -93,6 +73,14 @@ public class CustomFormSection {
 
 	public void setReadonly(boolean readonly) {
 		this.readonly = readonly;
+	}
+
+	public List<CustomFormSection> getSections() {
+		return sections;
+	}
+
+	public void setSections(List<CustomFormSection> sections) {
+		this.sections = sections;
 	}
 
 }

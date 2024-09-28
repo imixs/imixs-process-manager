@@ -29,6 +29,7 @@ package org.imixs.application.ui.form;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import jakarta.faces.model.SelectItem;
 
@@ -50,16 +51,35 @@ public class CustomFormItem {
     String label;
     boolean required;
     boolean readonly;
+    boolean disabled;
+    boolean hide;
     String options;
+    String path; // used for custom types
+    int span; // flex grid layout span
 
-    public CustomFormItem(String name, String type, String label, boolean required, boolean readonly, String options) {
+    private static Logger logger = Logger.getLogger(CustomFormItem.class.getName());
+
+    public CustomFormItem(String name, String type, String label, boolean required, boolean readonly, boolean disabled,
+            String options,
+            String path, boolean hide, int span) {
         super();
         this.label = label;
         this.name = name;
         this.type = type;
         this.required = required;
         this.readonly = readonly;
+        this.disabled = disabled;
+        this.hide = hide;
         this.options = options;
+        this.path = path;
+        if ("custom".equalsIgnoreCase(type) && (path == null || path.isEmpty())) {
+            logger.warning("Custom Form Item requires 'path' attribute - please check your BPMN model");
+        }
+        // default span = 12
+        if (span <= 0 || span > 12) {
+            span = 12;
+        }
+        this.span = span;
     }
 
     public String getName() {
@@ -102,6 +122,30 @@ public class CustomFormItem {
         this.readonly = readonly;
     }
 
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    public boolean isHide() {
+        return hide;
+    }
+
+    public void setHide(boolean hide) {
+        this.hide = hide;
+    }
+
+    public int getSpan() {
+        return span;
+    }
+
+    public void setSpan(int span) {
+        this.span = span;
+    }
+
     /**
      * SelectItem getter Method provides a getter method to an ArrayList of
      * <SelectItem> objects for a given options String. The options String contains
@@ -121,7 +165,7 @@ public class CustomFormItem {
      */
     public List<SelectItem> getSelectItems() throws Exception {
         ArrayList<SelectItem> selection;
-        selection = new ArrayList<>();
+        selection = new ArrayList<SelectItem>();
 
         // check if a value for this param is available...
         // if not return an empty list
@@ -135,7 +179,7 @@ public class CustomFormItem {
             // test if aValue has a | as an delimiter
             String sValue = aValue;
             String sName = sValue;
-            if (sValue.contains("|")) {
+            if (sValue.indexOf("|") > -1) {
                 sValue = sValue.substring(0, sValue.indexOf("|"));
                 sName = sName.substring(sName.indexOf("|") + 1);
             }
@@ -143,4 +187,33 @@ public class CustomFormItem {
         }
         return selection;
     }
+
+    /**
+     * Optional option string.
+     * <p>
+     * Can contain custom parts data
+     * 
+     * @return
+     */
+    public String getOptions() {
+        return options;
+    }
+
+    public void setOptions(String options) {
+        this.options = options;
+    }
+
+    /**
+     * optional path for custom items.
+     * 
+     * @return
+     */
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
 }

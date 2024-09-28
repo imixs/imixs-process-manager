@@ -1,9 +1,6 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs">
 
 	<nav>
 		<h:form>
@@ -26,43 +23,46 @@
 				</div>
 				<hr />
 				<ul>
-					<li class="nav-item"><a
-						href="#{facesContext.externalContext.requestContextPath}/"><span
-							class="typcn typcn-home"></span><label>Home</label></a></li>
+					<li class="nav-item"><a href="#{facesContext.externalContext.requestContextPath}/"><span
+								class="typcn typcn-home"></span><label>Home</label></a></li>
 
-					<li class="nav-item"><h:commandLink
-							action="/pages/workflow/start">
+					<li class="nav-item">
+						<h:commandLink action="/pages/workitems/start">
 							<span class="typcn typcn-document"></span>
 							<label>New Task</label>
-						</h:commandLink></li>
+						</h:commandLink>
+					</li>
 				</ul>
 				<hr />
 				<ul>
 					<li class="nav-item"><a
-						href="#{facesContext.externalContext.requestContextPath}/pages/my_tasklist.xhtml"><span
-							class="typcn typcn-input-checked"></span><label>#{message.my_tasklist}</label></a></li>
+							href="#{facesContext.externalContext.requestContextPath}/pages/my_tasklist.xhtml"><span
+								class="typcn typcn-input-checked"></span><label>#{message.my_tasklist}</label></a></li>
 
 					<li class="nav-item"><a
-						href="#{facesContext.externalContext.requestContextPath}/pages/my_statuslist.xhtml"><span
-							class="typcn typcn-th-list-outline"></span><label>#{message.my_statuslist}</label></a></li>
+							href="#{facesContext.externalContext.requestContextPath}/pages/my_statuslist.xhtml"><span
+								class="typcn typcn-th-list-outline"></span><label>#{message.my_statuslist}</label></a>
+					</li>
 
 					<li class="nav-item"><a
-						href="#{facesContext.externalContext.requestContextPath}/pages/all.xhtml"><span
-							class="typcn typcn-th-menu-outline"></span><label>#{message.worklist}</label></a></li>
+							href="#{facesContext.externalContext.requestContextPath}/pages/all.xhtml"><span
+								class="typcn typcn-th-menu-outline"></span><label>#{message.worklist}</label></a></li>
 
 				</ul>
 				<hr />
 				<ul>
-					<li class="nav-item"><h:commandLink
-							action="/pages/config/teamlist?faces-redirect=true">
+					<li class="nav-item">
+						<h:commandLink action="/pages/config/teamlist?faces-redirect=true">
 							<span class="typcn typcn-group"></span>
 							<label>Teams</label>
-						</h:commandLink></li>
+						</h:commandLink>
+					</li>
 
-					<li class="nav-item"><h:commandLink
-							action="/pages/admin/modellist?faces-redirect=true">
+					<li class="nav-item">
+						<h:commandLink action="/pages/admin/modellist?faces-redirect=true">
 							<span class="typcn typcn-flow-merge"></span><label>Models</label>
-					</h:commandLink></li>
+						</h:commandLink>
+					</li>
 				</ul>
 
 				<hr />
@@ -70,11 +70,11 @@
 					<li class="nav-item"><a href="#{apiController.healthEndpoint}" target="health">
 							<span class="typcn typcn-wi-fi"></span>
 							<label>Status</label>
-						</a> 
+						</a>
 					</li>
 					<li class="nav-item"><a href="#{apiController.metricsEndpoint}" target="metrics">
-						<span class="typcn typcn-chart-pie"></span>
-						<label>Metrics</label>
+							<span class="typcn typcn-chart-pie"></span>
+							<label>Metrics</label>
 						</a>
 					</li>
 				</ul>
@@ -85,5 +85,3 @@
 	</nav>
 
 </ui:composition>
-
-

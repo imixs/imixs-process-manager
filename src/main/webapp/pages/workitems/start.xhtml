@@ -33,7 +33,7 @@
 							<h:panelGroup rendered="#{!empty initialTask}">
 								<h:commandLink title=" " styleClass="action-create"
 									actionListener="#{modelController.startWorkflowByTask(version,initialTask)}"
-									action="/pages/workflow/workitem">
+									action="/pages/workitems/workitem">
 									<span class="typcn typcn-folder-add" style="margin-right:5px;"></span>
 									<h:outputText value="#{group}" />
 								</h:commandLink>

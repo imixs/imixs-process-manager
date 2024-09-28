@@ -5,7 +5,8 @@ html {
 	-webkit-text-size-adjust: 100%;
 }
 
-body, html {
+body,
+html {
 	font-family: 'Open Sans', sans-serif;
 	text-rendering: optimizeLegibility !important;
 	-webkit-font-smoothing: antialiased !important;
@@ -44,11 +45,12 @@ body, html {
 	left: 0;
 	height: 100%;
 	width: 100%;
-	background: rgba(255, 255, 255, .8) url('../icons/ajax-loader.gif') 50%
-		50% no-repeat;
+	background: rgba(255, 255, 255, .8) url('../icons/ajax-loader.gif') 50% 50% no-repeat;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
 	box-sizing: inherit
 }
 
@@ -127,7 +129,7 @@ body, html {
 	margin: 0;
 }
 
-.nav-sidebar  ul {
+.nav-sidebar ul {
 	padding: 0;
 }
 
@@ -201,8 +203,12 @@ body, html {
 	line-height: 2em;
 }
 
-button, input[type="button"], input[type="submit"], .button, a.button,
-	.imixs-button {
+button,
+input[type="button"],
+input[type="submit"],
+.button,
+a.button,
+.imixs-button {
 	background: #263544;
 	color: #fff !important;
 	font-weight: normal !important;
@@ -213,15 +219,21 @@ a.button {
 	border-radius: 3px;
 }
 
-input[type="button"]:hover, input[type="submit"]:hover, .button:hover, a.button:hover,
-	.imixs-button:hover {
+input[type="button"]:hover,
+input[type="submit"]:hover,
+.button:hover,
+a.button:hover,
+.imixs-button:hover {
 	background: #31b1dc;
 	color: #ddd !important;
 }
 
-input[type="button"]:active, input[type="submit"]:active, a.button:active,
-	a.button:focus, input[type="button"]:focus, input[type="submit"]:focus
-	{
+input[type="button"]:active,
+input[type="submit"]:active,
+a.button:active,
+a.button:focus,
+input[type="button"]:focus,
+input[type="submit"]:focus {
 	background: #31b1dc;
 	color: #ddd !important;
 }
@@ -272,24 +284,38 @@ span.tooltip:hover span.tip {
 	font-size: 0.85rem;
 	background-color: #ffffff;
 	border-radius: 5px;
-	-webkit-box-shadow: 0 0 5px 0 rgba(43, 43, 43, .1), 0 11px 6px -7px
-		rgba(43, 43, 43, .1);
-	box-shadow: 0 0 5px 0 rgba(43, 43, 43, .1), 0 11px 6px -7px
-		rgba(43, 43, 43, .1);
+	-webkit-box-shadow: 0 0 5px 0 rgba(43, 43, 43, .1), 0 11px 6px -7px rgba(43, 43, 43, .1);
+	box-shadow: 0 0 5px 0 rgba(43, 43, 43, .1), 0 11px 6px -7px rgba(43, 43, 43, .1);
 	border: 1px solid #CCC;
 	margin-bottom: 30px;
 	-webkit-transition: all .3s ease-in-out;
 	transition: all .3s ease-in-out;
 }
 
-.imixs-form-section, .imixs-form-section-2, .imixs-form-section-3 {
+.imixs-form-section,
+.imixs-form-section-2,
+.imixs-form-section-3 {
 	margin-top: 30px;
 }
 
-/* --- Imixs-Tabs ---------------------------------- */
-.imixs-form .imixs-body .imixs-tabs {
-	
+
+/* --- New Flex Design ---------------------------- */
+.imixs-form-section-flex {
+	padding: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	display: grid;
+	column-gap: 10px;
+	row-gap: 10px;
+	grid-template-columns: repeat(12, minmax(10px, 210px));
 }
+
+.imixs-form-section-flex dl dd {
+	position: relative;
+}
+
+/* --- Imixs-Tabs ---------------------------------- */
+.imixs-form .imixs-body .imixs-tabs {}
 
 .imixs-tabs.ui-tabs.ui-corner-all.ui-widget.ui-widget-content {
 	border: none;
@@ -363,8 +389,10 @@ span.tooltip:hover span.tip {
 	color: green;
 }
 
-input[type="text"]:focus, input[type="password"]:focus, textarea:focus,
-	select:focus {
+input[type="text"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
 	border: 1px solid #145267;
 	border-radius: 3px;
 }
@@ -377,7 +405,9 @@ th {
 	font-weight: bold;
 }
 
-table, td, th {
+table,
+td,
+th {
 	border: none;
 	padding: 4px;
 	border-bottom: 1px solid #ddd;
@@ -386,24 +416,28 @@ table, td, th {
 .imixsdatatable a {
 	color: #428bca !important;
 }
+
 .imixsdatatable tr:hover a {
 	color: #fff !important;
 }
+
 .imixsdatatable a:hover {
 	color: #fff !important;
 }
+
 .danger-zone {
 	border: 1px solid #cb2431;
 	border-radius: 4px;
 	padding: 10px 10px;
 }
 
-.danger-zone  .typcn {
+.danger-zone .typcn {
 	margin-right: 5px;
 }
 
-.danger-zone button, .danger-zone input[type="button"], .danger-zone input[type="submit"]
-	{
+.danger-zone button,
+.danger-zone input[type="button"],
+.danger-zone input[type="submit"] {
 	color: #cb2431;
 }
 
@@ -422,9 +456,11 @@ table, td, th {
 	.content {
 		margin-left: 60px;
 	}
+
 	.nav-sidebar {
 		width: 60px;
 	}
+
 	.nav-sidebar label {
 		display: none;
 	}

@@ -1,24 +1,22 @@
-<f:subview id="subview" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs">
+<f:subview id="subview" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs">
 
 	<f:view>
 		<h:form>
 			<h2>#{title}</h2>
 
-			<h:dataTable class="imixsdatatable" style="width:100%"
-				value="#{viewHandler.getData(viewController)}" var="workitem">				
-				
+			<h:dataTable class="imixsdatatable" style="width:100%" value="#{viewHandler.getData(viewController)}"
+				var="workitem">
+
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="#{message.summary}" />
 					</f:facet>
-						<h:link outcome="/pages/workflow/workitem">
-							<span class="typcn typcn-cog-outline"></span> <h:outputText value="#{workitem.item['$workflowSummary']}" />
-							<f:param name="id" value="#{workitem.item['$uniqueid']}" />
+					<h:link outcome="/pages/workitems/workitem">
+						<span class="typcn typcn-cog-outline"></span>
+						<h:outputText value="#{workitem.item['$workflowSummary']}" />
+						<f:param name="id" value="#{workitem.item['$uniqueid']}" />
 					</h:link>
 				</h:column>
 
@@ -28,7 +26,7 @@
 					</f:facet>
 					<h:outputText value="#{workitem.item['$workflowGroup']}" />
 				</h:column>
-				
+
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="#{message.status}" />
@@ -64,16 +62,16 @@
 					<h:outputText value="#{workitem.item['$modified']}">
 						<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />
 					</h:outputText>
-					<h:outputText
-						value=" #{message.by} #{workitem.item['$editor']}" />
+					<h:outputText value=" #{message.by} #{workitem.item['$editor']}" />
 				</h:column>
 
 
-				
 
-				<h:column> 
+
+				<h:column>
 					<h:commandLink value="#{message.delete}" onclick="return confirm('Delete this entry?');"
-						action="/pages/welcome?faces-redirect=true" actionListener="#{documentController.delete(workitem.item['$uniqueid'])}"
+						action="/pages/welcome?faces-redirect=true"
+						actionListener="#{documentController.delete(workitem.item['$uniqueid'])}"
 						rendered="#{workitem.item['$isAuthor']}">
 					</h:commandLink>
 				</h:column>
@@ -82,12 +80,10 @@
 
 
 			<h:commandButton actionListener="#{viewHandler.back(viewController)}"
-				disabled="#{!(viewController.pageIndex>0)}"
-				value="&lt;&lt; #{message.prev}">
+				disabled="#{!(viewController.pageIndex>0)}" value="&lt;&lt; #{message.prev}">
 			</h:commandButton>
 			<h:commandButton actionListener="#{viewHandler.forward(viewController)}"
-				disabled="#{viewController.endOfList}" 
-				value="#{message.next} &gt;&gt;">
+				disabled="#{viewController.endOfList}" value="#{message.next} &gt;&gt;">
 			</h:commandButton>
 
 		</h:form>
@@ -95,4 +91,3 @@
 
 
 </f:subview>
-
