@@ -58,6 +58,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<org.imixs.workflow.version>6.1.0-SNAPSHOT</org.imixs.workflow.version>
+		<org.imixs.micro.version>1.0.0-SNAPSHOT</org.imixs.micro.version>
 		<microprofile.version>6.0</microprofile.version>
 		<custom.webResources>src/main/webapp</custom.webResources>
 		<custom.unpackTypes>war</custom.unpackTypes>
@@ -455,11 +456,17 @@
 			<artifactId>imixs-workflow-jax-rs</artifactId>
 			<version>${org.imixs.workflow.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.imixs.workflow</groupId>
 			<artifactId>imixs-workflow-faces</artifactId>
 			<version>${org.imixs.workflow.version}</version>
+		</dependency>
+
+		<!-- Imixs Micro -->
+		<dependency>
+			<groupId>org.imixs.workflow</groupId>
+			<artifactId>imixs-micro-client</artifactId>
+			<version>${org.imixs.micro.version}</version>
 		</dependency>
 
 		<!-- Apache Lucene Core -->
