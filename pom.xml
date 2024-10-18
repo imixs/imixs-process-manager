@@ -57,8 +57,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.imixs.workflow.version>6.1.0-SNAPSHOT</org.imixs.workflow.version>
-		<org.imixs.micro.version>1.0.0-SNAPSHOT</org.imixs.micro.version>
+		<org.imixs.workflow.version>6.1.0</org.imixs.workflow.version>
+		<org.imixs.micro.version>1.0.0</org.imixs.micro.version>
 		<microprofile.version>6.0</microprofile.version>
 		<custom.webResources>src/main/webapp</custom.webResources>
 		<custom.unpackTypes>war</custom.unpackTypes>
