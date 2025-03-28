@@ -34,7 +34,6 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -44,19 +43,21 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.imixs.workflow.FileData;
 import org.imixs.workflow.ItemCollection;
+import org.imixs.workflow.WorkflowKernel;
 import org.imixs.workflow.bpmn.BPMNUtil;
 import org.imixs.workflow.engine.ModelService;
 import org.imixs.workflow.engine.WorkflowService;
 import org.imixs.workflow.exceptions.AccessDeniedException;
 import org.imixs.workflow.exceptions.ModelException;
-import org.imixs.workflow.faces.data.WorkflowController;
+import org.imixs.workflow.exceptions.PluginException;
+import org.imixs.workflow.faces.fileupload.FileUploadController;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 import org.xml.sax.SAXException;
 
-import jakarta.ejb.EJB;
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ConversationScoped;
 import jakarta.faces.event.ActionEvent;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -75,24 +76,41 @@ import jakarta.inject.Named;
  * 
  */
 @Named
-@RequestScoped
+// @RequestScoped
+@ConversationScoped
 public class ModelController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static Logger logger = Logger.getLogger(ModelController.class.getName());
+
+	protected ItemCollection modelUploads = null;
+	// @Inject
+	// protected ModelUploadHandler modelUploadHandler;
 
 	@Inject
-	protected ModelUploadHandler modelUploadHandler;
-
-	@Inject
-	WorkflowController workflowController;
-
-	@EJB
 	protected ModelService modelService;
 
-	@EJB
+	@Inject
 	protected WorkflowService workflowService;
 
-	private static final Logger logger = Logger.getLogger(ModelController.class.getName());
+	@Inject
+	FileUploadController fileUploadController;
+
+	/**
+	 * PostConstruct event - init model uploads
+	 */
+	@PostConstruct
+	void init() {
+		modelUploads = new ItemCollection();
+	}
+
+	public ItemCollection getModelUploads() {
+		return modelUploads;
+	}
+
+	public void setModelUploads(ItemCollection modelUploads) {
+		this.modelUploads = modelUploads;
+	}
 
 	/**
 	 * returns all groups for a version
@@ -100,20 +118,21 @@ public class ModelController implements Serializable {
 	 * @param version
 	 * @return
 	 */
-	public Set<String> getGroups(String version) {
+	public List<String> getGroups(String version) {
 		try {
-			BPMNModel model;
-			model = modelService.getModelManager().getModel(version);
-			return modelService.getModelManager().findAllGroupsByModel(model);
+			BPMNModel model = modelService.getModelManager().getModel(version);
+			Set<String> groups = modelService.getModelManager().findAllGroupsByModel(model);
+			// Convert the Set to a List
+			return new ArrayList<>(groups);
 		} catch (ModelException e) {
-			logger.log(Level.WARNING, "Unable to load groups:{0}", e.getMessage());
+			logger.warning("Unable to load groups:" + e.getMessage());
 		}
 		// return empty result
-		return new LinkedHashSet<>();
+		return new ArrayList<String>();
 	}
 
 	/**
-	 * Returns a sorted list of all WorkflowGroups from all models.
+	 * Returns a String list of all WorkflowGroup names.
 	 * 
 	 * Workflow groups of the system model will be skipped.
 	 * 
@@ -126,7 +145,6 @@ public class ModelController implements Serializable {
 	 * @throws ModelException
 	 */
 	public List<String> getWorkflowGroups() throws ModelException {
-
 		List<String> result = new ArrayList<>();
 		for (BPMNModel model : modelService.getModelManager().getAllModels()) {
 			String version = BPMNUtil.getVersion(model);
@@ -143,66 +161,57 @@ public class ModelController implements Serializable {
 				result.add(groupName);
 			}
 		}
-
 		Collections.sort(result);
 		return result;
-
 	}
 
 	/**
-	 * Finds the first matching model version for a group name
+	 * Returns the ModelVersion of a given group name
 	 * 
 	 * @param group
 	 * @return
 	 * @throws ModelException
 	 */
-	public String findVersionByGroup(String group) throws ModelException {
+	public String getVersionByGroup(String group) throws ModelException {
 		return modelService.getModelManager().findVersionByGroup(group);
 	}
 
 	/**
-	 * Loads the first start task in the corresponding workflow group
+	 * Returns a list of all Imixs Tasks for a given group
 	 * 
-	 * @param group
 	 * @return
-	 * @throws ModelException
 	 */
-	public ItemCollection findStartTaskByGroup(String version, String group) throws ModelException {
-		ItemCollection result = null;
-		BPMNModel model = modelService.getModelManager().getModel(version);
-		List<ItemCollection> startTasks;
-
-		startTasks = modelService.getModelManager().findStartTasks(model, group);
-		if (startTasks.size() > 0) {
-			result = startTasks.get(0);
+	public List<ItemCollection> findAllTasksByGroup(String group) {
+		List<ItemCollection> result = new ArrayList<>();
+		if (group == null || group.isEmpty()) {
+			return result;
 		}
-
-		if (result == null) {
-			logger.warning("No Model found for Group '" + group + "'");
+		try {
+			String version = modelService.getModelManager().findVersionByGroup(group);
+			BPMNModel model = modelService.getModelManager().getModel(version);
+			result = modelService.getModelManager().findTasks(model, group);
+		} catch (ModelException e) {
+			logger.warning("Failed to call findAllTasksByGroup for '" + group + "'");
 		}
 
 		return result;
-
 	}
 
 	/**
-	 * Creates a new process instance based on a given start task in the
-	 * corresponding workflow model
-	 * group
+	 * Returns a list of all Imixs Start Tasks for a given group
 	 * 
-	 * @param version   - model version
-	 * @param startTask - initial task
-	 * @return new process instance
-	 * @throws ModelException
+	 * @return
 	 */
-	public ItemCollection startWorkflowByTask(String version, ItemCollection startTask) throws ModelException {
-		ItemCollection result = null;
-		workflowController.create(version, startTask.getItemValueInteger("numprocessid"), null);
-		if (result == null) {
-			logger.warning("No Model found for model version '" + version + "'");
+	public List<ItemCollection> findAllStartTasksByGroup(String version, String group) {
+		List<ItemCollection> result = new ArrayList<>();
+		try {
+			BPMNModel model = modelService.getModelManager().getModel(version);
+			return modelService.getModelManager().findStartTasks(model, group);
+		} catch (ModelException e) {
+			logger.severe(
+					"Failed to find start tasks for workflow group '" + group + "' : " + e.getMessage());
 		}
 		return result;
-
 	}
 
 	/**
@@ -241,7 +250,14 @@ public class ModelController implements Serializable {
 	 */
 	public void doUploadModel(ActionEvent event)
 			throws ModelException {
-		List<FileData> fileList = modelUploadHandler.getModelUploads().getFileData();
+
+		try {
+			fileUploadController.attacheFiles(modelUploads);
+		} catch (PluginException e) {
+			e.printStackTrace();
+		}
+
+		List<FileData> fileList = getModelUploads().getFileData();
 
 		if (fileList == null) {
 			return;
@@ -265,19 +281,96 @@ public class ModelController implements Serializable {
 				logger.log(Level.WARNING, "Invalid Model Type. Model {0} can't be imported!", file.getName());
 			}
 		}
-		modelUploadHandler.reset();
+		modelUploads = new ItemCollection();
 	}
 
 	/**
 	 * This Method deletes the given model from the database and the internal model
 	 * cache.
 	 * 
-	 * @param modelversion
 	 * @throws AccessDeniedException
 	 * @throws ModelException
 	 */
 	public void deleteModel(String modelversion) throws AccessDeniedException, ModelException {
 		modelService.deleteModel(modelversion);
+	}
+
+	/**
+	 * This method returns a process entity for a given ModelVersion or null if no
+	 * entity exists.
+	 * 
+	 * 
+	 * @param modelVersion
+	 *                     - version for the model to search the process entity
+	 * @param processid
+	 *                     - id of the process entity
+	 * @return an instance of the matching process entity
+	 * @throws ModelException
+	 */
+	public ItemCollection getProcessEntity(int processid, String modelversion) {
+		try {
+			BPMNModel model = modelService.getModelManager().getModel(modelversion);
+			return modelService.getModelManager().findTaskByID(model, processid);
+		} catch (ModelException e) {
+			logger.warning("Unable to load task " + processid + " in model version '" + modelversion + "' - "
+					+ e.getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * This method return the 'rtfdescription' of a processentity and applies the
+	 * dynamic Text replacement function from the jee plugin
+	 * 
+	 * @param processid
+	 * @param modelversion
+	 * @return
+	 * @throws ModelException
+	 */
+	public String getProcessDescription(int processid, String modelversion, ItemCollection documentContext) {
+		ItemCollection pe = null;
+		try {
+			BPMNModel model = modelService.getModelManager().getModel(modelversion);
+			pe = modelService.getModelManager().findTaskByID(model, processid);
+		} catch (ModelException e1) {
+			logger.warning("Unable to load task " + processid + " in model version '" + modelversion + "' - "
+					+ e1.getMessage());
+		}
+		if (pe == null) {
+			return "";
+		}
+		// String desc = pe.getItemValueString("rtfdescription");
+		String desc = pe.getItemValueString(BPMNUtil.TASK_ITEM_DOCUMENTATION);
+		try {
+			desc = workflowService.adaptText(desc, documentContext);
+		} catch (PluginException e) {
+			logger.warning("Unable to update processDescription: " + e.getMessage());
+		}
+		return desc;
+	}
+
+	/**
+	 * This method return the 'rtfdescription' of the initial task and resolves
+	 * textblock entries.
+	 * <p>
+	 * The method creates a dummy workitem to resolve the correct textblock
+	 * 
+	 * @param processid
+	 * @param modelversion
+	 * @return
+	 * @throws ModelException
+	 */
+	public String getProcessDescriptionByInitialTask(ItemCollection initialTask, String modelVersion,
+			String workflowGroup) {
+		String result = "";
+		if (initialTask != null) {
+			// Dummy Workitem
+			ItemCollection dummy = new ItemCollection();
+			dummy.setItemValue(WorkflowKernel.WORKFLOWSTATUS, initialTask.getItemValueString("name"));
+			dummy.setItemValue(WorkflowKernel.WORKFLOWGROUP, workflowGroup);
+			result = getProcessDescription(initialTask.getItemValueInteger("taskid"), modelVersion, dummy);
+		}
+		return result;
 	}
 
 }
