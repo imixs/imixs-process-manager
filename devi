@@ -1,0 +1,86 @@
+#!/bin/bash
+
+############################################################
+# The Imixs Developer Script
+# start, build, hot, setup, deploy
+# 
+############################################################
+
+# Funktion zum Entfernen des '-' Zeichens von einem Parameter
+strip_dash() {
+    echo "$1" | sed 's/^-//'
+}
+
+    echo "     _            _   _          _  "     
+    echo "  __| | _____   _(_) | |__   ___| |_ __"  
+    echo " / _\` |/ _ \\ \\ / / | | '_ \\ / _ \\ | \'_ \\" 
+    echo "| (_| |  __/\ V /| | | | | |  __/ | |_) |"
+    echo " \__,_|\___| \_/ |_| |_| |_|\___|_| .__/ "
+    echo "                                  |_|  "
+    echo "    Imixs Developer Script..."
+    echo "_________________________________________"
+
+# Verify params
+
+
+if [[ "$(strip_dash $1)" == "docker" ]]; then
+    echo "├── Build Docker Image..."
+    mvn clean install 
+
+    # get project version from pom.xml
+    PLATFORM=$2    
+    IMAGENAME=imixs/imixs-process-manager
+    echo " "
+    echo "│  ├── platform: $PLATFORM"
+
+    docker build -f Dockerfile-$PLATFORM -t $IMAGENAME .
+
+    echo " "
+    echo " "
+    echo "├── Build finished! "        
+
+fi
+
+if [[ "$(strip_dash $1)" == "start" ]]; then
+    echo "├── Start Dev Environment..."
+    PLATFORM="dev"
+    if [ $2 != "" ]; then
+        PLATFORM=$2
+    fi
+    echo "│  ├── platform: $PLATFORM"
+    docker-compose -f ./docker-compose-$PLATFORM.yaml up
+fi
+
+if [[ "$(strip_dash $1)" == "build" ]]; then
+    echo " Build and Autodeploy..."
+    mvn clean install -DskipTests
+fi
+
+if [[ "$(strip_dash $1)" == "test" ]]; then
+    echo " Run JUnit Tests..."
+    mvn clean test
+fi
+
+if [[ "$(strip_dash $1)" == "hot" ]]; then
+    echo "* Hotdeploy..."
+    cd *-app
+    mvn manik-hotdeploy:hotdeploy
+    cd ..
+fi
+
+
+
+# Überprüfen, ob keine Parameter übergeben wurden - standard build
+if [[ $# -eq 0 ]]; then
+
+    echo " Run with ./dev.sh -XXX"
+    echo " "
+    echo "   -start {PLATFORM}     : start Docker Container for a platform (wildfly | openliberty | payara)"
+    echo "   -docker {PLATFORM}    : build the Docker image for a platform (wildfly | openliberty | payara)"
+    echo "   -build                : run maven build"
+    echo "   -test                 : run maven tests"
+    echo "   -hot                  : run Manik Hotdeploy"
+    echo "_________________________________________________________________________________________"
+    echo " "
+
+fi

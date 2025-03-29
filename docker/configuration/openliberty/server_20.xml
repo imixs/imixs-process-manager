@@ -2,23 +2,20 @@
 <server description="new server">
 	<!-- Enable features -->
 	<featureManager>
-		<feature>jakartaee-10.0</feature>
-		<platform>microprofile-7.0</platform>
-		<!-- 
-		<feature>jsonb</feature>
-		<feature>jsonp</feature>
-		<feature>cdi</feature>
-		-->
-		<feature>mpConfig</feature>
+		<feature>javaee-8.0</feature>
+		<feature>microProfile-2.2</feature>
+		<feature>javaMail-1.6</feature>
 	</featureManager>
-
-	<!-- Logging -->
+	
+	<!--  -->
 	<logging consoleLogLevel="INFO" />
-	<logging traceSpecification="com.ibm.ws.*=audit" />
-	<logging traceSpecification="org.imixs.workflow.*=info" />
-
-
-	<!--
+	
+	
+	<logging traceSpecification="com.ibm.ws.*=audit"/>
+	<logging traceSpecification="org.imixs.workflow.*=info"/>
+	
+	
+<!--
 	<logging traceSpecification="org.imixs.*=info"/>
 -->
 	<!-- This template enables security. To get the full use of all the capabilities, 
@@ -30,8 +27,7 @@
 		Then uncomment the keyStore element. -->
 	<!-- <keyStore password=""/> -->
 
-	<!--For
-	a user registry configuration, configure your user registry. For 
+	<!--For a user registry configuration, configure your user registry. For 
 		example, configure a basic user registry using the basicRegistry element. 
 		Specify your own user name below in the name attribute of the user element. 
 		For the password, generate an encoded password using bin/securityUtility 
@@ -41,7 +37,7 @@
 
 	<basicRegistry id="basic" realm="imixsrealm">
 		<user name="admin" password="adminadmin" />
-		<user name="workflow-service" password="xxxx" />
+		<user name="workflow-service"  password="xxxx" />  
 		<user name="manfred" password="password" />
 		<user name="alex" password="password" />
 		<user name="anna" password="password" />
@@ -55,34 +51,37 @@
 	</basicRegistry>
 
 
-	<!-- @RunAs see:
-	https://stackoverflow.com/questions/51830570/how-to-authorize-a-java-batch-job-so-it-can-run-from-a-startup-bean-in-websphere
-	https://www.ibm.com/support/knowledgecenter/en/SSEQTP_liberty/com.ibm.websphere.wlp.doc/ae/twlp_sec_runas.html
+	<!-- @RunAs see: 
+		https://stackoverflow.com/questions/51830570/how-to-authorize-a-java-batch-job-so-it-can-run-from-a-startup-bean-in-websphere
+		https://www.ibm.com/support/knowledgecenter/en/SSEQTP_liberty/com.ibm.websphere.wlp.doc/ae/twlp_sec_runas.html
 		https://groups.io/g/openliberty/messages
-	https://www.ibm.com/support/knowledgecenter/de/SS7K4U_liberty/com.ibm.websphere.wlp.zseries.doc/ae/cwlp_authorization.html
+		https://www.ibm.com/support/knowledgecenter/de/SS7K4U_liberty/com.ibm.websphere.wlp.zseries.doc/ae/cwlp_authorization.html
 	 -->
 	<applicationMonitor dropinsEnabled="false" />
-	<application name="imixs-process-manager" context-root="/" type="war"
+	
+	<application name="imixs-process-manager"  context-root="/" type="war" 
 		id="imixs-process-manager"
-		location="${server.config.dir}dropins/imixs-process-manager.war">
-		<application-bnd>
-			<security-role name="org.imixs.ACCESSLEVEL.MANAGERACCESS">
-				<user name="workflow-service" />
-				<user name="admin" />
-				<run-as userid="workflow-service" />
-			</security-role>
-			<security-role name="org.imixs.ACCESSLEVEL.AUTHORACCESS">
-				<user name="manfred" />
-				<user name="alex" />
+    	location="${server.config.dir}dropins/imixs-process-manager.war">
+    
+	    <application-bnd>
+	        <security-role name="org.imixs.ACCESSLEVEL.MANAGERACCESS" >
+	            <user name="workflow-service" />
+	            <user name="admin" />
+	            <run-as userid="workflow-service"/>
+	        </security-role>
+	        
+	         <security-role name="org.imixs.ACCESSLEVEL.AUTHORACCESS" >
+	            <user name="manfred"  />
+				<user name="alex"  />
 				<user name="anna" />
-				<user name="marty" />
-				<user name="melman" />
-				<user name="gloria" />
-				<user name="skipper" />
-				<user name="kowalski" />
+				<user name="marty"  />
+				<user name="melman"  />
+				<user name="gloria"  />
+				<user name="skipper"  />
+				<user name="kowalski"  />
 				<user name="private" />
-			</security-role>
-		</application-bnd>
+	        </security-role>
+	    </application-bnd>
 	</application>
 
 
@@ -133,7 +132,6 @@
 		<fileset dir="${server.config.dir}/derbyDriverDir/" />
 	</library>
 
-
 	<!--  Mail Config 
 	<mailSession>
         <mailSessionID>imixsSMTPSession</mailSessionID>             
@@ -151,6 +149,7 @@
         <property name="mail.smtp.starttls.enable" value="true" />
     </mailSession>
     -->
-
-
+    
+    
+    
 </server>
