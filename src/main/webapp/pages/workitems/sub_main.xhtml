@@ -12,10 +12,10 @@
 	
 	<dl>
 		<dt>
-			<h:outputLabel value="#{message.subject}">
+			<h:outputText value="#{message.subject}">
 				<h:message style="color: red" for="subject_id" showSummary="true"
 					showDetail="false" />
-			</h:outputLabel>
+			</h:outputText>
 		</dt>
 		<dd style="width: 400px;">
 			<h:inputText style="width: 20em;" required="true"
@@ -25,17 +25,17 @@
 		</dd>
 
 		<dt>
-			<h:outputLabel value="#{message.date}"></h:outputLabel>
+			<h:outputText value="#{message.date}"></h:outputText>
 		</dt>
 		<dd style="width: 350px;">
 			<i:imixsDateInput value="#{workflowController.workitem.item['date']}"  showtime="true" minuteinterval="5"/>
 		</dd>
 
 		<dt style="clear: left;">
-			<h:outputLabel value="Team:">
+			<h:outputText value="Team:">
 				<h:message style="color: red" for="team_id" showSummary="true"
 					showDetail="false" />
-			</h:outputLabel>
+			</h:outputText>
 		</dt>
 		
 

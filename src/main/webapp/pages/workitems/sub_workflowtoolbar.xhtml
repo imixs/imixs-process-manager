@@ -6,7 +6,6 @@
 	<div class="imixs-panel">
 		<h2>#{message.workflow}</h2>
 
-
 		<!-- **** Workflow Actions only visible if user is autor ***** -->
 		<ui:fragment
 			rendered="#{empty workflowController.workitem.item['$lastevent'] or workflowController.workitem.item['$isauthor']}">
@@ -20,14 +19,10 @@
 		<h:commandButton value="#{message.close}" action="/pages/my_tasklist?faced-redirect=true"
 			actionListener="#{workflowController.close()}" />
 
-
-
-
-
 		<dl>
 			<!-- ### Kommentar ### -->
 			<dt class="imixs-no-print">
-				<h:outputLabel value="#{message['comment']}:" />
+				<h:outputText value="#{message['comment']}:" />
 			</dt>
 			<dd>
 				<h:inputTextarea value="#{workflowController.workitem.item['txtComment']}" />
@@ -35,43 +30,32 @@
 		</dl>
 
 		<h:panelGrid columns="3">
-			<h:outputLabel value="#{message.created}: " />
+			<h:outputText value="#{message.created}: " />
 			<h:outputText value="#{workflowController.workitem.item['$created']} ">
 				<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />
 			</h:outputText>
 			<h:outputText value=" #{message.by} #{workflowController.workitem.item['namcreator']} " />
-			<h:outputLabel value="#{message.modified}: " />
+			<h:outputText value="#{message.modified}: " />
 			<h:outputText value="#{workflowController.workitem.item['$modified']} ">
 				<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />
 			</h:outputText>
 			<h:outputText value=" #{message.by} #{workflowController.workitem.item['namcurrenteditor']}" />
 		</h:panelGrid>
 
-
-
 		<div class="imixs-tabs">
 			<ul>
 				<li><a href="#tab-1">Activities</a></li>
 				<li><a href="#tab-2">Documents</a></li>
-
 			</ul>
 			<div id="tab-1">
-
 				<ui:include src="/pages/workitems/workitem_chronicle.xhtml" />
 			</div>
 			<div id="tab-2">
 				<ui:include src="/pages/workitems/sub_documents.xhtml" />
-
-
-
 			</div>
 
 		</div>
 
-
-
 	</div>
-
-
 
 </f:subview>

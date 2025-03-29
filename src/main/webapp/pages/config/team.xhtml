@@ -23,10 +23,10 @@
 				<dl>
 
 					<dt>
-						<h:outputLabel value="#{message.name}:">
+						<h:outputText value="#{message.name}:">
 							<h:message style="color: red" for="subject_id" showSummary="true"
 								showDetail="true" />
-						</h:outputLabel>
+						</h:outputText>
 					</dt>
 					<dd>
 						<h:inputText style="width: 20em;" required="true"
@@ -37,7 +37,7 @@
 					</dd>
 
 					<dt style="clear: left;">
-						<h:outputLabel value="#{message.members}:" />
+						<h:outputText value="#{message.members}:" />
 					</dt>
 
 
@@ -72,13 +72,13 @@
 
 				<h:panelGrid columns="2">
 
-					<h:outputLabel value="#{message.created}: " />
+					<h:outputText value="#{message.created}: " />
 					<h:outputText
 						value="#{documentController.document.item['$created']} ">
 						<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />
 					</h:outputText>
 
-					<h:outputLabel value="#{message.modified}: " />
+					<h:outputText value="#{message.modified}: " />
 					<h:outputText
 						value="#{documentController.document.item['$modified']} ">
 						<f:convertDateTime timeZone="CET" type="both" dateStyle="medium" />
