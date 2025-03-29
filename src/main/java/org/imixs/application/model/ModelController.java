@@ -215,6 +215,22 @@ public class ModelController implements Serializable {
 	}
 
 	/**
+	 * Returns the first start task by group
+	 * 
+	 * @param version
+	 * @param group
+	 * @return
+	 */
+	public ItemCollection findStartTaskByGroup(String version, String group) {
+		List<ItemCollection> result = findAllStartTasksByGroup(version, group);
+		if (result != null && result.size() > 0) {
+			return result.get(0);
+		}
+		// not match
+		return null;
+	}
+
+	/**
 	 * Returns a sorted set of all model versions.
 	 * <p>
 	 * Used by the Model View.

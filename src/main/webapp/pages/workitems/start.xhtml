@@ -3,36 +3,26 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs"
 	template="/layout/template.xhtml">
 
-
-
-
 	<f:metadata>
 		<f:viewAction action="#{workflowController.onLoad()}" />
 	</f:metadata>
-
-
-
 	<ui:define name="content">
 		<f:view>
 			<h:form id="workitem_form_id">
-
 				<h1>Start a New Business Process</h1>
 				<p class="lead">Select a Workflowgroup to start a new task:</p>
-
-
 				<!-- Error  -->
 				<ui:include src="error.xhtml" />
-
 
 				<ul style="margin: 5px 0;">
 					<ui:repeat value="#{modelController.workflowGroups}" var="group">
 						<!-- get first task by group -->
-						<ui:param name="version" value="#{modelController.findVersionByGroup(group)}" />
+						<ui:param name="version" value="#{modelController.getVersionByGroup(group)}" />
 						<ui:param name="initialTask" value="#{modelController.findStartTaskByGroup(version,group)}" />
 						<li>
 							<h:panelGroup rendered="#{!empty initialTask}">
 								<h:commandLink title=" " styleClass="action-create"
-									actionListener="#{modelController.startWorkflowByTask(version,initialTask)}"
+									actionListener="#{workflowController.create(version,initialTask.item['taskid'],null)}"
 									action="/pages/workitems/workitem">
 									<span class="typcn typcn-folder-add" style="margin-right:5px;"></span>
 									<h:outputText value="#{group}" />
