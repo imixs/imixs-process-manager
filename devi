@@ -28,7 +28,10 @@ if [[ "$(strip_dash $1)" == "docker" ]]; then
     mvn clean install 
 
     # get project version from pom.xml
-    PLATFORM=$2    
+    PLATFORM="dev"
+    if [[ $2 != "" ]]; then
+        PLATFORM=$2
+    fi   
     IMAGENAME=imixs/imixs-process-manager
     echo " "
     echo "│  ├── platform: $PLATFORM"
@@ -44,7 +47,7 @@ fi
 if [[ "$(strip_dash $1)" == "start" ]]; then
     echo "├── Start Dev Environment..."
     PLATFORM="dev"
-    if [ $2 != "" ]; then
+    if [[ $2 != "" ]]; then
         PLATFORM=$2
     fi
     echo "│  ├── platform: $PLATFORM"
