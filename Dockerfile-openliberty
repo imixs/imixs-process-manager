@@ -33,8 +33,8 @@ USER root
 COPY ./docker/configuration/openliberty/postgresql-42.2.5.jar /opt/ol/wlp/lib
 
 COPY --chown=1001:0 ./docker/configuration/openliberty/server.xml /config/
-#COPY --chown=1001:0 ./target/*.war /config/apps/
-COPY --chown=1001:0 ./target/*.war /config/dropins/
+COPY --chown=1001:0 ./target/*.war /config/apps/
+#COPY --chown=1001:0 ./target/*.war /config/dropins/
 
 
 USER 1001

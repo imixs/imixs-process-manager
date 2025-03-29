@@ -4,23 +4,14 @@
 	<featureManager>
 		<feature>jakartaee-10.0</feature>
 		<platform>microprofile-7.0</platform>
-		<!-- 
-		<feature>jsonb</feature>
-		<feature>jsonp</feature>
-		<feature>cdi</feature>
-		-->
 		<feature>mpConfig</feature>
 	</featureManager>
 
 	<!-- Logging -->
 	<logging consoleLogLevel="INFO" />
-	<logging traceSpecification="com.ibm.ws.*=audit" />
 	<logging traceSpecification="org.imixs.workflow.*=info" />
+	<!-- <logging traceSpecification="com.ibm.ws.*=audit" /> -->
 
-
-	<!--
-	<logging traceSpecification="org.imixs.*=info"/>
--->
 	<!-- This template enables security. To get the full use of all the capabilities, 
 		a keystore and user registry are required. -->
 
@@ -37,8 +28,6 @@
 		For the password, generate an encoded password using bin/securityUtility 
 		encode and add it in the password attribute of the user element. Then uncomment 
 		the user element. -->
-
-
 	<basicRegistry id="basic" realm="imixsrealm">
 		<user name="admin" password="adminadmin" />
 		<user name="workflow-service" password="xxxx" />
@@ -55,46 +44,6 @@
 	</basicRegistry>
 
 
-	<!-- @RunAs see:
-	https://stackoverflow.com/questions/51830570/how-to-authorize-a-java-batch-job-so-it-can-run-from-a-startup-bean-in-websphere
-	https://www.ibm.com/support/knowledgecenter/en/SSEQTP_liberty/com.ibm.websphere.wlp.doc/ae/twlp_sec_runas.html
-		https://groups.io/g/openliberty/messages
-	https://www.ibm.com/support/knowledgecenter/de/SS7K4U_liberty/com.ibm.websphere.wlp.zseries.doc/ae/cwlp_authorization.html
-	 -->
-	<applicationMonitor dropinsEnabled="false" />
-	<application name="imixs-process-manager" context-root="/" type="war"
-		id="imixs-process-manager"
-		location="${server.config.dir}dropins/imixs-process-manager.war">
-		<application-bnd>
-			<security-role name="org.imixs.ACCESSLEVEL.MANAGERACCESS">
-				<user name="workflow-service" />
-				<user name="admin" />
-				<run-as userid="workflow-service" />
-			</security-role>
-			<security-role name="org.imixs.ACCESSLEVEL.AUTHORACCESS">
-				<user name="manfred" />
-				<user name="alex" />
-				<user name="anna" />
-				<user name="marty" />
-				<user name="melman" />
-				<user name="gloria" />
-				<user name="skipper" />
-				<user name="kowalski" />
-				<user name="private" />
-			</security-role>
-		</application-bnd>
-	</application>
-
-
-	<!-- To access this server from a remote client add a host attribute to 
-		the following element, e.g. host="*" -->
-	<httpEndpoint id="defaultHttpEndpoint" httpPort="9080"
-		httpsPort="9443" />
-
-	<!-- Automatically expand WAR files and EAR files -->
-	<applicationManager autoExpand="true" />
-
-
 	<!-- JDBC PostgreSQL driver -->
 	<library id="postgresql-library">
 		<fileset id="PostgreSQLFileset" dir="/opt/ol/wlp/lib"
@@ -106,8 +55,7 @@
 		libraryRef="postgresql-library" />
 
 	<!-- imxisworkflow datapool -->
-	<dataSource id="imixsworkflow" jndiName="jdbc/workflow"
-		jdbcDriverRef="postgresql-driver"
+	<dataSource id="imixsworkflow" jndiName="jdbc/workflow" jdbcDriverRef="postgresql-driver"
 		type="javax.sql.ConnectionPoolDataSource" transactional="true">
 		<properties serverName="imixs-db" portNumber="5432"
 			databaseName="workflow-db" user="postgres" password="adminadmin" />
@@ -115,9 +63,9 @@
 
 
 	<!-- timerdb psql -->
-	<dataSource id="timerDataSource"
-		jndiName="jdbc/timerDataSource" jdbcDriverRef="postgresql-driver"
-		type="javax.sql.ConnectionPoolDataSource" transactional="false">
+	<dataSource id="timerDataSource" jndiName="jdbc/timerDataSource"
+		jdbcDriverRef="postgresql-driver" type="javax.sql.ConnectionPoolDataSource"
+		transactional="false">
 		<properties serverName="imixs-db" portNumber="5432"
 			databaseName="workflow-db" user="postgres" password="adminadmin" />
 	</dataSource>
@@ -126,12 +74,9 @@
 		<authData user="postgres" password="adminadmin" />
 	</databaseStore>
 	<persistentExecutor
-		id="defaultEJBPersistentTimerExecutor" retryInterval="10s"
+		id="defaultEJBPersistentTimerExecutor" retryInterval="10s" initialPollDelay="30s"
 		retryLimit="10" taskStoreRef="EJBTimerDatabaseStore">
 	</persistentExecutor>
-	<library id="DerbyLib">
-		<fileset dir="${server.config.dir}/derbyDriverDir/" />
-	</library>
 
 
 	<!--  Mail Config -->
@@ -151,5 +96,35 @@
 		<property name="mail.smtp.starttls.enable" value="true" />
 	</mailSession>
 
+
+	<!-- @RunAs see:
+	https://stackoverflow.com/questions/51830570/how-to-authorize-a-java-batch-job-so-it-can-run-from-a-startup-bean-in-websphere
+	https://www.ibm.com/support/knowledgecenter/en/SSEQTP_liberty/com.ibm.websphere.wlp.doc/ae/twlp_sec_runas.html
+		https://groups.io/g/openliberty/messages
+	https://www.ibm.com/support/knowledgecenter/de/SS7K4U_liberty/com.ibm.websphere.wlp.zseries.doc/ae/cwlp_authorization.html
+	 -->
+	<applicationMonitor dropinsEnabled="false" />
+	<application name="imixs-process-manager" context-root="/" type="war"
+		id="imixs-process-manager"
+		location="${server.config.dir}apps/imixs-process-manager.war">
+		<application-bnd>
+			<security-role name="org.imixs.ACCESSLEVEL.MANAGERACCESS">
+				<user name="workflow-service" />
+				<user name="admin" />
+				<run-as userid="workflow-service" />
+			</security-role>
+			<security-role name="org.imixs.ACCESSLEVEL.AUTHORACCESS">
+				<user name="manfred" />
+				<user name="alex" />
+				<user name="anna" />
+				<user name="marty" />
+				<user name="melman" />
+				<user name="gloria" />
+				<user name="skipper" />
+				<user name="kowalski" />
+				<user name="private" />
+			</security-role>
+		</application-bnd>
+	</application>
 
 </server>
