@@ -98,7 +98,7 @@
 	<!-- JDBC PostgreSQL driver -->
 	<library id="postgresql-library">
 		<fileset id="PostgreSQLFileset" dir="/opt/ol/wlp/lib"
-			includes="postgresql-9.4.1212.jar" />
+			includes="postgresql-42.2.5.jar" />
 	</library>
 	<jdbcDriver id="postgresql-driver"
 		javax.sql.XADataSource="org.postgresql.xa.PGXADataSource"
@@ -109,7 +109,7 @@
 	<dataSource id="imixsworkflow" jndiName="jdbc/workflow"
 		jdbcDriverRef="postgresql-driver"
 		type="javax.sql.ConnectionPoolDataSource" transactional="true">
-		<properties serverName="imixssample-db" portNumber="5432"
+		<properties serverName="imixs-db" portNumber="5432"
 			databaseName="workflow-db" user="postgres" password="adminadmin" />
 	</dataSource>
 
@@ -118,7 +118,7 @@
 	<dataSource id="timerDataSource"
 		jndiName="jdbc/timerDataSource" jdbcDriverRef="postgresql-driver"
 		type="javax.sql.ConnectionPoolDataSource" transactional="false">
-		<properties serverName="imixssample-db" portNumber="5432"
+		<properties serverName="imixs-db" portNumber="5432"
 			databaseName="workflow-db" user="postgres" password="adminadmin" />
 	</dataSource>
 	<databaseStore id="EJBTimerDatabaseStore"
@@ -134,23 +134,22 @@
 	</library>
 
 
-	<!--  Mail Config 
+	<!--  Mail Config -->
 	<mailSession>
-        <mailSessionID>imixsSMTPSession</mailSessionID>             
-        <jndiName>mail/org.imixs.workflow.mail</jndiName>
-        <description>Imixs SMTP Session</description>
-        <storeProtocol>imaps</storeProtocol>
-        <transportProtocol>smtp</transportProtocol>
-        <host>my.host.com</host>
-        <user>youruseraccount</user>
-        <password>yourpassword</password>
-        <from>youruseraccount@info.com</from>
-        <property name="mail.imap.host" value="my.host.com" />
-        <property name="mail.smtp.port" value="587" />
-        <property name="mail.smtp.auth" value="true" />
-        <property name="mail.smtp.starttls.enable" value="true" />
-    </mailSession>
-    -->
+		<mailSessionID>imixsSMTPSession</mailSessionID>
+		<jndiName>mail/org.imixs.workflow.mail</jndiName>
+		<description>Imixs SMTP Session</description>
+		<storeProtocol>imaps</storeProtocol>
+		<transportProtocol>smtp</transportProtocol>
+		<host>my.host.com</host>
+		<user>youruseraccount</user>
+		<password>yourpassword</password>
+		<from>youruseraccount@info.com</from>
+		<property name="mail.imap.host" value="my.host.com" />
+		<property name="mail.smtp.port" value="587" />
+		<property name="mail.smtp.auth" value="true" />
+		<property name="mail.smtp.starttls.enable" value="true" />
+	</mailSession>
 
 
 </server>

@@ -1,13 +1,15 @@
 version: "3.6"
 services:
 
-  imixssample-db:
-    image: postgres:9.6.1
+  imixs-db:
+    image: postgres:13.11
     environment:
       POSTGRES_PASSWORD: adminadmin
       POSTGRES_DB: workflow-db
-  
-  imixssample-app:
+    volumes: 
+      - dbdata:/var/lib/postgresql/data  
+
+  imixs-app:
     image: imixs/imixs-process-manager
     environment:
       MODEL_DEFAULT_DATA: "ticket.bpmn"
@@ -20,9 +22,11 @@ services:
 #      - ./docker/deployments:/config/dropins/   
 
 
-
-    
+ 
 #  imixsadmin:
 #    image: imixs/imixs-admin
 #    ports:
 #      - "8888:8080"
+
+volumes:
+  dbdata:   
