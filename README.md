@@ -23,7 +23,7 @@ Download the [docker-compose.yml](https://raw.githubusercontent.com/imixs/imixs-
 version: "3.6"
 services:
   imixs-db:
-    image: postgres:9.6.1
+    image: postgres:13.11
     environment:
       POSTGRES_PASSWORD: adminadmin
       POSTGRES_DB: workflow-db
