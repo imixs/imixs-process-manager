@@ -141,11 +141,11 @@ In this mode the Manik-Plugin will detect updates of the Web Frontend and update
 
 To run the application on the Open Liberty Application Server with Docker run:
 
-    $ mvn clean install -Pdocker-build-openliberty
-    $ docker-compose -f docker-compose-openliberty.yml up
+    $ mvn clean install -Pdocker-openliberty
+    $ docker-compose -f docker-compose-openliberty.yaml up
 
 The application running on OpenLiberty is available from:
 
     http://localhost:9080/
 
-You can find the configuration details of open liberty server in /src/docker/configuration/openliberty/
+You can find the configuration details in the server section [OpenLiberty](/docker/configuration/openliberty/README.md)

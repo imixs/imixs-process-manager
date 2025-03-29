@@ -234,7 +234,7 @@
 										<exec executable="docker">
 											<arg value="build" />
 											<arg value="-f" />
-											<arg value="Dockerfile-OpenLiberty" />
+											<arg value="Dockerfile-openliberty" />
 											<arg value="-t" />
 											<arg value="imixs/imixs-process-manager" />
 											<arg value="./" />
