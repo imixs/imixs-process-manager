@@ -30,7 +30,7 @@
     </bpmn2:participant>
     <bpmn2:participant id="Participant_2" name="Ticket Pool" processRef="ticket"/>
   </bpmn2:collaboration>
-  <bpmn2:process id="ticket" isExecutable="false" name="Ticket">
+  <bpmn2:process id="ticket" isExecutable="false" name="Ticket" processType="Public">
     <bpmn2:textAnnotation id="TextAnnotation_1">
       <bpmn2:text>Initialize a new process instance and assigne it to a team.</bpmn2:text>
       <bpmn2:documentation id="documentation_XEK1gQ"/>
@@ -61,7 +61,7 @@
     </bpmn2:association>
     <bpmn2:documentation id="documentation_KlISrA"/>
   </bpmn2:process>
-  <bpmn2:process definitionalCollaborationRef="Collaboration_1" id="Process_1" isExecutable="false" name="Ticket">
+  <bpmn2:process definitionalCollaborationRef="Collaboration_1" id="Process_1" isExecutable="false" name="Ticket" processType="Private">
     <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1">
       <bpmn2:lane id="Lane_1" name="Support Team">
         <bpmn2:flowNodeRef>Task_2</bpmn2:flowNodeRef>
@@ -343,13 +343,12 @@
 <imixs-form>
   <imixs-form-section columns="2" label="General Information">
     <item name="_ticketid" type="text"  label="Ticket ID:" />
-    <item name="_ticketid" type="custom" path="sub_team"  label="Select a Team:" />
+    <item name="team" type="custom" path="sub_team"  label="Select a Team:" />
     <item name="_date" type="date"  label="Date:" />
   </imixs-form-section>
   <imixs-form-section label="Problem Description">
     <item name="_problem" type="textarea"  />
   </imixs-form-section>
- 
 </imixs-form>]]></bpmn2:documentation>
     </bpmn2:dataObject>
     <bpmn2:dataObject id="DataObject_4" name="Custom-Form">
@@ -357,7 +356,7 @@
 <imixs-form>
   <imixs-form-section columns="2" label="General Information">
     <item name="_ticketid" type="text"  label="Ticket ID:" readonly="true" />
-    <item name="_ticketid" type="custom" path="sub_team"  label="Select a Team:" />
+    <item name="team" type="custom" path="sub_team"  label="Select a Team:" />
     <item name="_date" type="date"  label="Date:" />
   </imixs-form-section>
   <imixs-form-section label="Problem Description">
