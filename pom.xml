@@ -60,6 +60,9 @@
 		<org.imixs.workflow.version>6.1.4</org.imixs.workflow.version>
 		<org.imixs.micro.version>1.0.0</org.imixs.micro.version>
 		<microprofile.version>6.0</microprofile.version>
+		<junit.jupiter.version>5.9.2</junit.jupiter.version>
+		<mockito.version>5.8.0</mockito.version>
+		<org.imixs.melman.version>2.1.0</org.imixs.melman.version>
 		<custom.webResources>src/main/webapp</custom.webResources>
 		<custom.unpackTypes>war</custom.unpackTypes>
 	</properties>
@@ -416,7 +419,12 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
 			</plugin>
-
+			<!-- Testing JUnit 5 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.1.2</version>
+			</plugin>
 		</plugins>
 
 		<finalName>imixs-process-manager</finalName>
@@ -462,13 +470,6 @@
 			<version>${org.imixs.workflow.version}</version>
 		</dependency>
 
-		<!-- Imixs Micro -->
-		<dependency>
-			<groupId>org.imixs.workflow</groupId>
-			<artifactId>imixs-micro-client</artifactId>
-			<version>${org.imixs.micro.version}</version>
-		</dependency>
-
 		<!-- Apache Lucene Core -->
 		<dependency>
 			<groupId>org.imixs.workflow</groupId>
@@ -480,6 +481,73 @@
 		<!-- Apache Lucene Solr <dependency> <groupId>org.imixs.workflow</groupId> 
 			<artifactId>imixs-workflow-index-solr</artifactId> <version>${org.imixs.workflow.version}</version> 
 			</dependency> -->
+
+
+		<!-- Testing -->
+		<dependency>
+			<groupId>org.imixs.workflow</groupId>
+			<artifactId>imixs-melman</artifactId>
+			<version>${org.imixs.melman.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- JUnit 5 Dependencies -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>${junit.jupiter.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>${junit.jupiter.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Mockito Dependencies -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
+			<version>3.0.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.parsson</groupId>
+			<artifactId>jakarta.json</artifactId>
+			<version>1.1.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+			<version>3.0.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-jaxb</artifactId>
+			<version>3.1.5</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-client</artifactId>
+			<version>3.1.5</version>
+		</dependency>
+
 
 	</dependencies>
 </project>
