@@ -63,18 +63,16 @@ You can upload your own process model and create customized forms. You can view 
 
 Imixs-Workflow is a human-centric workflow engine which means that each actor need to authenticate against the service to interact.
 
-The default setup of the _Imixs Process Manager_ provides a set of predefined users which can be used for testing purpose. The test users are stored in a separate user and roles properties files. See the following list of predefined test user accounts:
+The _Imixs Process Manager_ provides a user and team management. The users are stored in a database and used for authentication.
+If you first deploy the system the application will create a default user:
 
-| User    | Role                   | Password   |
-| ------- | ---------------------- | ---------- |
-| admin   | IMIXS-WORKFLOW-Manager | adminadmin |
-| alex    | IMIXS-WORKFLOW-Manager | password   |
-| marty   | IMIXS-WORKFLOW-Author  | password   |
-| melman  | IMIXS-WORKFLOW-Author  | password   |
-| gloria  | IMIXS-WORKFLOW-Author  | password   |
-| skipper | IMIXS-WORKFLOW-Author  | password   |
+| User  | Role                   | Password   |
+| ----- | ---------------------- | ---------- |
+| admin | IMIXS-WORKFLOW-Manager | adminadmin |
 
-You can add accounts or change the default account later, by updating the files "_sampleapp-roles.properties_" and "_sampleapp-users.properties_". You can also configure a different custom security realm (e.g. LDAP or Database).
+You can add you own accounts and teams using the user/team management section.
+
+<img src="./screen-003.png" />
 
 You will find more information about the security concept in the [Imixs-Workflow Deployent guide](https://www.imixs.org/doc/deployment/index.html).
 
