@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="https://jakarta.ee/xml/ns/persistence"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
-             version="3.0">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+	version="3.0">
 
 	<!--
 		Imixs JPA definition Make sure that the imixs-workflow-jee library
@@ -10,30 +10,30 @@
 	-->
 
 	<!-- eclipselink -->
-	<persistence-unit name="org.imixs.workflow.jpa" transaction-type="JTA">	
-	<!--  -->
+	<persistence-unit name="org.imixs.workflow.jpa" transaction-type="JTA">
+		<!--  -->
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		
+
 		<jta-data-source>jdbc/workflow</jta-data-source>
 		<jar-file>lib/imixs-workflow-engine-${org.imixs.workflow.version}.jar</jar-file>
+		<jar-file>lib/imixs-marty-${org.imixs.marty.version}.jar</jar-file>
 		<properties>
 			<!-- target-database Auto MySQL PostgreSQL  -->
 			<property name="eclipselink.target-database" value="Auto" />
 			<property name="eclipselink.ddl-generation" value="create-or-extend-tables" />
 			<property name="eclipselink.deploy-on-startup" value="true" />
-			<property name="eclipselink.logging.level" value="INFO" />	
+			<property name="eclipselink.logging.level" value="INFO" />
 
 			<!-- disable 2nd level cache 
 			<property name="eclipselink.cache.shared.default" value="false" />
 			<property name="eclipselink.query-results-cache" value="false"/>
 			-->
-			
+
 			<!--  hybernate 
 			<property name="hibernate.hbm2ddl.auto" value="update"/>
 			-->
-		</properties>				
+		</properties>
 	</persistence-unit>
-	
-	
-	
+
+
 </persistence>

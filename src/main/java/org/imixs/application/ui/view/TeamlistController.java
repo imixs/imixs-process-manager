@@ -1,13 +1,13 @@
-package org.imixs.application.ui;
+package org.imixs.application.ui.view;
 
 import java.io.Serializable;
 import java.util.logging.Logger;
 
+import org.imixs.workflow.faces.data.ViewController;
+
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
-
-import org.imixs.workflow.faces.data.ViewController;
 
 /**
  * Select the list of teams sorted by name
