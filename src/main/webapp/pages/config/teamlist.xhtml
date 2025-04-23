@@ -19,14 +19,68 @@
 				</h2>
 
 				<h:dataTable id="datatable_id" class="imixsdatatable"
-					value="#{viewHandler.getData(teamlistController)}" var="record">
+					value="#{viewHandler.getData(teamListController)}" var="record">
 
 					<h:column>
 						<f:facet name="header">
 							<h:outputText value="Name" />
 						</f:facet>
-						<h:outputText value="#{record.item['txtName']} " />
+						<h:outputText value="#{record.item['Name']} " />
 					</h:column>
+
+
+					<h:column>
+						<f:facet name="header">Manager</f:facet>
+						<ui:repeat var="grp" value="#{record.itemListArray['Manager']}">
+							<ui:param name="displayname" value="#{userController.getUserName(grp)}"></ui:param>
+							<h:outputText value="#{userController.getUserName(grp)}"
+								title="#{grp} - #{userController.getEmail(grp)}" />
+							<ui:fragment rendered="#{(empty displayname) and (!empty grp)}">
+								<ui:param name="isrole" value="#{userInputController.isRole(grp)}" />
+								<h:outputText value="#{grp}" title="#{isrole?'Access Role':'Unknown User!'}"
+									class="#{isrole?'imixs-warning':'imixs-important'}" />
+							</ui:fragment>
+							<br />
+						</ui:repeat>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Team</f:facet>
+						<ui:repeat var="grp" value="#{record.itemListArray['Team']}">
+							<ui:param name="displayname" value="#{userController.getUserName(grp)}"></ui:param>
+							<h:outputText value="#{userController.getUserName(grp)}"
+								title="#{grp} - #{userController.getEmail(grp)}" />
+							<ui:fragment rendered="#{(empty displayname) and (!empty grp)}">
+								<ui:param name="isrole" value="#{userInputController.isRole(grp)}" />
+								<h:outputText value="#{grp}" title="#{isrole?'Access Role':'Unknown User!'}"
+									class="#{isrole?'imixs-warning':'imixs-important'}" />
+							</ui:fragment>
+							<br />
+						</ui:repeat>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Assist</f:facet>
+						<ui:repeat var="grp" value="#{record.itemListArray['Assist']}">
+							<ui:param name="displayname" value="#{userController.getUserName(grp)}" />
+							<h:outputText value="#{userController.getUserName(grp)}"
+								title="#{grp} - #{userController.getEmail(grp)}" />
+							<ui:fragment rendered="#{(empty displayname) and (!empty grp)}">
+								<ui:param name="isrole" value="#{userInputController.isRole(grp)}" />
+								<h:outputText value="#{grp}" title="#{isrole?'Access Role':'Unknown User!'}"
+									class="#{isrole?'imixs-warning':'imixs-important'}" />
+							</ui:fragment>
+							<br />
+						</ui:repeat>
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Status" />
+						</f:facet>
+						<h:outputText value="#{record.item['$workflowstatus']} " />
+					</h:column>
+
 
 
 					<h:column>
@@ -40,8 +94,11 @@
 
 					<!-- edit -->
 					<h:column>
-						<h:link outcome="/pages/config/team?faces-redirect=true">
-							<h:outputText value="#{message.edit}" />
+						
+						<!-- Edit -->
+						<h:link outcome="/pages/config/team?faces-redirect=true" styleClass="imixs-viewentry-main-link">
+							<span class="typcn typcn-pencil imixs-state-info"></span>
+							#{message.edit}
 							<f:param name="id" value="#{record.item['$uniqueid']}" />
 						</h:link>
 					</h:column>
@@ -54,24 +111,20 @@
 				</h:dataTable>
 
 				<h:commandButton
-					actionListener="#{viewHandler.back(teamlistController)}"
-					disabled="#{teamlistController.pageIndex==0}"
+					actionListener="#{viewHandler.back(teamListController)}"
+					disabled="#{teamListController.pageIndex==0}"
 					value="#{message.prev}">
 				</h:commandButton>
 
 
 				<h:commandButton
-					actionListener="#{viewHandler.forward(teamlistController)}"
-					disabled="#{teamlistController.endOfList}" value="#{message.next}">
+					actionListener="#{viewHandler.forward(teamListController)}"
+					disabled="#{teamListController.endOfList}" value="#{message.next}">
 				</h:commandButton>
 
 
-				<h:commandButton actionListener="#{documentController.create()}"
-					action="team" value="#{message.add}">
-					<f:setPropertyActionListener
-						target="#{documentController.document.item['type']}" value="team" />
-				</h:commandButton>
-
+			
+				<h:button outcome="/pages/config/team?id=" value="#{message.add}" />
 
 			</h:form>
 		</f:view>

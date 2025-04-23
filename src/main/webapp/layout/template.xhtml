@@ -30,6 +30,9 @@
 		src="#{facesContext.externalContext.requestContextPath}/layout/js/imixs-xml.js"></script>
 	<script type="text/javascript"
 		src="#{facesContext.externalContext.requestContextPath}/layout/js/basic.js"></script>
+	<script type="text/javascript"
+		src="#{request.contextPath}/marty/imixs-marty.js?build=#{app.application_build_timestamp}"></script>
+
 
 	<!-- Fonts
 	    ================================================== -->
@@ -49,6 +52,10 @@
 	<link
 		href="#{facesContext.externalContext.requestContextPath}/layout/css/basic.css"
 		charset="UTF-8" type="text/css" rel="stylesheet" />
+
+	<link href="#{request.contextPath}/marty/imixs-marty.css?build=#{app.application_build_timestamp}" charset="UTF-8"
+		type="text/css" rel="stylesheet" />
+
 	<link
 		href="#{facesContext.externalContext.requestContextPath}/layout/css/chronicle.css"
 		charset="UTF-8" type="text/css" rel="stylesheet" />

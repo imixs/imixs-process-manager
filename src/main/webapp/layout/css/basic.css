@@ -250,6 +250,12 @@ input[type="submit"]:focus {
 	color: #fff;
 }
 
+#imixs-content .imixs-footer {
+	margin-top:30px;
+}
+.imixs-tooltip-content {
+	max-width: 600px;
+}
 #imixs-footer {
 	width: 100%;
 	padding: 10px 30px 10px 210px;
@@ -260,6 +266,7 @@ input[type="submit"]:focus {
 #imixs-footer a {
 	color: inherit;
 }
+
 
 /* tootip */
 span.tooltip:hover {
@@ -411,6 +418,10 @@ th {
 	border: none;
 	padding: 4px;
 	border-bottom: 1px solid #ddd;
+}
+
+.imixsdatatable  {
+	width:  100%;
 }
 
 .imixsdatatable a {
