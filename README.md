@@ -70,11 +70,25 @@ If you first deploy the system the application will create a default user:
 | ----- | ---------------------- | ---------- |
 | admin | IMIXS-WORKFLOW-Manager | adminadmin |
 
-You can add you own accounts and teams using the user/team management section.
+For testing you can create the following additional test accounts to see the different behavior :
+
+| User    | Role                   | Password |
+| ------- | ---------------------- | -------- |
+| alex    | IMIXS-WORKFLOW-Manager | password |
+| marty   | IMIXS-WORKFLOW-Author  | password |
+| melman  | IMIXS-WORKFLOW-Author  | password |
+| gloria  | IMIXS-WORKFLOW-Author  | password |
+| skipper | IMIXS-WORKFLOW-Reader  | password |
+
+You will find more information about the security concept in the [Imixs-Workflow Deployent guide](https://www.imixs.org/doc/deployment/index.html).
+
+## Teams
+
+You can group users to teams using the user/team management section.
 
 <img src="./screen-003.png" />
 
-You will find more information about the security concept in the [Imixs-Workflow Deployent guide](https://www.imixs.org/doc/deployment/index.html).
+Each team supports the roles 'Manager', 'Team' and 'Assist'. These teams are solved by the Plugin class `org.imixs.marty.team.TeamPlugin` if a team reference is assigned to a workitem named `space.ref`. You can see the example in the BPMN model 'ticket.bpmn'
 
 ## Process Design
 
@@ -92,6 +106,7 @@ Example:
 	  <imixs-form-section label="Order">
 	    <item name="_orderid" type="text" label="Order ID:" />
 	    <item name="_orderdate" type="date" label="Order Date:" />
+      <item name="team" type="custom" path="team"  label="Select a Team:" />
 	  </imixs-form-section>
 	</imixs-form>
 ```
