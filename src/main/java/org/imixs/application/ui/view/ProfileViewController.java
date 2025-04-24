@@ -26,7 +26,7 @@ public class ProfileViewController extends ViewController {
 	@PostConstruct
 	public void init() {
 		super.init();
-		this.setQuery("(type:\"profile\") OR (type:\"profilearchive\")");
+		this.setQuery("(type:profile*) ");
 		this.setSortBy("txtname");
 		this.setSortReverse(false);
 		this.setPageSize(adminViewPageSize);

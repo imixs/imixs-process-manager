@@ -137,7 +137,8 @@ public class ModelController implements Serializable {
 	 * Workflow groups of the system model will be skipped.
 	 * 
 	 * A workflowGroup with a '~' in its name will be skipped. This indicates a
-	 * child process.
+	 * child process. The model 'marty-*' will be ignored as this is the system
+	 * model.
 	 * 
 	 * The worflowGroup list is used to assign a workflow Group to a core process.
 	 * 
@@ -149,7 +150,7 @@ public class ModelController implements Serializable {
 		for (BPMNModel model : modelService.getModelManager().getAllModels()) {
 			String version = BPMNUtil.getVersion(model);
 			// Skip system model..
-			if (version.startsWith("system-")) {
+			if (version.startsWith("system-") || version.startsWith("marty-")) {
 				continue;
 			}
 			Set<String> groups = modelService.getModelManager().findAllGroupsByModel(model);

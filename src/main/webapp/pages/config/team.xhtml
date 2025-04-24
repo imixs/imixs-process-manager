@@ -1,11 +1,7 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:marty="http://xmlns.jcp.org/jsf/composite/marty"
-	xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs"
-	template="/layout/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:marty="http://xmlns.jcp.org/jsf/composite/marty"
+	xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs" template="/layout/template.xhtml">
 
 	<f:metadata>
 		<f:viewAction action="#{workflowController.onLoad()}" if="#{not empty param.id}" />
@@ -25,14 +21,13 @@
 				<dl>
 					<dt>
 						<h:outputText value="#{message.name}:">
-							<h:message style="color: red" for="subject_id" showSummary="true"
-								showDetail="true" />
+							<h:message style="color: red" for="subject_id" showSummary="true" showDetail="true" />
 						</h:outputText>
 					</dt>
 					<dd>
 						<h:inputText style="width: 20em;" required="true"
-						value="#{workflowController.workitem.item['name']}" id="name_id">
-					</h:inputText>
+							value="#{workflowController.workitem.item['space.name']}" id="name_id">
+						</h:inputText>
 					</dd>
 
 					<div class="imixs-form-section-3">
@@ -43,8 +38,7 @@
 								<h:outputText value="Manager" />
 							</dt>
 							<dd>
-								<marty:userListInput
-									value="#{workflowController.workitem.itemList['manager']}"
+								<marty:userListInput value="#{workflowController.workitem.itemList['space.manager']}"
 									editmode="true" />
 							</dd>
 						</dl>
@@ -55,8 +49,7 @@
 								<h:outputText value="Team" />
 							</dt>
 							<dd>
-								<marty:userListInput
-									value="#{workflowController.workitem.itemList['team']}"
+								<marty:userListInput value="#{workflowController.workitem.itemList['space.team']}"
 									editmode="true" />
 							</dd>
 						</dl>
@@ -64,11 +57,10 @@
 						<!-- ******** space Assistance ********* -->
 						<dl>
 							<dt>
-								<h:outputText 	value="Assistance" />
+								<h:outputText value="Assistance" />
 							</dt>
 							<dd>
-								<marty:userListInput
-									value="#{workflowController.workitem.itemList['assist']}"
+								<marty:userListInput value="#{workflowController.workitem.itemList['space.assist']}"
 									editmode="true" />
 							</dd>
 						</dl>
@@ -83,7 +75,7 @@
 					<ui:param name="action" value="/pages/config/teamlist" />
 				</ui:include>
 
-				
+
 
 			</h:form>
 		</f:view>

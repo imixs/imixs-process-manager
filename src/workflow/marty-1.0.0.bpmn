@@ -480,7 +480,7 @@ System Model: marty-1.0]]></bpmn2:text>
           <imixs:value><![CDATA[nammanager]]></imixs:value>
         </imixs:item>
         <imixs:item name="txttype" type="xs:string">
-          <imixs:value><![CDATA[team]]></imixs:value>
+          <imixs:value><![CDATA[space]]></imixs:value>
         </imixs:item>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
@@ -560,7 +560,7 @@ System Model: marty-1.0]]></bpmn2:text>
           <imixs:value><![CDATA[org.imixs.ACCESSLEVEL.MANAGERACCESS]]></imixs:value>
         </imixs:item>
         <imixs:item name="txttype" type="xs:string">
-          <imixs:value><![CDATA[teamdeleted]]></imixs:value>
+          <imixs:value><![CDATA[spacedeleted]]></imixs:value>
         </imixs:item>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_15</bpmn2:incoming>
@@ -675,7 +675,7 @@ System Model: marty-1.0]]></bpmn2:text>
           <imixs:value><![CDATA[nammanager]]></imixs:value>
         </imixs:item>
         <imixs:item name="txttype" type="xs:string">
-          <imixs:value><![CDATA[teamarchive]]></imixs:value>
+          <imixs:value><![CDATA[spacearchive]]></imixs:value>
         </imixs:item>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_12</bpmn2:incoming>

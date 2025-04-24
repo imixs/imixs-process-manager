@@ -2,9 +2,9 @@
 <!-- origin at X=0.0 Y=0.0 --><bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:imixs="http://www.imixs.org/bpmn2" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" xmlns:tl="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.5.2.SNAPSHOT-v20200602-1600-B1" id="Definitions_1" targetNamespace="http://www.imixs.org/bpmn2">
   <bpmn2:extensionElements>
     <imixs:item name="txtfieldmapping" type="xs:string">
-      <imixs:value><![CDATA[Team | teamMembers]]></imixs:value>
-      <imixs:value><![CDATA[Creator | namCreator]]></imixs:value>
-      <imixs:value><![CDATA[CurrentEditor | namCurrentEditor]]></imixs:value>
+      <imixs:value><![CDATA[Team|user]]></imixs:value>
+      <imixs:value><![CDATA[Creator|$Creator]]></imixs:value>
+      <imixs:value><![CDATA[CurrentEditor|$Editor]]></imixs:value>
     </imixs:item>
     <imixs:item name="txtworkflowmodelversion" type="xs:string">
       <imixs:value><![CDATA[order-model-1.0.0]]></imixs:value>
@@ -69,14 +69,21 @@
         <imixs:item name="txtworkflowsummary" type="xs:string">
           <imixs:value><![CDATA[<itemvalue>_orderid</itemvalue> (<itemvalue>_teamName</itemvalue>)]]></imixs:value>
         </imixs:item>
-        <imixs:item name="keyupdateacl" type="xs:boolean">
-          <imixs:value>true</imixs:value>
+        <imixs:item name="keyupdateacl" type="xs:string">
+          <imixs:value><![CDATA[true]]></imixs:value>
         </imixs:item>
-        <imixs:item name="keyaddwritefields" type="xs:string">
-          <imixs:value><![CDATA[namCurrentEditor]]></imixs:value>
-          <imixs:value><![CDATA[teamMembers]]></imixs:value>
+        <imixs:item name="keyownershipfields" type="xs:string">
+          <imixs:value><![CDATA[user]]></imixs:value>
         </imixs:item>
-        <imixs:item name="keyownershipfields" type="xs:string"/>
+        <imixs:item name="namownershipnames" type="xs:string">
+          <imixs:value/>
+        </imixs:item>
+        <imixs:item name="namaddreadaccess" type="xs:string">
+          <imixs:value/>
+        </imixs:item>
+        <imixs:item name="namaddwriteaccess" type="xs:string">
+          <imixs:value/>
+        </imixs:item>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
       <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
@@ -95,20 +102,23 @@
     </bpmn2:sequenceFlow>
     <bpmn2:task id="Task_2" imixs:processid="1100" name="Approve Order">
       <bpmn2:extensionElements>
-        <imixs:item name="keyupdateacl" type="xs:boolean">
-          <imixs:value>true</imixs:value>
+        <imixs:item name="keyupdateacl" type="xs:string">
+          <imixs:value><![CDATA[true]]></imixs:value>
         </imixs:item>
         <imixs:item name="keyownershipfields" type="xs:string">
-          <imixs:value><![CDATA[namCurrentEditor]]></imixs:value>
-          <imixs:value><![CDATA[teamMembers]]></imixs:value>
-        </imixs:item>
-        <imixs:item name="keyaddreadfields" type="xs:string"/>
-        <imixs:item name="keyaddwritefields" type="xs:string">
-          <imixs:value><![CDATA[teamMembers]]></imixs:value>
-          <imixs:value><![CDATA[namCurrentEditor]]></imixs:value>
+          <imixs:value><![CDATA[user]]></imixs:value>
         </imixs:item>
         <imixs:item name="txtworkflowsummary" type="xs:string">
           <imixs:value><![CDATA[<itemvalue>_orderid</itemvalue> (<itemvalue>_teamName</itemvalue>)]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="namownershipnames" type="xs:string">
+          <imixs:value/>
+        </imixs:item>
+        <imixs:item name="namaddreadaccess" type="xs:string">
+          <imixs:value/>
+        </imixs:item>
+        <imixs:item name="namaddwriteaccess" type="xs:string">
+          <imixs:value/>
         </imixs:item>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
@@ -124,15 +134,20 @@
         <imixs:item name="txtworkflowsummary" type="xs:string">
           <imixs:value><![CDATA[<itemvalue>_orderid</itemvalue> (<itemvalue>_teamName</itemvalue>)]]></imixs:value>
         </imixs:item>
-        <imixs:item name="keyupdateacl" type="xs:boolean">
-          <imixs:value>true</imixs:value>
+        <imixs:item name="keyupdateacl" type="xs:string">
+          <imixs:value><![CDATA[true]]></imixs:value>
         </imixs:item>
         <imixs:item name="keyownershipfields" type="xs:string">
-          <imixs:value><![CDATA[namCurrentEditor]]></imixs:value>
+          <imixs:value><![CDATA[user]]></imixs:value>
         </imixs:item>
-        <imixs:item name="keyaddwritefields" type="xs:string">
-          <imixs:value><![CDATA[namCurrentEditor]]></imixs:value>
-          <imixs:value><![CDATA[teamMembers]]></imixs:value>
+        <imixs:item name="namownershipnames" type="xs:string">
+          <imixs:value/>
+        </imixs:item>
+        <imixs:item name="namaddreadaccess" type="xs:string">
+          <imixs:value/>
+        </imixs:item>
+        <imixs:item name="namaddwriteaccess" type="xs:string">
+          <imixs:value/>
         </imixs:item>
       </bpmn2:extensionElements>
       <bpmn2:documentation id="Documentation_4"><![CDATA[Start new purchase order process]]></bpmn2:documentation>
@@ -169,6 +184,7 @@
     <item name="_orderid" type="text"  label="Order ID:" />
     <item name="_orderdate" type="date"  label="Order Date:" />
     <item name="_supplier" type="textarea"  label="Supplier Address:" />
+    <item name="user" type="custom" path="userinput"  label="Assign to:" />
   </imixs-form-section>
   <imixs-form-section>
     <item name="_details" type="html" label="Description" />
@@ -213,10 +229,7 @@
         <imixs:item name="keyupdateacl" type="xs:boolean">
           <imixs:value>true</imixs:value>
         </imixs:item>
-        <imixs:item name="keyaddwritefields" type="xs:string">
-          <imixs:value><![CDATA[namCurrentEditor]]></imixs:value>
-          <imixs:value><![CDATA[teamMembers]]></imixs:value>
-        </imixs:item>
+        <imixs:item name="keyaddwritefields" type="xs:string"/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_11</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
