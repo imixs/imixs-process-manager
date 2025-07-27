@@ -33,26 +33,40 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.imixs.workflow.ItemCollection;
+import org.imixs.workflow.ModelManager;
+import org.imixs.workflow.engine.WorkflowService;
 import org.imixs.workflow.exceptions.AccessDeniedException;
 import org.imixs.workflow.exceptions.ModelException;
+import org.imixs.workflow.exceptions.PluginException;
 import org.imixs.workflow.faces.data.WorkflowEvent;
+import org.openbpmn.bpmn.BPMNModel;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ConversationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.faces.application.Application;
@@ -75,17 +89,28 @@ import jakarta.inject.Named;
 public class CustomFormController implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static Logger logger = Logger.getLogger(CustomFormService.class.getName());
+    private static Logger logger = Logger.getLogger(CustomFormController.class.getName());
+
+    public static final String ITEM_CUSTOM_FORM = "txtWorkflowEditorCustomForm";
 
     private List<CustomSubForm> subforms = null;
+    private ModelManager modelManager = null;
     private List<CustomFormSection> sections;
     private String supportedExpressions = "";
 
     @Inject
-    CustomFormService customFormService;
+    WorkflowService workflowService;
 
     public CustomFormController() {
         super();
+    }
+
+    /**
+     * Initializes the ModelManger
+     */
+    @PostConstruct
+    public void init() {
+        modelManager = new ModelManager(workflowService);
     }
 
     public List<CustomSubForm> getSubforms() {
@@ -114,7 +139,9 @@ public class CustomFormController implements Serializable {
         }
 
         int eventType = workflowEvent.getEventType();
-        if (WorkflowEvent.WORKITEM_CHANGED == eventType || WorkflowEvent.WORKITEM_CREATED == eventType) {
+        if (WorkflowEvent.WORKITEM_CHANGED == eventType
+                || WorkflowEvent.WORKITEM_CREATED == eventType
+                || WorkflowEvent.WORKITEM_AFTER_PROCESS == eventType) {
             // parse form definition
             loadCustomFormExpressions();
             computeFieldDefinition(workflowEvent.getWorkitem());
@@ -135,7 +162,7 @@ public class CustomFormController implements Serializable {
      */
     public void computeFieldDefinition(ItemCollection workitem) throws ModelException {
         logger.fine("---> computeFieldDefinition");
-        String content = customFormService.updateCustomFieldDefinition(workitem);
+        String content = updateCustomFieldDefinition(workitem);
         sections = new ArrayList<CustomFormSection>();
         if (!content.isEmpty()) {
             // start parsing....
@@ -150,7 +177,7 @@ public class CustomFormController implements Serializable {
                 // find the root tag
                 org.w3c.dom.Element rootElement = doc.getDocumentElement();
 
-                // find imixs-subforms - this tag is optional.
+                // find imixs-subform - this tag is optional.
                 // if we have subforms we parse each subform tag for form-section tags
                 NodeList nSubformList = rootElement.getElementsByTagName("imixs-subform");
                 if (nSubformList != null && nSubformList.getLength() > 0) {
@@ -164,13 +191,13 @@ public class CustomFormController implements Serializable {
                             bReadOnly = Boolean.parseBoolean(sReadOnly);
                         }
                         CustomSubForm customSubForm = new CustomSubForm("subform-" + (subId + 1), label, bReadOnly);
-                        sections = parseSectionList(nSubFormElement, bReadOnly);
+                        sections = parseSectionList(nSubFormElement, bReadOnly, workitem);
                         customSubForm.setSections(sections);
                         subforms.add(customSubForm);
                     }
                 } else {
                     // no subform defined - so simply parse all imixs-form-section tags
-                    sections = parseSectionList(rootElement, false);
+                    sections = parseSectionList(rootElement, false, workitem);
                 }
             } catch (ParserConfigurationException | SAXException | IOException e) {
                 logger.warning("Unable to parse custom form definition: " + e.getMessage());
@@ -220,7 +247,8 @@ public class CustomFormController implements Serializable {
      * @return list of customFormSection elements
      * @throws ModelException
      */
-    private List<CustomFormSection> parseSectionList(Element parentNode, boolean readOnly) throws ModelException {
+    private List<CustomFormSection> parseSectionList(Element parentNode, boolean readOnly, ItemCollection workitem)
+            throws ModelException {
         ArrayList<CustomFormSection> result = new ArrayList<CustomFormSection>();
         boolean defaultReadOnly = false;
         NodeList nSectionList = parentNode.getElementsByTagName("imixs-form-section");
@@ -246,7 +274,7 @@ public class CustomFormController implements Serializable {
                         eSectionElement.getAttribute("path"),
                         defaultReadOnly);
                 customSection.setItems(findItems(eSectionElement,
-                        customSection.getColumns(), defaultReadOnly));
+                        customSection.getColumns(), defaultReadOnly, workitem));
                 result.add(customSection);
             }
         }
@@ -254,7 +282,7 @@ public class CustomFormController implements Serializable {
     }
 
     /**
-     * This method parses the item nods with a section element. The param columns
+     * This method parses the item nodes within a section element. The param columns
      * defines the span for each item
      * 
      * @param sectionElement
@@ -262,7 +290,8 @@ public class CustomFormController implements Serializable {
      * @return
      * @throws ModelException
      */
-    private List<CustomFormItem> findItems(Element sectionElement, String _columns, boolean readOnly)
+    private List<CustomFormItem> findItems(Element sectionElement, String _columns, boolean readOnly,
+            ItemCollection workitem)
             throws ModelException {
         List<CustomFormItem> result = new ArrayList<CustomFormItem>();
 
@@ -305,6 +334,30 @@ public class CustomFormController implements Serializable {
                     // evaluate the readonly flag depending on the item attribute
                     defaultReadOnly = evaluateBoolean(itemElement.getAttribute("readonly"));
                 }
+
+                // test if we have a default value
+                String defaultValue = itemElement.getTextContent();
+                if (defaultValue != null && !defaultValue.isEmpty()) {
+                    // extract raw values
+                    String itemName = itemElement.getAttribute("name");
+                    try {
+                        defaultValue = getInnerXMLContent(itemElement);
+                        if (!workitem.hasItem(itemName)) {
+                            // adapt text....
+                            if (defaultValue.contains("$created")) {
+                                // special case - we resolve the manually here!
+                                workitem.setItemValue(itemElement.getAttribute("name"), new Date());
+                            } else {
+                                // use adaptText method in all other cases
+                                defaultValue = workflowService.adaptText(defaultValue, workitem);
+                                workitem.setItemValue(itemElement.getAttribute("name"), defaultValue);
+                            }
+                        }
+                    } catch (PluginException e) {
+                        logger.warning(
+                                "failed to adapt default value for item " + itemName + " : " + e.getMessage());
+                    }
+                }
                 CustomFormItem customItem = new CustomFormItem(itemElement.getAttribute("name"),
                         itemElement.getAttribute("type"), itemElement.getAttribute("label"),
                         evaluateBoolean(itemElement.getAttribute("required")),
@@ -315,9 +368,32 @@ public class CustomFormController implements Serializable {
                 result.add(customItem);
             }
         }
-
         return result;
 
+    }
+
+    /**
+     * Helper method to extract the content of a xml tag including child tags
+     **/
+    public static String getInnerXMLContent(Element element) {
+        Transformer transformer;
+        try {
+            transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.setOutputProperty("omit-xml-declaration", "yes");
+            StringWriter writer = new StringWriter();
+            transformer.transform(new DOMSource(element), new StreamResult(writer));
+            String xmlString = writer.toString().trim();
+            Pattern pattern = Pattern.compile(
+                    "<" + element.getNodeName() + "[^>]*>(.*?)</" + element.getNodeName() + ">", Pattern.DOTALL);
+            Matcher matcher = pattern.matcher(xmlString);
+            if (matcher.find()) {
+                return matcher.group(1);
+            }
+        } catch (TransformerException e) {
+            // no op
+        }
+        // default behavior
+        return element.getTextContent();
     }
 
     /**
@@ -403,5 +479,73 @@ public class CustomFormController implements Serializable {
         } else {
             return inputStream;
         }
+    }
+
+    /**
+     * This method updates the custom Field Definition based on a given workitem.
+     * The method first looks if the task associated with the workitem contains a
+     * bpmn:DataObject containing a custom definition.
+     * The result is stored into the item <code>txtWorkflowEditorCustomForm</code>.
+     * <p>
+     * In case the model does not provide a custom Field Definition but the workitem
+     * has stored one the method returns the existing one and did not update the
+     * item <code>txtWorkflowEditorCustomForm</code>.
+     * 
+     * @return
+     * @throws ModelException
+     */
+    public String updateCustomFieldDefinition(ItemCollection workitem)
+            throws ModelException {
+        String content = fetchFormDefinitionFromModel(workitem);
+        if (content.isEmpty()) {
+            // take the existing one to be returned...
+            content = workitem.getItemValueString(ITEM_CUSTOM_FORM);
+        } else {
+            workitem.replaceItemValue(ITEM_CUSTOM_FORM, content);
+        }
+        return content;
+    }
+
+    /**
+     * Helper method that reads a form definition from an optional
+     * <code>bpmn:DataObject</code> associated with the current task element.
+     * A <code>bpmn:DataObject</code> must contain a `form-tag` containing the form
+     * definition.
+     * If not matching <code>bpmn:DataObject</code> is defined the method returns an
+     * empty
+     * string.
+     * 
+     * @param workitem
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    private String fetchFormDefinitionFromModel(ItemCollection workitem) {
+        ItemCollection task;
+        try {
+            BPMNModel model = modelManager.getModelByWorkitem(workitem);
+            task = modelManager.loadTask(workitem, model);
+
+        } catch (ModelException e) {
+            logger.warning("unable to parse data object in model: " + e.getMessage());
+            return "";
+        }
+
+        List<List<String>> dataObjects = task.getItemValue("dataObjects");
+        for (List<String> dataObject : dataObjects) {
+            // there can be more than one dataOjects be attached.
+            // We need the one with the tag <imixs-form>
+            String templateName = dataObject.get(0);
+            String content = dataObject.get(1);
+            // we expect that the content contains at least one occurrence of <imixs-form>
+            if (content.contains("<imixs-form>")) {
+                logger.finest("......DataObject name=" + templateName);
+                logger.finest("......DataObject content=" + content);
+                return content;
+            } else {
+                // seems not to be a imixs-form definition!
+            }
+        }
+        // nothing found!
+        return "";
     }
 }

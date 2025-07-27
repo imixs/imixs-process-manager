@@ -28,16 +28,16 @@
 package org.imixs.application.plugin;
 
 import java.util.List;
-import java.util.logging.Logger;
-
-import jakarta.ejb.EJB;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.imixs.workflow.ItemCollection;
 import org.imixs.workflow.WorkflowContext;
 import org.imixs.workflow.engine.ModelService;
 import org.imixs.workflow.engine.plugins.AbstractPlugin;
 import org.imixs.workflow.exceptions.PluginException;
+
+import jakarta.ejb.EJB;
 
 /**
  * This Plugin demonstrates the CDI behavior of an imixs workflow pugin.
@@ -55,21 +55,24 @@ public class DemoPlugin extends AbstractPlugin {
 
 	private static final Logger logger = Logger.getLogger(DemoPlugin.class.getName());
 
-        @Override
+	@Override
 	public void init(WorkflowContext actx) throws PluginException {
 
 	}
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public ItemCollection run(ItemCollection adocumentContext, ItemCollection adocumentActivity)
 			throws PluginException {
 
 		logger.info("...running demo plugin...");
 		// test model service
-		List<String> versions = modelService.getModelManager().getVersions();
+
+		this.modelService.getVersions();
+
+		List<String> versions = modelService.getVersions();
 		for (String aversion : versions) {
 			logger.log(Level.INFO, "ModelVersion found: {0}", aversion);
 		}
