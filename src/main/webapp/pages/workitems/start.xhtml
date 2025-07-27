@@ -1,7 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:i="http://xmlns.jcp.org/jsf/composite/imixs"
-	template="/layout/template.xhtml">
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions" template="/layout/template.xhtml">
 
 	<f:metadata>
 		<f:viewAction action="#{workflowController.onLoad()}" />
@@ -19,24 +19,26 @@
 						<!-- get first task by group -->
 						<ui:param name="version" value="#{modelController.getVersionByGroup(group)}" />
 						<ui:param name="initialTask" value="#{modelController.findStartTaskByGroup(version,group)}" />
-						<li>
-							<h:panelGroup rendered="#{!empty initialTask}">
-								<h:commandLink title=" " styleClass="action-create"
-									actionListener="#{workflowController.create(version,initialTask.item['taskid'],null)}"
-									action="/pages/workitems/workitem">
-									<span class="typcn typcn-folder-add" style="margin-right:5px;"></span>
-									<h:outputText value="#{group}" />
-								</h:commandLink>
-								<p>
-									<h:outputText value="#{initialTask.item['rtfdescription']}" escape="false" />
-								</p>
-								<span class="imixs-tooltip">
-									<h:outputText value="#{initialTask.item['rtfdescription']}" escape="false" />
-								</span>
-							</h:panelGroup>
-							<h:outputText style="color:red" rendered="#{empty initialTask}"
-								value="Model not found: #{group}"></h:outputText>
-						</li>
+						<ui:fragment rendered="#{!fn:startsWith(version, 'marty') and group ne 'Default Process'}">
+							<li>
+								<h:panelGroup rendered="#{!empty initialTask}">
+									<h:commandLink title=" " styleClass="action-create"
+										actionListener="#{workflowController.create(version,initialTask.item['taskid'],null)}"
+										action="/pages/workitems/workitem">
+										<span class="typcn typcn-folder-add" style="margin-right:5px;"></span>
+										<h:outputText value="#{group}" />
+									</h:commandLink>
+									<p>
+										<h:outputText value="#{initialTask.item['rtfdescription']}" escape="false" />
+									</p>
+									<span class="imixs-tooltip">
+										<h:outputText value="#{initialTask.item['rtfdescription']}" escape="false" />
+									</span>
+								</h:panelGroup>
+								<h:outputText style="color:red" rendered="#{empty initialTask}"
+									value="Model not found: #{version}:#{group}"></h:outputText>
+							</li>
+						</ui:fragment>
 					</ui:repeat>
 				</ul>
 
