@@ -348,7 +348,7 @@
     <bpmn2:sequenceFlow id="SequenceFlow_11" sourceRef="Task_1" targetRef="IntermediateCatchEvent_1">
       <bpmn2:documentation id="documentation_UW95kw"/>
     </bpmn2:sequenceFlow>
-    <bpmn2:dataObject id="DataObject_2" name="Custom Form">
+    <bpmn2:dataObject id="DataObject_2" imixs:datatype="form-data" name="Custom Form">
       <bpmn2:documentation id="Documentation_5"><![CDATA[<?xml version="1.0"?>
 <imixs-form>
   <imixs-form-section columns="2" label="General Information">
@@ -361,7 +361,7 @@
   </imixs-form-section>
 </imixs-form>]]></bpmn2:documentation>
     </bpmn2:dataObject>
-    <bpmn2:dataObject id="DataObject_4" name="Custom-Form">
+    <bpmn2:dataObject id="DataObject_4" imixs:datatype="form-data" name="Custom-Form">
       <bpmn2:documentation id="Documentation_11"><![CDATA[<?xml version="1.0"?>
 <imixs-form>
   <imixs-form-section columns="2" label="General Information">

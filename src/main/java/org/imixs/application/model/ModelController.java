@@ -229,8 +229,9 @@ public class ModelController implements Serializable {
 	 * 
 	 * @param version
 	 * @return
+	 * @throws ModelException
 	 */
-	public ItemCollection getModelEntity(String version) {
+	public ItemCollection getModelEntity(String version) throws ModelException {
 		return modelService.loadModelMetaData(version);
 	}
 
