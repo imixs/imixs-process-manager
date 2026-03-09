@@ -97,6 +97,7 @@ public class CustomFormController implements Serializable {
     private ModelManager modelManager = null;
     private List<CustomFormSection> sections;
     private String supportedExpressions = "";
+    private String errorMessage = "";
 
     @Inject
     WorkflowService workflowService;
@@ -119,6 +120,14 @@ public class CustomFormController implements Serializable {
 
     public List<CustomFormSection> getSections() {
         return sections;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String error) {
+        this.errorMessage = error;
     }
 
     /**
@@ -200,7 +209,10 @@ public class CustomFormController implements Serializable {
                     sections = parseSectionList(rootElement, false, workitem);
                 }
             } catch (ParserConfigurationException | SAXException | IOException e) {
-                logger.warning("Unable to parse custom form definition: " + e.getMessage());
+                errorMessage = "Invalid form definition! - Model=" + workitem.getModelVersion()
+                        + " TaskID=" + workitem.getTaskID() + " Error="
+                        + e.getMessage();
+                logger.warning(errorMessage);
                 return;
             }
 
@@ -209,8 +221,8 @@ public class CustomFormController implements Serializable {
     }
 
     /**
-     * This method overwrite the 'readOnly' status flag for all sections.
-     * Note: sections can be embedded in optional subForms.
+     * This method overwrite the 'readOnly' status flag for all sections. Note:
+     * sections can be embedded in optional subForms.
      * 
      * @param readOnly
      */
@@ -238,8 +250,8 @@ public class CustomFormController implements Serializable {
     }
 
     /**
-     * This helper method pareses a parent-node for 'imixs-form-section'
-     * tags and returns a list of CustomFormSections
+     * This helper method pareses a parent-node for 'imixs-form-section' tags and
+     * returns a list of CustomFormSections
      * 
      * @param parentNode - the parent node to be parsed
      * @param readOnly   - if true, all items will become readonly independent from
@@ -272,7 +284,8 @@ public class CustomFormController implements Serializable {
                         eSectionElement.getAttribute("label"),
                         eSectionElement.getAttribute("columns"),
                         eSectionElement.getAttribute("path"),
-                        defaultReadOnly);
+                        defaultReadOnly,
+                        eSectionElement.getAttribute("options"));
                 customSection.setItems(findItems(eSectionElement,
                         customSection.getColumns(), defaultReadOnly, workitem));
                 result.add(customSection);
@@ -428,7 +441,7 @@ public class CustomFormController implements Serializable {
             } else {
                 throw new ModelException(ModelException.INVALID_MODEL_ENTRY,
                         "The custom-form expression is not allowed: "
-                                + expression);
+                                + expression + " - expression missing in 'customform.expressions' ");
             }
 
         } else {
@@ -484,8 +497,8 @@ public class CustomFormController implements Serializable {
     /**
      * This method updates the custom Field Definition based on a given workitem.
      * The method first looks if the task associated with the workitem contains a
-     * bpmn:DataObject containing a custom definition.
-     * The result is stored into the item <code>txtWorkflowEditorCustomForm</code>.
+     * bpmn:DataObject containing a custom definition. The result is stored into the
+     * item <code>txtWorkflowEditorCustomForm</code>.
      * <p>
      * In case the model does not provide a custom Field Definition but the workitem
      * has stored one the method returns the existing one and did not update the
@@ -508,25 +521,28 @@ public class CustomFormController implements Serializable {
 
     /**
      * Helper method that reads a form definition from an optional
-     * <code>bpmn:DataObject</code> associated with the current task element.
-     * A <code>bpmn:DataObject</code> must contain a `form-tag` containing the form
-     * definition.
-     * If not matching <code>bpmn:DataObject</code> is defined the method returns an
-     * empty
-     * string.
+     * <code>bpmn:DataObject</code> associated with the current task element. A
+     * <code>bpmn:DataObject</code> must contain a `form-tag` containing the form
+     * definition. If not matching <code>bpmn:DataObject</code> is defined the
+     * method returns an empty string.
      * 
      * @param workitem
      * @return
      */
     @SuppressWarnings("unchecked")
     private String fetchFormDefinitionFromModel(ItemCollection workitem) {
+
+        // return if no modelversion is defined
+        if (workitem == null || workitem.getModelVersion().isBlank()) {
+            return "";
+        }
         ItemCollection task;
         try {
             BPMNModel model = modelManager.getModelByWorkitem(workitem);
             task = modelManager.loadTask(workitem, model);
 
         } catch (ModelException e) {
-            logger.warning("unable to parse data object in model: " + e.getMessage());
+            logger.fine("unable to parse data object in model: " + e.getMessage());
             return "";
         }
 

@@ -4,11 +4,12 @@
 	xmlns:marty="http://xmlns.jcp.org/jsf/composite/marty" template="/layout/template.xhtml">
 
 
-
-
-	<f:metadata>
-		<f:viewAction action="#{workflowController.onLoad()}" />
-	</f:metadata>
+	<h:head>
+		<!-- support deep link for workitems to be loaded by the WorkflowController (optional params 'id' and 'workitem' supported) -->
+		<f:metadata>
+			<f:viewAction action="#{workflowController.onLoad()}" />
+		</f:metadata>
+	</h:head>
 
 	<ui:define name="content">
 		<f:view>

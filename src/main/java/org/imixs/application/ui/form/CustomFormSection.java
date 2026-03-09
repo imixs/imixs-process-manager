@@ -42,14 +42,16 @@ public class CustomFormSection {
 	String label;
 	String columns;
 	String path;
+	String options;
 	boolean readonly;
 	List<CustomFormItem> items;
 
-	public CustomFormSection(String label, String columns, String path, boolean readonly) {
+	public CustomFormSection(String label, String columns, String path, boolean readonly, String options) {
 		super();
 		this.label = label;
 		this.readonly = readonly;
 		this.columns = columns;
+		this.options = options;
 		if (path != null) {
 			this.path = path.trim();
 		}
@@ -93,6 +95,14 @@ public class CustomFormSection {
 
 	public void setReadonly(boolean readonly) {
 		this.readonly = readonly;
+	}
+
+	public String getOptions() {
+		return options;
+	}
+
+	public void setOptions(String options) {
+		this.options = options;
 	}
 
 }

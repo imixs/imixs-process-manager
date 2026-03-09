@@ -25,12 +25,11 @@
 				<ul>
 					<li class="nav-item"><a href="#{facesContext.externalContext.requestContextPath}/"><span
 								class="typcn typcn-home"></span><label>Home</label></a></li>
-
 					<li class="nav-item">
-						<h:commandLink action="/pages/workitems/start">
-							<span class="typcn typcn-document"></span>
+						<h:link outcome="/pages/workitems/start"><span class="typcn typcn-document"></span>
 							<label>New Task</label>
-						</h:commandLink>
+						</h:link>
+
 					</li>
 				</ul>
 				<hr />
