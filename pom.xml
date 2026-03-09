@@ -57,7 +57,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.imixs.workflow.version>6.2.5-SNAPSHOT</org.imixs.workflow.version>
+		<org.imixs.workflow.version>6.2.5</org.imixs.workflow.version>
 		<org.imixs.marty.version>5.1.0</org.imixs.marty.version>
 		<org.imixs.micro.version>1.0.0</org.imixs.micro.version>
 		<microprofile.version>6.0</microprofile.version>
