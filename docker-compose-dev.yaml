@@ -1,23 +1,56 @@
 version: "3.6"
 services:
-
+  #######################
+  # PostgreSQL
+  #######################
   imixs-db:
     image: postgres:13.11
     environment:
       POSTGRES_PASSWORD: adminadmin
       POSTGRES_DB: workflow-db
-    volumes: 
+    volumes:
       - dbdata:/var/lib/postgresql/data
-  
+
+  #######################
+  # Cassandra
+  #######################
+  imixs-cluster:
+    image: cassandra:5.0.4
+    container_name: cassandra
+    mem_limit: 2G # minimum 2 GB RAM for Cassandra 5.x
+    mem_reservation: 1G # Reserviert 1 GB
+    environment:
+      - TZ="Europe/Berlin"
+      - JVM_OPTS=-Xms1G -Xmx1G # Heap auf 1 GB begrenzen
+      - CASSANDRA_CLUSTER_NAME=imixs-workflow
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+      - CASSANDRA_DC=datacenter1
+      - CASSANDRA_RACK=rack1
+    ports:
+      - "9042:9042" # CQL-Port
+      - "7000:7000" # Inter-Node-communication
+      - "7001:7001" # TLS-Inter-Node-Kommunikation
+      - "7199:7199" # JMX-Port
+    volumes:
+      - cluster_data:/var/lib/cassandra
+
+  #######################
+  # Imixs Process Manager
+  #######################
   imixs-app:
     image: imixs/imixs-process-manager:latest
     environment:
-      TZ: "CET" 
-      LANG: "en_US.UTF-8"  
+      TZ: "CET"
+      LANG: "en_US.UTF-8"
       JAVA_OPTS: "-Dnashorn.args=--no-deprecation-warning"
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "adminadmin"
       POSTGRES_CONNECTION: "jdbc:postgresql://imixs-db/workflow-db"
+      # Cassandra Cluster Mode
+      WORKFLOW_CLUSTER_MODE: "true"
+      WORKFLOW_CLUSTER_CONTACTPOINTS: "imixs-cluster"
+      WORKFLOW_CLUSTER_KEYSPACE: "imixs_process_manager"
+
       METRICS_ENABLED: "true"
     ports:
       - "8080:8080"
@@ -26,11 +59,14 @@ services:
     volumes:
       - ./docker/deployments:/opt/jboss/wildfly/standalone/deployments/
 
-
+  #######################
+  # Imixs-Admin
+  #######################
   imixsadmin:
     image: imixs/imixs-admin:latest
     ports:
-      - "8888:8080"      
-      
+      - "8888:8080"
+
 volumes:
-  dbdata:   
+  dbdata:
+  cluster_data:
