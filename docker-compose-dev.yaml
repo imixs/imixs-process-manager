@@ -17,6 +17,7 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "adminadmin"
       POSTGRES_CONNECTION: "jdbc:postgresql://imixs-db/workflow-db"
+      MAILGATEWAY: "localhost"
       METRICS_ENABLED: "true"
 
       ASYNCEVENT_PROCESSOR_ENABLED: "true"
