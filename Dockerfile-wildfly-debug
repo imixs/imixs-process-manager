@@ -16,10 +16,17 @@ COPY ./docker/configuration/wildfly/modules/ /opt/jboss/wildfly/modules/
 COPY ./docker/configuration/wildfly/\*.properties /opt/jboss/wildfly/standalone/configuration/
 COPY ./docker/configuration/wildfly/standalone.xml /opt/jboss/wildfly/standalone/configuration/
 
+# Create Index directory
+
+USER root
+RUN mkdir -p /opt/jboss/lucene \
+ && chown -R jboss:jboss /opt/jboss/lucene
+USER jboss
+
 # Deploy artefact
 
 ADD ./target/\*.war /opt/jboss/wildfly/standalone/deployments/
-WORKDIR /opt/jboss/wildfly
+WORKDIR /opt/jboss
 
 # Set the default command to run on boot
 

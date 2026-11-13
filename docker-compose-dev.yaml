@@ -1,4 +1,3 @@
-version: "3.6"
 services:
   imixs-db:
     image: postgres:13.11
@@ -13,10 +12,21 @@ services:
     environment:
       TZ: "CET"
       LANG: "en_US.UTF-8"
-      JAVA_OPTS: "-Dnashorn.args=--no-deprecation-warning"
+      JAVA_OPTS: >-
+        -XX:MaxRAMPercentage=75.0
+        -XX:+UseG1GC
+        -XX:MaxGCPauseMillis=200
+        -XX:InitiatingHeapOccupancyPercent=45
+        -Djava.net.preferIPv4Stack=true
+        -Djava.awt.headless=true
+        -Djboss.modules.system.pkgs=org.jboss.byteman,com.sun.management,jdk.incubator.vector
+        --add-modules=jdk.incubator.vector
+        --enable-native-access=ALL-UNNAMED
+
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "adminadmin"
       POSTGRES_CONNECTION: "jdbc:postgresql://imixs-db/workflow-db"
+      INDEX_DIRECTORY: "/opt/jboss/lucene/imixs-workflow-index"
       MAILGATEWAY: "localhost"
       METRICS_ENABLED: "true"
 
@@ -28,6 +38,7 @@ services:
       - "8787:8787"
       - "9990:9990"
     volumes:
+      - index:/opt/jboss/lucene/
       - ./docker/deployments:/opt/jboss/wildfly/standalone/deployments/
 
   imixsadmin:
@@ -37,3 +48,6 @@ services:
 
 volumes:
   dbdata:
+    name: imixs-process-manager-dbdata
+  index:
+    name: imixs-process-manager-index
